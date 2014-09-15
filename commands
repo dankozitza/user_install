@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USER_NAME=$1
+
 cp bashrc ~/.bashrc
 cp vimrc ~/.vimrc
 cp -R screenlayout ~/.screenlayout
@@ -49,29 +51,34 @@ sleep 2
 #pacman --noconfirm -S htop
 #pacman --noconfirm -S surf
 #pacman --noconfirm -S dmenu
+#pacman --noconfirm -S figlet
 
 echo "!--- Now going to configure those programs ---!"
 
-mkdir /home/jklkbum/.config
-cp -R openbox /home/jklkbum/.config
-cp xsession /home/jklkbum/.xsession
+mkdir /home/$USER_NAME/.config
+cp -R openbox /home/$USER_NAME/.config
+cp xsession /home/$USER_NAME/.xsession
 openbox --reconfigure
 
-# set up user jklkbum
+cp -R irssi /home/$USER_NAME/.irssi
+
+# set up user $USER_NAME
 
 echo
-echo "!--- Now going to set up user jklkbum ---!"
+echo "!--- Now going to set up user $USER_NAME ---!"
 echo
 
 sleep 2
 
-#useradd -m -s /bin/bash jklkbum
-#passwd jklkbum
+#useradd -m -s /bin/bash $USER_NAME
+#passwd $USER_NAME
 
-cp bashrc /home/jklkbum/.bashrc
-cp vimrc /home/jklkbum/.vimrc
-cp xinitrc /home/jklkbum/.xinitrc
-cp -R screenlayout /home/jklkbum/.screenlayout
+cp bashrc /home/$USER_NAME/.bashrc
+cp vimrc /home/$USER_NAME/.vimrc
+cp xinitrc /home/$USER_NAME/.xinitrc
+cp -R screenlayout /home/$USER_NAME/.screenlayout
+
+chown -R $USER_NAME /home/$USER_NAME
 
 echo
 echo "!--- Done ---!"
