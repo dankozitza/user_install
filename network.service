@@ -1,0 +1,22 @@
+[Unit]
+Description=Wired Static IP Connectivity
+Wants=network.target
+Before=network.target
+BindsTo=sys-subsystem-net-devices-enp5s0.device
+After=sys-subsystem-net-devices-enp5s0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/ip link set dev enp5s0 up
+
+# ExecStart=/usr/bin/wpa_supplicant -B -i eth0 -c /etc/wpa_supplicant.conf # Remove this for wired connections
+
+ExecStart=/usr/bin/ip addr add 10.0.1.2/24 dev enp5s0
+ExecStart=/usr/bin/ip route add default via 10.0.1.1
+
+ExecStop=/usr/bin/ip addr flush dev enp5s0
+ExecStop=/usr/bin/ip link set dev enp5s0 down
+
+[Install]
+WantedBy=multi-user.target

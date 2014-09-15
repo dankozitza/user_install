@@ -34,13 +34,13 @@ my %programs = (
 
    htop => {
 
-      command => "xfce4-terminal --hide-menubar --geometry 115x25+3320+0 "
+      command => "xfce4-terminal --hide-menubar --geometry 115x25+2500+0 "
                . "--hide-toolbar -e htop &",
    },
 
    ncmpcpp => {
 
-      command => "xfce4-terminal --hide-menubar --geometry 115x15+3320+970 "
+      command => "xfce4-terminal --hide-menubar --geometry 115x15+2500+970 "
                . "--hide-toolbar -e \"ncmpcpp -h 10.0.1.2\" &",
    },
 

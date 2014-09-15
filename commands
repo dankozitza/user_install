@@ -1,0 +1,78 @@
+#!/bin/bash
+
+cp bashrc ~/.bashrc
+cp vimrc ~/.vimrc
+cp -R screenlayout ~/.screenlayout
+
+cp startp /usr/bin
+cp s /usr/bin
+
+ip addr
+
+echo
+echo "!--- switch eth0 with whatever your device name is ---!"
+echo
+
+sleep 5
+
+vim network.service
+
+cp network.service /etc/systemd/system/multi-user.target.wants/
+
+systemctl daemon-reload
+systemctl start network.service
+
+echo
+echo "!--- if ping fails network setup failed! ---!"
+echo
+
+sleep 2
+
+ping google.com
+
+echo
+echo "!--- Now going to install a few programs ---!"
+echo
+
+sleep 2
+
+#pacman --noconfirm -S vim
+#pacman --noconfirm -S wget
+#pacman --noconfirm -S openbox
+#pacman --noconfirm -S xorg
+#pacman --noconfirm -S xorg-xinit
+#pacman --noconfirm -S xfce4
+#pacman --noconfirm -S git
+#pacman --noconfirm -S go
+#pacman --noconfirm -S mpd
+#pacman --noconfirm -S ncmpcpp
+#pacman --noconfirm -S htop
+#pacman --noconfirm -S surf
+#pacman --noconfirm -S dmenu
+
+echo "!--- Now going to configure those programs ---!"
+
+mkdir /home/jklkbum/.config
+cp -R openbox /home/jklkbum/.config
+cp xsession /home/jklkbum/.xsession
+openbox --reconfigure
+
+# set up user jklkbum
+
+echo
+echo "!--- Now going to set up user jklkbum ---!"
+echo
+
+sleep 2
+
+#useradd -m -s /bin/bash jklkbum
+#passwd jklkbum
+
+cp bashrc /home/jklkbum/.bashrc
+cp vimrc /home/jklkbum/.vimrc
+cp xinitrc /home/jklkbum/.xinitrc
+cp -R screenlayout /home/jklkbum/.screenlayout
+
+echo
+echo "!--- Done ---!"
+echo
