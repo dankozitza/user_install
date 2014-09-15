@@ -55,6 +55,8 @@ sleep 2
 
 echo "!--- Now going to configure those programs ---!"
 
+sleep 2
+
 mkdir /home/$USER_NAME/.config
 cp -R openbox /home/$USER_NAME/.config
 cp xsession /home/$USER_NAME/.xsession
