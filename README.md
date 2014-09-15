@@ -1,2 +1,1 @@
-startp will execute whatever commands are found in the %programs hash.
-i run this from ~/.xinitrc.
+these are some of the configuration files and programs i use. 'commands' is a bash script that will install my user on a clean archlinux install
