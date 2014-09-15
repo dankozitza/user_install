@@ -16,6 +16,6 @@
 # exec startxfce4
 # ...or the Window Manager of your choice
 
-/home/jklkbum/.screenlayout/2-hp19-hp23.sh
+$HOME/.screenlayout/2-hp19-hp23.sh
 startp
 exec dbus-launch openbox
