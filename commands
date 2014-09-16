@@ -46,12 +46,13 @@ sleep 2
 #pacman --noconfirm -S xfce4
 #pacman --noconfirm -S git
 #pacman --noconfirm -S go
-#pacman --noconfirm -S mpd
+#pacman --noconfirm -S mpc
 #pacman --noconfirm -S ncmpcpp
 #pacman --noconfirm -S htop
 #pacman --noconfirm -S surf
 #pacman --noconfirm -S dmenu
 #pacman --noconfirm -S figlet
+#pacman --noconfirm -S flashplugin
 
 echo
 echo "!--- Now going to set up user $USER_NAME ---!"
@@ -85,3 +86,16 @@ chown -R $USER_NAME /home/$USER_NAME
 echo
 echo "!--- Done ---!"
 echo
+
+### optional section ###
+#
+#pacman --noconfirm -S mpd
+#
+## Virtualbox section
+#
+#pacman --noconfirm -S virtualbox
+#
+## make default user
+#
+#
+###
