@@ -254,32 +254,32 @@
     </keybind>
     <keybind key="XF86AudioPlay">
       <action name="Execute">
-        <command>ncmpcpp -h 10.0.1.2 toggle</command>
+        <command>mpc -h 10.0.1.2 toggle</command>
       </action>
     </keybind>
     <keybind key="XF86AudioStop">
       <action name="Execute">
-        <command>ncmpcpp -h 10.0.1.2 stop</command>
+        <command>mpc -h 10.0.1.2 stop</command>
       </action>
     </keybind>
     <keybind key="XF86AudioPrev">
       <action name="Execute">
-        <command>ncmpcpp -h 10.0.1.2 prev</command>
+        <command>mpc -h 10.0.1.2 prev</command>
       </action>
     </keybind>
     <keybind key="XF86AudioNext">
       <action name="Execute">
-        <command>ncmpcpp -h 10.0.1.2 next</command>
+        <command>mpc -h 10.0.1.2 next</command>
       </action>
     </keybind>
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <command>amixer set Master 5%+</command>
+        <command>mpc -h 10.0.1.2 volume +10</command>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <command>amixer set Master 5%-</command>
+        <command>mpc -h 10.0.1.2 volume -10</command>
       </action>
     </keybind>
     <keybind key="XF86AudioMute">

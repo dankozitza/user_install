@@ -53,6 +53,7 @@ sleep 2
 #pacman --noconfirm -S dmenu
 #pacman --noconfirm -S figlet
 #pacman --noconfirm -S flashplugin
+#pacman --noconfirm -S transmission-gtk
 
 echo
 echo "!--- Now going to set up user $USER_NAME ---!"
@@ -74,13 +75,14 @@ openbox --reconfigure
 
 cp -R irssi /home/$USER_NAME/.irssi
 
-
+cp -R ncmpcpp /home/$USER_NAME/.ncmpcpp
 
 cp bashrc /home/$USER_NAME/.bashrc
 cp vimrc /home/$USER_NAME/.vimrc
 cp xinitrc /home/$USER_NAME/.xinitrc
 cp -R screenlayout /home/$USER_NAME/.screenlayout
 
+# make suer user owns all their files
 chown -R $USER_NAME /home/$USER_NAME
 
 echo
@@ -94,6 +96,12 @@ echo
 ## Virtualbox section
 #
 #pacman --noconfirm -S virtualbox
+#depmod -a
+#modprobe vboxdrv
+#modprobe vboxpci
+#cp virtualbox.conf /etc/modules-load.d/virtualbox.conf
+#
+##pacman --noconfirm -S virtualbox-guest-iso
 #
 ## make default user
 #
