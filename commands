@@ -54,6 +54,7 @@ sleep 2
 #pacman --noconfirm -S figlet
 #pacman --noconfirm -S flashplugin
 #pacman --noconfirm -S transmission-gtk
+#pacman --noconfirm -S ffmpeg
 
 echo
 echo "!--- Now going to set up user $USER_NAME ---!"
