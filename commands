@@ -48,8 +48,10 @@ sleep 2
 #pacman --noconfirm -S go
 #pacman --noconfirm -S mpc
 #pacman --noconfirm -S ncmpcpp
+#pacman --noconfirm -S alsa-utils
 #pacman --noconfirm -S htop
-#pacman --noconfirm -S surf
+#pacman --noconfirm -S dwb
+#pacman --noconfirm -S gst-plugins-good
 #pacman --noconfirm -S dmenu
 #pacman --noconfirm -S figlet
 #pacman --noconfirm -S flashplugin
