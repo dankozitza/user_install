@@ -8,6 +8,7 @@ cp -R screenlayout ~/.screenlayout
 
 cp startp /usr/bin
 cp s /usr/bin
+cp pomf /usr/bin
 
 ip addr
 
