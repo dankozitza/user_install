@@ -8,22 +8,22 @@ cp -R screenlayout ~/.screenlayout
 
 cp startp /usr/bin
 cp s /usr/bin
-cp pomf /usr/bin
+cp p /usr/bin
 
-ip addr
-
-echo
-echo "!--- switch eth0 with whatever your device name is ---!"
-echo
-
-sleep 5
-
-vim network.service
-
-cp network.service /etc/systemd/system/multi-user.target.wants/
-
-systemctl daemon-reload
-systemctl start network.service
+#ip addr
+#
+#echo
+#echo "!--- switch eth0 with whatever your device name is ---!"
+#echo
+#
+#sleep 5
+#
+#vim network.service
+#
+#cp network.service /etc/systemd/system/multi-user.target.wants/
+#
+#systemctl daemon-reload
+#systemctl start network.service
 
 echo
 echo "!--- if ping fails network setup failed! ---!"
@@ -39,27 +39,26 @@ echo
 
 sleep 2
 
-#pacman --noconfirm -S vim
+##pacman --noconfirm -S vim
 #pacman --noconfirm -S wget
 #pacman --noconfirm -S openbox
-#pacman --noconfirm -S xorg
+##pacman --noconfirm -S xorg
 #pacman --noconfirm -S xorg-xinit
 #pacman --noconfirm -S xfce4
-#pacman --noconfirm -S git
-#pacman --noconfirm -S go
+##pacman --noconfirm -S git
+##pacman --noconfirm -S go
 #pacman --noconfirm -S mpc
 #pacman --noconfirm -S ncmpcpp
 #pacman --noconfirm -S alsa-utils
 #pacman --noconfirm -S htop
 #pacman --noconfirm -S dwb
 #pacman --noconfirm -S gst-plugins-good
-#pacman --noconfirm -S dmenu
-#pacman --noconfirm -S figlet
+##pacman --noconfirm -S dmenu
+##pacman --noconfirm -S figlet
 #pacman --noconfirm -S flashplugin
 #pacman --noconfirm -S transmission-gtk
-#pacman --noconfirm -S pomf
-#pacman --noconfirm -S scrot
-#pacman --noconfirm -S gimp
+##pacman --noconfirm -S scrot
+##pacman --noconfirm -S gimp
 
 echo
 echo "!--- Now going to set up user $USER_NAME ---!"
@@ -67,29 +66,29 @@ echo
 
 sleep 2
 
-useradd -m -s /bin/bash $USER_NAME
-passwd $USER_NAME
+#useradd -m -s /bin/bash $USER_NAME
+#passwd $USER_NAME
 
 echo "!--- Now going to configure programs ---!"
 
 sleep 2
 
-mkdir /home/$USER_NAME/.config
-cp -R openbox /home/$USER_NAME/.config
-cp xsession /home/$USER_NAME/.xsession
+mkdir /$USER_NAME/.config
+cp -R openbox /$USER_NAME/.config
+cp xsession /$USER_NAME/.xsession
 openbox --reconfigure
 
-cp -R irssi /home/$USER_NAME/.irssi
+cp -R irssi /$USER_NAME/.irssi
 
-cp -R ncmpcpp /home/$USER_NAME/.ncmpcpp
+cp -R ncmpcpp /$USER_NAME/.ncmpcpp
 
-cp bashrc /home/$USER_NAME/.bashrc
-cp vimrc /home/$USER_NAME/.vimrc
-cp xinitrc /home/$USER_NAME/.xinitrc
-cp -R screenlayout /home/$USER_NAME/.screenlayout
+cp bashrc /$USER_NAME/.bashrc
+cp vimrc /$USER_NAME/.vimrc
+cp xinitrc /$USER_NAME/.xinitrc
+#cp -R screenlayout /$USER_NAME/.screenlayout
 
 # make suer user owns all their files
-chown -R $USER_NAME /home/$USER_NAME
+#chown -R $USER_NAME /$USER_NAME
 
 echo
 echo "!--- Done ---!"
