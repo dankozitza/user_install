@@ -23,4 +23,4 @@ if (!-d $ENV{"HOME"} . "/downloads") {
 	system("mkdir ~/downloads")
 }
 
-exec("cd ~/downloads; surf $url 2> ~/.s_surf_err &");
+exec("dwb $url 2> ~/.d_dwb_log &");

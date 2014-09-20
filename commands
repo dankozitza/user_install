@@ -10,20 +10,20 @@ cp startp /usr/bin
 cp s /usr/bin
 cp p /usr/bin
 
-#ip addr
-#
-#echo
-#echo "!--- switch eth0 with whatever your device name is ---!"
-#echo
-#
-#sleep 5
-#
-#vim network.service
-#
-#cp network.service /etc/systemd/system/multi-user.target.wants/
-#
-#systemctl daemon-reload
-#systemctl start network.service
+ip addr
+
+echo
+echo "!--- switch eth0 with whatever your device name is ---!"
+echo
+
+sleep 5
+
+vim network.service
+
+cp network.service /etc/systemd/system/multi-user.target.wants/
+
+systemctl daemon-reload
+systemctl start network.service
 
 echo
 echo "!--- if ping fails network setup failed! ---!"
@@ -32,6 +32,8 @@ echo
 sleep 2
 
 ping google.com
+
+exit
 
 echo
 echo "!--- Now going to install a few programs ---!"
