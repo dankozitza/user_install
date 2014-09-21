@@ -6,7 +6,7 @@ USER_NAME=$1
 #cp vimrc ~/.vimrc
 #cp -R screenlayout ~/.screenlayout
 
-cp -R userhome/* /home/$USER_NAME/
+#cp -R userhome/* /home/$USER_NAME/
 
 #cp startp /usr/bin
 #cp s /usr/bin
@@ -37,7 +37,7 @@ sleep 2
 
 ping google.com
 
-exit
+#exit
 
 echo
 echo "!--- Now going to install a few programs ---!"
@@ -47,22 +47,22 @@ sleep 2
 
 ##pacman --noconfirm -S vim
 #pacman --noconfirm -S wget
-#pacman --noconfirm -S openbox
-##pacman --noconfirm -S xorg
-#pacman --noconfirm -S xorg-xinit
+pacman --noconfirm -S openbox
+pacman --noconfirm -S xorg
+pacman --noconfirm -S xorg-xinit
 #pacman --noconfirm -S xfce4
 ##pacman --noconfirm -S git
 ##pacman --noconfirm -S go
 #pacman --noconfirm -S mpc
 #pacman --noconfirm -S ncmpcpp
 #pacman --noconfirm -S alsa-utils
-#pacman --noconfirm -S htop
+pacman --noconfirm -S htop
 #pacman --noconfirm -S dwb
 #pacman --noconfirm -S gst-plugins-good
 ##pacman --noconfirm -S dmenu
 ##pacman --noconfirm -S figlet
 #pacman --noconfirm -S flashplugin
-#pacman --noconfirm -S transmission-gtk
+pacman --noconfirm -S transmission-gtk
 ##pacman --noconfirm -S scrot
 ##pacman --noconfirm -S gimp
 
@@ -79,19 +79,22 @@ echo "!--- Now going to configure programs ---!"
 
 sleep 2
 
-mkdir /$USER_NAME/.config
-cp -R openbox /$USER_NAME/.config
-cp xsession /$USER_NAME/.xsession
-openbox --reconfigure
+#mkdir /$USER_NAME/.config
+#cp -R openbox /$USER_NAME/.config
+#cp xsession /$USER_NAME/.xsession
 
-cp -R irssi /$USER_NAME/.irssi
+#cp -R irssi /$USER_NAME/.irssi
 
-cp -R ncmpcpp /$USER_NAME/.ncmpcpp
+#cp -R ncmpcpp /$USER_NAME/.ncmpcpp
 
-cp bashrc /$USER_NAME/.bashrc
-cp vimrc /$USER_NAME/.vimrc
-cp xinitrc /$USER_NAME/.xinitrc
+#cp bashrc /$USER_NAME/.bashrc
+#cp vimrc /$USER_NAME/.vimrc
+#cp xinitrc /$USER_NAME/.xinitrc
 #cp -R screenlayout /$USER_NAME/.screenlayout
+
+cp -R userhome/* /$USER_NAME/
+
+openbox --reconfigure
 
 # make suer user owns all their files
 #chown -R $USER_NAME /$USER_NAME
