@@ -2,13 +2,17 @@
 
 USER_NAME=$1
 
-cp bashrc ~/.bashrc
-cp vimrc ~/.vimrc
-cp -R screenlayout ~/.screenlayout
+#cp bashrc ~/.bashrc
+#cp vimrc ~/.vimrc
+#cp -R screenlayout ~/.screenlayout
 
-cp startp /usr/bin
-cp s /usr/bin
-cp p /usr/bin
+cp -R userhome/* /home/$USER_NAME/
+
+#cp startp /usr/bin
+#cp s /usr/bin
+#cp p /usr/bin
+
+cp -R usr/* /usr/
 
 ip addr
 

@@ -1,0 +1,88 @@
+#!/usr/bin/perl
+
+BEGIN {
+
+   fork and exit;
+
+system("mpd");
+
+sleep(3);
+
+#my @hist = [];
+#if (-f "~/.startp.hist") {
+#   open(history, "<", "~/.startp.hist");
+#   while (<history>) {
+#      push @hist, $_;
+#   }
+#}
+
+my %programs = (
+
+   surf => {
+
+      command => "s localhost 2> /dev/null &",
+      command => "s https://github.com 2> /dev/null &",
+   },
+
+   irssi => {
+
+      commands => [
+         "xfce4-terminal --hide-menubar --geometry 60x34+2000+500 "
+       . "--hide-toolbar -e \"irssi\" &", 
+      ],
+   },
+
+   htop => {
+
+      command => "xfce4-terminal --hide-menubar --geometry 115x25+2500+0 "
+               . "--hide-toolbar -e htop &",
+   },
+
+   ncmpcpp => {
+
+      command => "xfce4-terminal --hide-menubar --geometry 115x15+2500+970 "
+               . "--hide-toolbar -e \"ncmpcpp -h 10.0.1.2\" &",
+   },
+
+   xfce4_terminal => {
+
+      commands => [
+         "xfce4-terminal --hide-menubar --geometry 84x42+10+570 &",
+         "xfce4-terminal --hide-menubar --geometry 84x28+900+570 &",
+         "xfce4-terminal --hide-menubar --geometry 84x42+1970+10 &",
+      ],
+   },
+
+   #steam => {
+   #   command => "steam 2> /dev/null &",
+   #},
+);
+
+if ($ARGV[0] =~ /kill/) { 
+   # this will kill stuff it didn't start
+   foreach my $prog (keys %programs) {
+      $prog =~ s/_/-/g;
+      print "killing $prog\n";
+      system("pkill $prog");
+   }
+}
+else {
+   foreach my $prog (keys %programs) {
+      print "starting $prog\n";
+      sleep(1);
+      if (defined $programs{$prog}{command}) {
+         system $programs{$prog}{command};
+      }
+      elsif (@{$programs{$prog}{commands}}) {
+         foreach my $cmd (@{$programs{$prog}{commands}}) {
+            system $cmd;
+            sleep(1);
+         }
+      }
+   }
+}
+
+#foreach my $cmd (@hist) {
+#   print "recovering
+
+}
