@@ -8,6 +8,13 @@ if [[ "$USER_NAME" == "root" ]]; then
 	echo "set user home to $USER_HOME"
 fi
 
+### set git name and email ###
+#
+git config --global user.name "Dan Kozitza"
+git config --global user.email "dankoz@gmx.us"
+#
+###
+
 ### root+program configuration ###
 #
 find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} ~ \;
@@ -34,6 +41,18 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 #sleep 2
 #
 #ping google.com
+#
+###
+
+### virtualboxclient setup ###
+#
+#pacman --noconfirm -S virtualbox-guest-modules
+#pacman --noconfirm -S virtualbox-guest-utils
+#
+#modprobe -a vboxguest vboxsf vboxvideo
+#cp extra/virtualboxclient.conf /etc/modules-load.d/
+#
+#systemctl enable vboxservice
 #
 ###
 
