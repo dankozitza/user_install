@@ -43,11 +43,11 @@ echo "\n!--- Now going to install a few programs ---!\n"
 sleep 2
 
 ###pacman --noconfirm -S vim
-##pacman --noconfirm -S wget
-#pacman --noconfirm -S openbox
-#pacman --noconfirm -S xorg
-#pacman --noconfirm -S xorg-xinit
-#pacman --noconfirm -S xfce4-terminal
+pacman --noconfirm -S wget
+pacman --noconfirm -S openbox
+pacman --noconfirm -S xorg
+pacman --noconfirm -S xorg-xinit
+pacman --noconfirm -S xfce4-terminal
 ##pacman --noconfirm -S xfce4
 ###pacman --noconfirm -S git
 ###pacman --noconfirm -S go
@@ -55,7 +55,8 @@ sleep 2
 ##pacman --noconfirm -S ncmpcpp
 ##pacman --noconfirm -S alsa-utils
 pacman --noconfirm -S htop
-##pacman --noconfirm -S dwb
+#pacman --noconfirm -S surf
+pacman --noconfirm -S dwb
 ##pacman --noconfirm -S gst-plugins-good
 ###pacman --noconfirm -S dmenu
 ###pacman --noconfirm -S figlet
