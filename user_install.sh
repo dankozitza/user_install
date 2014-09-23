@@ -12,6 +12,7 @@ fi
 #
 find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} ~ \;
 find usr/ -maxdepth 1 -mindepth 1 -exec cp -r {} /usr/ \;
+find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 #
 ###
 
@@ -46,6 +47,7 @@ find usr/ -maxdepth 1 -mindepth 1 -exec cp -r {} /usr/ \;
 ##pacman --noconfirm -S openbox
 ##pacman --noconfirm -S xorg
 ##pacman --noconfirm -S xorg-xinit
+##pacman --noconfirm -S xfce4-terminal
 ###pacman --noconfirm -S xfce4
 ####pacman --noconfirm -S git
 ####pacman --noconfirm -S go
