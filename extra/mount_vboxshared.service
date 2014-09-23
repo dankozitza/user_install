@@ -1,5 +1,5 @@
 [Unit]
-Description=Mount /dev/sdb3 to /media
+Description=Mount vbox shared dir
 
 [Service]
 ExecStart=/bin/mount /dev/sdb3 /media
