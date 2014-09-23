@@ -1,8 +1,0 @@
-[Unit]
-Description=Mount /dev/sdb3 to /media
-
-[Service]
-ExecStart=/bin/mount /dev/sdb3 /media
-
-[Install]
-WantedBy=multi-user.target
