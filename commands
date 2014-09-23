@@ -2,11 +2,18 @@
 
 USER_NAME=$1
 
+USER_HOME="/home/$USER_NAME/"
+if [[ "$USER_NAME" == "root" ]]; then
+	USER_HOME="/$USER_NAME/"
+	echo "set user home to $USER_HOME"
+fi
+
 #cp bashrc ~/.bashrc
 #cp vimrc ~/.vimrc
 #cp -R screenlayout ~/.screenlayout
 
-#cp -R userhome/* /home/$USER_NAME/
+find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
+#cp -R "userhome/*" $USER_HOME
 
 #cp startp /usr/bin
 #cp s /usr/bin
@@ -14,57 +21,57 @@ USER_NAME=$1
 
 cp -R usr/* /usr/
 
-ip addr
-
-echo
-echo "!--- switch eth0 with whatever your device name is ---!"
-echo
-
-sleep 5
-
-vim network.service
-
-cp network.service /etc/systemd/system/multi-user.target.wants/
-
-systemctl daemon-reload
-systemctl start network.service
-
-echo
-echo "!--- if ping fails network setup failed! ---!"
-echo
-
-sleep 2
-
-ping google.com
-
-#exit
-
-echo
-echo "!--- Now going to install a few programs ---!"
-echo
-
-sleep 2
-
-##pacman --noconfirm -S vim
-#pacman --noconfirm -S wget
-pacman --noconfirm -S openbox
-pacman --noconfirm -S xorg
-pacman --noconfirm -S xorg-xinit
-#pacman --noconfirm -S xfce4
-##pacman --noconfirm -S git
-##pacman --noconfirm -S go
-#pacman --noconfirm -S mpc
-#pacman --noconfirm -S ncmpcpp
-#pacman --noconfirm -S alsa-utils
-pacman --noconfirm -S htop
-#pacman --noconfirm -S dwb
-#pacman --noconfirm -S gst-plugins-good
-##pacman --noconfirm -S dmenu
-##pacman --noconfirm -S figlet
-#pacman --noconfirm -S flashplugin
-pacman --noconfirm -S transmission-gtk
-##pacman --noconfirm -S scrot
-##pacman --noconfirm -S gimp
+#ip addr
+#
+#echo
+#echo "!--- switch eth0 with whatever your device name is ---!"
+#echo
+#
+#sleep 5
+#
+#vim network.service
+#
+#cp network.service /etc/systemd/system/multi-user.target.wants/
+#
+#systemctl daemon-reload
+#systemctl start network.service
+#
+#echo
+#echo "!--- if ping fails network setup failed! ---!"
+#echo
+#
+#sleep 2
+#
+#ping google.com
+#
+##exit
+#
+#echo
+#echo "!--- Now going to install a few programs ---!"
+#echo
+#
+#sleep 2
+#
+####pacman --noconfirm -S vim
+###pacman --noconfirm -S wget
+##pacman --noconfirm -S openbox
+##pacman --noconfirm -S xorg
+##pacman --noconfirm -S xorg-xinit
+###pacman --noconfirm -S xfce4
+####pacman --noconfirm -S git
+####pacman --noconfirm -S go
+###pacman --noconfirm -S mpc
+###pacman --noconfirm -S ncmpcpp
+###pacman --noconfirm -S alsa-utils
+##pacman --noconfirm -S htop
+###pacman --noconfirm -S dwb
+###pacman --noconfirm -S gst-plugins-good
+####pacman --noconfirm -S dmenu
+####pacman --noconfirm -S figlet
+###pacman --noconfirm -S flashplugin
+##pacman --noconfirm -S transmission-gtk
+####pacman --noconfirm -S scrot
+####pacman --noconfirm -S gimp
 
 echo
 echo "!--- Now going to set up user $USER_NAME ---!"
@@ -72,8 +79,8 @@ echo
 
 sleep 2
 
-#useradd -m -s /bin/bash $USER_NAME
-#passwd $USER_NAME
+useradd -m -s /bin/bash $USER_NAME
+passwd $USER_NAME
 
 echo "!--- Now going to configure programs ---!"
 
@@ -92,12 +99,12 @@ sleep 2
 #cp xinitrc /$USER_NAME/.xinitrc
 #cp -R screenlayout /$USER_NAME/.screenlayout
 
-cp -R userhome/* /$USER_NAME/
+cp -R userhome/* $USER_HOME
 
 openbox --reconfigure
 
 # make suer user owns all their files
-#chown -R $USER_NAME /$USER_NAME
+chown -R $USER_NAME $USER_HOME
 
 echo
 echo "!--- Done ---!"
