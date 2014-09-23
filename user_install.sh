@@ -18,22 +18,22 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 
 ### network setup ***
 #
-ip addr
-
-echo "\n!--- configure network.service ---!\n"
-sleep 5
-
-vim network.service
-
-cp network.service /etc/systemd/system/multi-user.target.wants/
-
-systemctl daemon-reload
-systemctl start network.service
-
-echo "\n!--- if ping fails network setup failed! ---!\n"
-sleep 2
-
-ping google.com
+#ip addr
+#
+#echo "\n!--- configure network.service ---!\n"
+#sleep 5
+#
+#vim network.service
+#
+#cp network.service /etc/systemd/system/multi-user.target.wants/
+#
+#systemctl daemon-reload
+#systemctl start network.service
+#
+#echo "\n!--- if ping fails network setup failed! ---!\n"
+#sleep 2
+#
+#ping google.com
 #
 ###
 
@@ -81,7 +81,7 @@ passwd $USER_NAME
 echo "\n!--- Now going to configure programs ---!\n"
 sleep 2
 
-find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USERHOME \;
+find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
 #cp -R userhome/* $USER_HOME
 
 openbox --reconfigure
