@@ -101,10 +101,15 @@ passwd $USER_NAME
 echo "\n!--- Now going to configure programs ---!\n"
 sleep 2
 
+# copy config files
 find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
 #cp -R userhome/* $USER_HOME
 
 openbox --reconfigure
+
+mkdir -p $USER_HOME/gocode/src/github.com/dankozitza
+mkdir $USER_HOME/gocode/bin
+mkdir $USER_HOME/gocode/pkg
 
 # make sure user owns all their files
 chown -R $USER_NAME $USER_HOME
