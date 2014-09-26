@@ -107,9 +107,9 @@ find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
 
 openbox --reconfigure
 
-mkdir -p $USER_HOME/gocode/src/github.com/dankozitza
-mkdir $USER_HOME/gocode/bin
-mkdir $USER_HOME/gocode/pkg
+mkdir -p $USER_HOME/go/src/github.com/dankozitza
+mkdir $USER_HOME/go/bin
+mkdir $USER_HOME/go/pkg
 
 # make sure user owns all their files
 chown -R $USER_NAME $USER_HOME
