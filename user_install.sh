@@ -51,6 +51,8 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 #
 #modprobe -a vboxguest vboxsf vboxvideo
 #cp extra/virtualboxclient.conf /etc/modules-load.d/
+#cp extra/mount_vboxshared.service /etc/systemd/system/multi-user.target.wants
+#systemd start mount_vboxshared.service
 #
 #systemctl enable vboxservice
 #

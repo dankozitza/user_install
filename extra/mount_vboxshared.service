@@ -2,7 +2,7 @@
 Description=Mount vbox shared dir
 
 [Service]
-ExecStart=/bin/mount /dev/sdb3 /media
+ExecStart=/bin/mount -t vboxsf tad /media
 
 [Install]
 WantedBy=multi-user.target
