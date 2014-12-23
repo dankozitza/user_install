@@ -1,0 +1,9 @@
+[Unit]
+Description=email external ip address to dankoz@gmx.us on change
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/bin/bash -c "cd /home/jklkbum/projects/checkipsleeper; ./checkipsleeper.pl"
+
+[Install]
+WantedBy=multi-user.target

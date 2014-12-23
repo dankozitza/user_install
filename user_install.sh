@@ -32,7 +32,7 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 #
 #vim network.service
 #
-#cp network.service /etc/systemd/system/multi-user.target.wants/
+#cp extra/network.service /etc/systemd/system/multi-user.target.wants/
 #
 #systemctl daemon-reload
 #systemctl start network.service
