@@ -4,7 +4,8 @@ BEGIN {
 
    fork and exit;
 
-system("mpd");
+# root should do this
+#system("mpd");
 
 sleep(3);
 
@@ -20,7 +21,8 @@ my %programs = (
 
    surf => {
 
-      command => "s localhost 2> /dev/null &",
+		command => "s https://wallet.google.com 2> /dev/null &",
+      command => "s https://gmx.com 2> /dev/null &",
       command => "s https://github.com 2> /dev/null &",
    },
 
