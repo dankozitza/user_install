@@ -7,7 +7,11 @@
 # you will also want to place the checkipsleeper dir somewhere and modify
 # extra/checkipsleeper.service to have it executed by systemctl on init.
 #
+
+use Sys::Hostname;
+
 while (1) {
+	$h = hostname;
 
 	$newip = `curl ipecho.net/plain 2> /dev/null`;
 	chomp($newip);
@@ -17,7 +21,7 @@ while (1) {
 	if ($newip ne $ip) {
 		print "old ip $ip has changed to new ip $newip\n";
 		system("rm ip; echo '$newip' >> ip");
-		system("mail -s 'GLaDOS external ip change' dankoz\@gmx.us < ip");
+		system("mail -s '$h external ip change' YourUserName\@email.com < ip");
 	}
 
 	sleep(1000);
