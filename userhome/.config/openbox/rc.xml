@@ -287,7 +287,7 @@
         <command>amixer set Master toggle</command>
       </action>
     </keybind>
-    <keybind key="A-a">
+	 <!-- <keybind key="A-a">
       <action name="DirectionalFocusWest"/>
     </keybind>
     <keybind key="A-d">
@@ -297,8 +297,13 @@
       <action name="DirectionalFocusNorth"/>
     </keybind>
     <keybind key="A-s">
-      <action name="DirectionalFocusSouth"/>
-    </keybind>
+		<action name="DirectionalFocusSouth"/>
+	 </keybind> -->
+ 	 <keybind key="A-s">
+		<action name="Execute">
+        <command>xfce4-terminal --hide-menubar --geometry 84x42</command>
+		</action>
+	 </keybind>
     <keybind key="A-q">
       <action name="Move"/>
     </keybind>
