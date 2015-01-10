@@ -20,7 +20,7 @@ if (@ARGV[1] || ($url !~ /\./ && $url ne "localhost")) {
 print "$0: going to [$url]\n";
 
 if (!-d $ENV{"HOME"} . "/downloads") {
-	system("mkdir ~/downloads")
+	system("mkdir " . $ENV{"HOME"} . "/downloads");
 }
 
 exec("dwb $url 2> ~/.d_dwb_log &");
