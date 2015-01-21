@@ -301,7 +301,7 @@
 	 </keybind> -->
  	 <keybind key="A-s">
 		<action name="Execute">
-        <command>xfce4-terminal --hide-menubar --geometry 84x42</command>
+        <command>xfce4-terminal --hide-menubar --geometry 84x42 -e screen</command>
 		</action>
 	 </keybind>
     <keybind key="A-q">

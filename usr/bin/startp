@@ -7,7 +7,7 @@ BEGIN {
 # root should do this
 #system("mpd");
 
-sleep(3);
+sleep(2);
 
 #my @hist = [];
 #if (-f "~/.startp.hist") {
@@ -22,9 +22,8 @@ my %programs = (
    surf => {
 
       commands => [
-			"s https://duckduckgo.com 2> /dev/null &",
 			"s https://gmx.com 2> /dev/null &",
-      	"s https://github.com 2> /dev/null &",
+      	"d https://github.com 2> /dev/null &",
 		],
    },
 
@@ -44,14 +43,14 @@ my %programs = (
 
    ncmpcpp => {
 
-      command => "xfce4-terminal --hide-menubar --geometry 115x15+2500+970 "
+      command => "xfce4-terminal --hide-menubar --geometry 115x15+2500+570 "
                . "--hide-toolbar -e \"ncmpcpp -h 10.0.1.2\" &",
    },
 
    xfce4_terminal => {
 
       commands => [
-         "xfce4-terminal --hide-menubar --geometry 84x42+10+570 -e screen &",
+         "xfce4-terminal --hide-menubar --geometry 84x42+10+10 -e screen &",
          "xfce4-terminal --hide-menubar --geometry 84x28+900+570 -e screen &",
          "xfce4-terminal --hide-menubar --geometry 84x42+1970+10 -e screen &",
       ],

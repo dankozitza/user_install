@@ -18,7 +18,7 @@ while (1) {
 	$ip = `cat ip`;
 	chomp($ip);
 
-	if ($newip ne $ip) {
+	if ($newip =~ /^[\d\.]$/ && $newip ne $ip) {
 		print "old ip $ip has changed to new ip $newip\n";
 		system("rm ip; echo '$newip' >> ip");
 		system("mail -s '$h external ip change' YourUserName\@email.com < ip");
