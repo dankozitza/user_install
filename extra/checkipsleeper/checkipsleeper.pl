@@ -15,6 +15,12 @@ while (1) {
 
 	$newip = `curl ipecho.net/plain 2> /dev/null`;
 	chomp($newip);
+
+	if ($newip !~ /^[\d\.]$/) {
+		$newip = `curl ifconfig.me 2> /dev/null`;
+		chomp($newip);
+	}
+
 	$ip = `cat ip`;
 	chomp($ip);
 
