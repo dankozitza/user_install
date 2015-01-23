@@ -21,7 +21,10 @@ while (1) {
 		chomp($newip);
 	}
 
-	$ip = `cat ip`;
+	my $ip;
+	if (-f "ip") {
+		$ip = `cat ip`;
+	}
 	chomp($ip);
 
 	if ($newip =~ /^[\d\.]$/ && $newip ne $ip) {
