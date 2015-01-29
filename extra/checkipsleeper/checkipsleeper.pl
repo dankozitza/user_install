@@ -8,29 +8,51 @@
 # extra/checkipsleeper.service to have it executed by systemctl on init.
 #
 
+use strict;
 use Sys::Hostname;
 
+my $filepath = "/var/local/externalip";
+my @sites = qw'ifconfig.me myexternalip.com/raw ip.appspot.com';
+
+for (my $i = 0; $i < $#ARGV; $i++) {
+	if ($ARGV[$i] eq "-f" || $ARGV[$i] eq "--filepath") {
+		print "setting filepath to $ARGV[$i+1]\n";
+		$filepath = $ARGV[$i+1];
+	}
+	if ($ARGV[$i] eq "-s" || $ARGV[$i] eq "--site") {
+		print "adding site $ARGV[$i+1] to list of websites\n";
+		my @newsites;
+		push(@newsites, $ARGV[$i+1], @sites);
+		print "sites: @newsites\n";
+		@sites = @newsites;
+	}
+}
+
 while (1) {
-	$h = hostname;
+	my $h = hostname;
 
-	$newip = `curl ipecho.net/plain 2> /dev/null`;
-	chomp($newip);
+	my $newip;
+	my $i = -1;
+	while ($newip !~ /^\d+\.\d+\.\d+\.\d+$/) {
+		sleep(30) if $i >= 0;
+		$i++;
+		$i = 0 if $i > $#sites;
 
-	if ($newip !~ /^[\d\.]$/) {
-		$newip = `curl ifconfig.me 2> /dev/null`;
+#		print "checking site $sites[$i]\n";
+		$newip = `curl -m 10 $sites[$i] 2> /dev/null`;
 		chomp($newip);
 	}
 
-	my $ip;
-	if (-f "ip") {
-		$ip = `cat ip`;
+	my $ip = "<nil>";
+	if (-f "$filepath") {
+		$ip = `cat $filepath`;
+		chomp($ip);
 	}
-	chomp($ip);
 
-	if ($newip =~ /^[\d\.]$/ && $newip ne $ip) {
+	if ($newip ne $ip) {
 		print "old ip $ip has changed to new ip $newip\n";
-		system("rm ip; echo '$newip' >> ip");
-		system("mail -s '$h external ip change' YourUserName\@email.com < ip");
+		system("rm -f $filepath; echo '$newip' >> $filepath");
+		system("mail -s '$h external ip change' UserName\@email.com < $filepath");
 	}
 
 	sleep(1000);
