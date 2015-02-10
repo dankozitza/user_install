@@ -1,0 +1,3 @@
+bindkey "^k" eval "copy" "stuff k"
+bindkey -m "^k" stuff k
+shell "/bin/bash"
