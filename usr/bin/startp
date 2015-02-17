@@ -56,6 +56,10 @@ my %programs = (
       ],
    },
 
+	VirtualBox => {
+		command => "VirtualBox 2> /dev/null &",
+	},
+
    #steam => {
    #   command => "steam 2> /dev/null &",
    #},
@@ -72,14 +76,12 @@ if ($ARGV[0] =~ /kill/) {
 else {
    foreach my $prog (keys %programs) {
       print "starting $prog\n";
-      sleep(1);
       if (defined $programs{$prog}{command}) {
          system $programs{$prog}{command};
       }
       elsif (@{$programs{$prog}{commands}}) {
          foreach my $cmd (@{$programs{$prog}{commands}}) {
             system $cmd;
-            sleep(1);
          }
       }
    }
