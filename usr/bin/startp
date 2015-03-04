@@ -5,7 +5,7 @@ BEGIN {
    fork and exit;
 
 # root should do this
-#system("mpd");
+system("mpd");
 
 sleep(2);
 
