@@ -44,7 +44,7 @@ my %programs = (
    ncmpcpp => {
 
       command => "xfce4-terminal --hide-menubar --geometry 115x15+2500+570 "
-               . "--hide-toolbar -e \"ncmpcpp -h 10.0.1.2\" &",
+               . "--hide-toolbar -e \"ncmpcpp\" &",
    },
 
    xfce4_terminal => {
