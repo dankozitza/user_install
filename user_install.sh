@@ -86,6 +86,7 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 # ###pacman --noconfirm -S scrot
 # ###pacman --noconfirm -S gimp
 # ###pacman --noconfirm -S arandr
+# ###pacman --noconfirm -S rsnapshot
 # #
 # ###
 
