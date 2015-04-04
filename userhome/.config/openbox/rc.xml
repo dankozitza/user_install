@@ -254,22 +254,22 @@
     </keybind>
     <keybind key="XF86AudioPlay">
       <action name="Execute">
-        <command>mpc -h 64.90.88.89 toggle</command>
+        <command>mpc toggle</command>
       </action>
     </keybind>
     <keybind key="XF86AudioStop">
       <action name="Execute">
-        <command>mpc -h 64.90.88.89 stop</command>
+        <command>mpc stop</command>
       </action>
     </keybind>
     <keybind key="XF86AudioPrev">
       <action name="Execute">
-        <command>mpc -h 64.90.88.89 prev</command>
+        <command>mpc prev</command>
       </action>
     </keybind>
     <keybind key="XF86AudioNext">
       <action name="Execute">
-        <command>mpc -h 64.90.88.89 next</command>
+        <command>mpc next</command>
       </action>
     </keybind>
     <keybind key="XF86AudioRaiseVolume">
