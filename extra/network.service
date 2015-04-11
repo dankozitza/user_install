@@ -1,22 +1,29 @@
 [Unit]
-Description=Wired Static IP Connectivity
+Description=Network Connectivity
 Wants=network.target
 Before=network.target
-BindsTo=sys-subsystem-net-devices-enp0s3.device
-After=sys-subsystem-net-devices-enp0s3.device
+BindsTo=sys-subsystem-net-devices-enp5s0.device
+After=sys-subsystem-net-devices-enp5s0.device
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/ip link set dev enp0s3 up
 
-# ExecStart=/usr/bin/wpa_supplicant -B -i eth0 -c /etc/wpa_supplicant.conf # Remove this for wired connections
+# For Static Ip
+#ExecStart=/usr/bin/ip link set dev enp5s0 up
+#
+### Remove this for wired connections
+### ExecStart=/usr/bin/wpa_supplicant -B -i eth0 -c /etc/wpa_supplicant.conf
+#
+#ExecStart=/usr/bin/ip addr add 64.90.88.89/24 dev enp5s0
+#ExecStart=/usr/bin/ip route add default via 64.90.88.1
+#
+#ExecStop=/usr/bin/ip addr flush dev enp5s0
+#ExecStop=/usr/bin/ip link set dev enp5s0 down
 
-ExecStart=/usr/bin/ip addr add 10.0.2.101/24 dev enp0s3
-ExecStart=/usr/bin/ip route add default via 10.0.2.2
-
-ExecStop=/usr/bin/ip addr flush dev enp0s3
-ExecStop=/usr/bin/ip link set dev enp0s3 down
+# For dhcpcd
+ExecStart=/usr/bin/dhcpcd enp5s0
+ExecStop=/usr/bin/dhcpcd -k enp5s0
 
 [Install]
 WantedBy=multi-user.target
