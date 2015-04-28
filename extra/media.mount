@@ -1,0 +1,9 @@
+[Unit]
+Description=mount device to /media
+
+[Mount]
+What=/dev/sdc3
+Where=/media
+
+[Install]
+WantedBy=basic.target

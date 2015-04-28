@@ -1,0 +1,9 @@
+[Unit]
+Description=mount device to /backup
+
+[Mount]
+What=/dev/sdb1
+Where=/backup
+
+[Install]
+RequiredBy=rsnapshot_daily.service rsnapshot_weekly.service

@@ -3,11 +3,8 @@ Description=startup service for daily rsnapshot
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
-ExecStart=/bin/mount /dev/sdb1 /backup
 ExecStart=/usr/bin/bash -c "/usr/bin/timedatectl | /usr/bin/grep Local > /root/backuptimestamp"
 ExecStart=/usr/bin/rsnapshot daily
-#ExecStart=/bin/umount /dev/sdb1
 
 [Install]
 WantedBy=multi-user.target

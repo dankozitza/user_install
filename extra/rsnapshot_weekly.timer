@@ -1,8 +1,9 @@
 [Unit]
-Description=Run rsnapshot daily
+Description=Run rsnapshot weekly
 
 [Timer]
 OnCalendar=weekly
 Persistent=true
+
 [Install]
 WantedBy=timers.target
