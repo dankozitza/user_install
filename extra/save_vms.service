@@ -1,0 +1,12 @@
+# could not get this to work for the life of me. helpful instructions on tad
+[Unit]
+Description=service unit to save running vm states on shutdown
+Before=shutdown.target
+
+[Service]
+ExecStart=/bin/true
+ExecStop=/usr/bin/su jklkbum -c /usr/bin/bash -c "VBoxManage list runningvms | sed -r 's/\"//' | sed -r 's/\".*$//' | xargs -i VBoxManage controlvm '{}' savestate"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=shutdown.target
