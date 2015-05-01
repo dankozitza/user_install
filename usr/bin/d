@@ -3,6 +3,8 @@
 my $url = $ARGV[0];
 
 my $search = "https://duckduckgo.com";
+#my $max_sessions = 20;
+#my $s_count_file = "$HOME/.config/dwb/dk_session_count";
 
 if (!$url) {
    $url = $search;
@@ -24,3 +26,55 @@ if (!-d $ENV{"HOME"} . "/downloads") {
 }
 
 exec("dwb $url 2> ~/.d_dwb_log &");
+
+# here we are going to implement the usage of multiple sessions.
+# it's a work in progress.
+#
+# if $s_count_file does not exist create it
+#
+#my $s_count = chomp(`cat $s_count_file`);
+#$s_count += 1;
+#if ($s_count > $max_sessions) {
+#	$s_count = 1;
+#}
+#if (session_active($s_count)) {
+#	print "you have too many sessions active! close session_$s_count to start"
+#		. "a new one\n";
+#	exit;
+#}
+#
+#system("echo '$s_count' > $s_count_file");
+#
+#system("dwb -r session_$s_count -x 'o $url' 2> ~/.d_dwb_log_session_$s_count");
+#
+#remove_active_session($s_count);
+#
+#sub session_active {
+#	$session_count = shift;
+#
+#	my @lines = `cat $active_session_file`;
+#	foreach my $l (@lines) {
+#		chomp $l;
+#		if ($l eq $session_count) {
+#			return 1;
+#		}
+#	}
+#	return 0;
+#}
+#
+#sub remove_active_session {
+#	$session_count = shift;
+#
+#	my @lines = `cat $active_session_file`;
+#	my $newfile;
+#	foreach my $l (@lines) {
+#		chomp $l;
+#		if ($l eq $session_count) {
+#			next;
+#		}
+#		else {
+#			$newfile .= $l . "\n";
+#		}
+#	}
+#	system("echo '$newfile' > $active_session_file");
+#}
