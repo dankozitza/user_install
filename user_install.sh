@@ -44,51 +44,53 @@ find etc/ -maxdepth 1 -mindepth 1 -exec cp -r {} /etc/ \;
 #
 ###
 
-### virtualboxclient setup ###
+### virtualbox guest setup ###
 #
 #pacman --noconfirm -S virtualbox-guest-modules
 #pacman --noconfirm -S virtualbox-guest-utils
 #
 #modprobe -a vboxguest vboxsf vboxvideo
-#cp extra/virtualboxclient.conf /etc/modules-load.d/
+#cp extra/virtualboxguest.conf /etc/modules-load.d/
 #cp extra/mount_vboxshared.service /etc/systemd/system/
 #systemd start mount_vboxshared.service
 #
+#systemctl daemon-reload
 #systemctl enable vboxservice
 #
 ###
 
-# ### program download+installation ***
-# #
-# echo "\n!--- Now going to install a few programs ---!\n"
-# sleep 2
-# 
-# pacman --noconfirm -S vim
-# pacman --noconfirm -S wget
-# pacman --noconfirm -S openbox
-# pacman --noconfirm -S xorg
-# pacman --noconfirm -S xorg-xinit
-# pacman --noconfirm -S xfce4-terminal
-# ##pacman --noconfirm -S xfce4
-# ###pacman --noconfirm -S git
-# ###pacman --noconfirm -S go
-# ##pacman --noconfirm -S mpc
-# ##pacman --noconfirm -S ncmpcpp
-# ##pacman --noconfirm -S alsa-utils
-# pacman --noconfirm -S htop
-# #pacman --noconfirm -S surf
-# pacman --noconfirm -S dwb
-# ##pacman --noconfirm -S gst-plugins-good
-# ###pacman --noconfirm -S dmenu
-# ###pacman --noconfirm -S figlet
-# ##pacman --noconfirm -S flashplugin
-# #pacman --noconfirm -S transmission-gtk
-# ###pacman --noconfirm -S scrot
-# ###pacman --noconfirm -S gimp
-# ###pacman --noconfirm -S arandr
-# ###pacman --noconfirm -S rsnapshot
-# #
-# ###
+### program download+installation ***
+#
+#echo "\n!--- Now going to install a few programs ---!\n"
+#sleep 2
+#
+#pacman --noconfirm -S vim
+#pacman --noconfirm -S wget
+#pacman --noconfirm -S rsnapshot
+#pacman --noconfirm -S openbox
+#pacman --noconfirm -S xorg
+#pacman --noconfirm -S xorg-xinit
+#pacman --noconfirm -S xfce4-terminal
+#pacman --noconfirm -S xfce4
+#pacman --noconfirm -S arandr
+#pacman --noconfirm -S git
+#pacman --noconfirm -S go
+#pacman --noconfirm -S mpc
+#pacman --noconfirm -S ncmpcpp
+#pacman --noconfirm -S alsa-utils
+#pacman --noconfirm -S htop
+#pacman --noconfirm -S surf
+#pacman --noconfirm -S dwb
+#pacman --noconfirm -S gst-plugins-good
+#pacman --noconfirm -S dmenu
+#pacman --noconfirm -S figlet
+#pacman --noconfirm -S flashplugin
+#pacman --noconfirm -S transmission-gtk
+#pacman --noconfirm -S scrot
+#pacman --noconfirm -S gimp
+#pacman --noconfirm -S epdfview
+#
+###
 
 ### user setup ###
 #
@@ -107,12 +109,10 @@ sleep 2
 
 # copy config files
 find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
-#cp -R userhome/* $USER_HOME
 
 openbox --reconfigure
 
 #mkdir -p $USER_HOME/go/src/github.com/dankozitza
-#mkdir $USER_HOME/go/bin
 #mkdir $USER_HOME/go/pkg
 
 # make sure user owns all their files
@@ -122,18 +122,15 @@ chown -R $USER_NAME $USER_HOME
 
 echo "\n!--- Done ---!\n"
 
-### Virtualbox section ###
+### virtualbox host setup ###
 #
 #pacman --noconfirm -S virtualbox
+#pacman --noconfirm -S qt4
+#pacman --noconfirm -S virtualbox-guest-iso
+#
 #depmod -a
 #modprobe vboxdrv
 #modprobe vboxpci
-#cp virtualbox.conf /etc/modules-load.d/virtualbox.conf
-#
-#pacman --noconfirm -S qt4
-#
-##pacman --noconfirm -S virtualbox-guest-iso
-#
-## make default user
+#cp extra/virtualboxhost.conf /etc/modules-load.d/
 #
 ###
