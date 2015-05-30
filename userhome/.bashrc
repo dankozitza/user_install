@@ -14,7 +14,6 @@ alias cpueat="while true; do date; ps auxf | awk '{if(\$8==\"D\") print $0;}\'; 
 alias save_vms="echo 'shutting down running vms'; VBoxManage list runningvms | sed -r 's/\"//' | sed -r 's/\".*$//' | xargs -i VBoxManage controlvm '{}' savestate"
 
 function off {
-
 	save_vms
 	sleep 1
 
@@ -31,10 +30,6 @@ function off {
 		echo
 		su -c 'shutdown'
 	fi
-
-	# alias offon="save_vms; reboot"
 }
-
-alias check="echo $UID"
 
 #PS1='[\u@\h \W]\$ '

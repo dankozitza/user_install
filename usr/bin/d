@@ -10,7 +10,7 @@ if (!$url) {
    $url = $search;
 }
 
-if (@ARGV[1] || ($url !~ /\./ && $url ne "localhost")) {
+if (@ARGV[1] || ($url !~ /\./ && $url !~ /^localhost/)) {
    $url = $search . "/?q=";
    foreach my $arg (@ARGV) {
       $arg =~ s/\s/+/g;
