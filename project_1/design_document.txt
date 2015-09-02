@@ -1,4 +1,4 @@
-Project 1 design document
+Project 1 Design Document
 Created by Daniel Kozitza
 CSCI 301 section 2
 Due 09/02/2015

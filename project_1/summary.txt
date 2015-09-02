@@ -1,0 +1,10 @@
+Project 1 Summary
+Created by Daniel Kozitza
+CSCI 301 section 2
+Due 09/02/2015
+
+In this project i decided to use maps with char keys and int values. I know
+there are other ways i could have gone about this but for me this was the
+most straightforward way. It was difficult for me to explain in words how it
+works.
+
