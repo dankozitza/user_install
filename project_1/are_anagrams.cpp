@@ -87,7 +87,6 @@ bool sets_equal(std::map<char, int> set_1, std::map<char, int> set_2) {
 }
 
 int main() {
-
 	std::map<char, int> first_set;
 	std::map<char, int> second_set;
 	define_set(first_set);

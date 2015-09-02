@@ -8,3 +8,9 @@ there are other ways i could have gone about this but for me this was the
 most straightforward way. It was difficult for me to explain in words how it
 works.
 
+In both cases where i use assert it's checking that the number of characters
+entered by the user is more than zero and less than 61. Instead of having
+the program explode i would rather have it explain why the input was invalid
+and prompt for input again. This means i would need the get_set function to
+return a bool to indicate whether it worked or not.
+
