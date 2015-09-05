@@ -15,33 +15,38 @@
 
 using namespace std;
 
-const int MaxSets = 100;
-const int MaxNs = 100;
-
-//void set_union(char s[])
+const int MAX_SETS = 100;
 
 void print_help() {
 	cout << "help\n";
 }
 
 void print_nonempty_sets(Set sets[]) const {
-	bool not_one = true;
-	for (int i = 0; i < MaxSets; i++) {
+	bool none = true;
+	for (int i = 0; i < MAX_SETS; i++) {
 		if (sets[i].size() > 0) {
-			not_one = false;
+			none = false;
 			cout << "set number " << i << " has ";
 			cout << sets[i].size() << "elements\n";
 		}
 	}
-	if (not_one) {
+	if (none) {
 		cout << "all the sets are empty\n";
 	}
 }
 
-void 
+void print_present(const Set& set, int v) {
+	for (int i = 0; i < set.size(); i++) {
+		if (set[i] == v) {
+			cout << "yes\n";
+			return;
+		}
+	}
+	cout << "no\n";
+}
 
 int main() {
-//	Set sets[MaxSets];
+//	Set sets[MAX_SETS];
 	char cmd = 'h';
 	bool quit = false;
 	int v, n, n1, n2, n3;
@@ -80,6 +85,10 @@ int main() {
 		case 'w':
 			cin >> n;
 			cout << sets[n] << endl;
+			break;
+		case 'e':
+			cin >> v >> n;
+			sets[n].remove(v);
 			break;
 		case 'q':
 			quit = true;
