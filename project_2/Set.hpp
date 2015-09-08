@@ -5,29 +5,42 @@
 //
 // Project 2
 // Created by Daniel Kozitza
+// account number 10540413
 // CSCI 301 section 2
 // Due 09/11/2015
 //
 
-typdef int Item;
+#ifndef _SET
+#define _SET
+
+#include <cstdlib>  // provides size_t
+#include <iostream> // provides ostream
+
+using namespace std;
 
 class Set {
 
-	private:
-		Item   items[MAX_ITEMS];
-		size_t size;
-
 	public:
+		typedef int Item;
+		static const size_t MAX_ITEMS = 100;
+
 		Set();
 		Set(const Set &s);
 		void clear();
-		void insert(const Item &i);
-		void remove(const Item &i);
-		void operator+=(const Set &addend);
-		//Set operator+(const Set &s1, const Set &s2);
-		//const Set operator+(const Set &other);
-		friend ostream& operator<<(ostream &out_s, const Set &s);
+		bool found(const Item &it);
+		void insert(const Item &it);
+		void remove(const Item &it);
+		void operator+=(const Set &s2);
+		Set operator+(const Set &s2);
+		void operator-=(const Set &s2);
+		Set operator-(const Set &s2);
 		size_t size();
-		bool find(Item i);
+		friend ostream& operator<<(ostream &out_s, const Set &s);
 
-}
+	private:
+		Item   items[MAX_ITEMS];
+		size_t i_size;
+
+};
+
+#endif
