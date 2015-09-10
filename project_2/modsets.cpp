@@ -88,7 +88,7 @@ int main() {
 			break;
 		case 'm':
 			cin >> n1 >> n2;
-			sets[n2] = sets[n1];
+			sets[n2] = Set(sets[n1]);
 			break;
 		case 's':
 			cin >> n;
