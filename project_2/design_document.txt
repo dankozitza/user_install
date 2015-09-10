@@ -2,7 +2,7 @@ Project 2 Design Document
 Created by Daniel Kozitza
 account number 10540413
 CSCI 301 section 2
-Due 09/02/2015
+Due 09/11/2015
 
 Introduction:
 
