@@ -1,0 +1,33 @@
+Project 2 Design Document
+Created by Daniel Kozitza
+account number 10540413
+CSCI 301 section 2
+Due 09/02/2015
+
+Introduction:
+
+	My program, modsets, is a user interface that allows the user to modify
+a number of Set objects in various ways. The Set object is an unordered list
+of unique items. Meaning individual items may only appear in the set once.
+
+Data Structures:
+
+   The program uses an array of Sets in modsets.cpp and an array of Items in
+Set.hpp. The array in modsets.cpp is used to hold a number of Set objects that
+the user can modify by identifying them by their index in the array. The
+array in Set.hpp is only accessed/modified by the Set object's member
+functions. It is used to Hold all of the Items in the Set.
+
+Functions:
+
+   There are two functions in modsets.cpp: one to print a list of the populated
+Sets and one to print the result of the Set::found function. There are twelve
+functions in Set.hpp: two constructors, a function to re-initialize the set, a
+function to get the size of the set, a function to search for an item, functions
+to insert and remove items, two union operators, two intersect operators, and a
+friend function overloading the '<<' operator.
+
+The Main Program:
+
+   The main program is a user interactive loop that prompts the user for
+commands. Each command allows the user to interact with the Sets.
