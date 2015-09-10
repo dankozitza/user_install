@@ -6,7 +6,7 @@ Due 09/11/2015
 
 Introduction:
 
-	My program, modsets, is a user interface that allows the user to modify
+   My program, modsets, is a user interface that allows the user to modify
 a number of Set objects in various ways. The Set object is an unordered list
 of unique items. Meaning individual items may only appear in the set once.
 
@@ -31,3 +31,4 @@ The Main Program:
 
    The main program is a user interactive loop that prompts the user for
 commands. Each command allows the user to interact with the Sets.
+
