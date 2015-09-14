@@ -2,7 +2,7 @@
 // even_backwards.cpp
 //
 // A program that takes a positive even integer and outputs the even digits
-// backwards
+// backwards.
 //
 // Project 3
 // Created by Daniel Kozitza
