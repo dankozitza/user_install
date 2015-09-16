@@ -1,7 +1,7 @@
 //
 // even_backwards.cpp
 //
-// A program that takes a positive even integer and outputs the even digits
+// A program that takes a positive integer and outputs the even digits
 // backwards.
 //
 // Project 3
@@ -16,6 +16,14 @@
 
 using namespace std;
 
+// char_to_int
+//
+// Converts a positive integer (0-9) in the char variable c to it's integer
+// equivalent.
+//
+// Pre-condition: A positive integer (0-9) in variable c.
+// Post-condition: Returns an integer equal to the number in c.
+//
 int char_to_int(char c) {
 	// explode if c is not a number
 	assert(c >= 48 && c <= 57);
@@ -23,36 +31,34 @@ int char_to_int(char c) {
 	return c - 48;
 }
 
-void even_backwards(int n) {
+// even_backwards
+//
+// Writes to the given output stream the even digits in n from right to left.
+//
+// Pre-condition: An out stream and a positive integer n.
+// Post-condition: The even numbers of n written backwards to the out stream.
+//
+void even_backwards(ostream &out, int n) {
 	if (n < 10) {
-		cout << "here\n";
-		if (n < 1)
-			return;
 		if (n % 2 == 0)
-			cout << n;
-		else
-			return;
+			out << n;
+		return;
 	}
-	even_backwards(n / 10);
+	// if the remainder of n / 10 is even print it
 	if ((n % 10) % 2 == 0)
-		cout << n % 10;
+		out << n % 10;
+	even_backwards(out, n / 10);
 	return;
 }
 
 int main(int argc, char *argv[]) {
 	assert(argc == 2);
 
-	int n = 0, i = 0;
-	while (argv[1][i] != '\0') {
+	int n = 0;
+	for (int i = 0; argv[1][i] != '\0'; i++) {
 		n = n * 10 + char_to_int(argv[1][i]);
-		i++;
 	}
-
-	cout << "got integer: `" << n << "`\n";
-
-	cout << "even_backwards: `";
-	even_backwards(n);
-	cout << "`\n";
+	even_backwards(cout, n);
 
 	return 0;
 }
