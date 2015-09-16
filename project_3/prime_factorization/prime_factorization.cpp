@@ -26,8 +26,9 @@ using namespace std;
 int char_to_int(char c) {
 	// explode if c is not a number
 	assert(c >= '0' && c <= '9');
-	// convert the char in c to an int by subtracting 48
-	return c - 48;
+	// convert the char in c to an int by subtracting the
+	// decimal of '0' since '0' is the lowest in the range
+	return c - '0';
 }
 
 int main(int argc, char* argv[]) {
