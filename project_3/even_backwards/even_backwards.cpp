@@ -53,13 +53,15 @@ void even_backwards(ostream &out, int n) {
 }
 
 int main(int argc, char *argv[]) {
-	assert(argc == 2);
+	if (argc != 2) {
+		cout << "USAGE: " << argv[0] << " INTEGER\n";
+		return 0;
+	}
 
 	int n = 0;
-	for (int i = 0; argv[1][i] != '\0'; i++) {
+	for (int i = 0; argv[1][i] != '\0'; i++)
 		n = n * 10 + char_to_int(argv[1][i]);
-	}
-	even_backwards(cout, n);
 
+	even_backwards(cout, n);
 	return 0;
 }
