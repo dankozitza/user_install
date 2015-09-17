@@ -43,11 +43,12 @@ void even_backwards(ostream &out, int n) {
 	if (n < 10) {
 		if (n % 2 == 0)
 			out << n;
+		cout << endl;
 		return;
 	}
 	// if the remainder of n / 10 is even print it
 	if ((n % 10) % 2 == 0)
-		out << n % 10;
+		out << n % 10 << " ";
 	even_backwards(out, n / 10);
 	return;
 }
