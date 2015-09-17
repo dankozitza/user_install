@@ -12,7 +12,6 @@
 //
 
 #include <iostream>
-#include <cassert>
 
 using namespace std;
 
@@ -26,7 +25,10 @@ using namespace std;
 //
 int char_to_int(char c) {
 	// explode if c is not a number
-	assert(c >= '0' && c <= '9');
+	if (c < '0' || c > '9') {
+		cout << "invalid input! positive integers only.\n";
+		throw;
+	}
 	// convert the char in c to an int by subtracting the
 	// decimal of '0' since '0' is the lowest in the range
 	return c - '0';
@@ -51,6 +53,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	int n = 0, s, d;
+
+	// get n, s, and d from the command line arguments
 	for (int i = 0; argv[1][i] != '\0'; i++)
 		n = n * 10 + char_to_int(argv[1][i]);
 	for (int i = 0; argv[2][i] != '\0'; i++)

@@ -12,7 +12,6 @@
 //
 
 #include <iostream>
-#include <cassert>
 
 using namespace std;
 
@@ -26,7 +25,10 @@ using namespace std;
 //
 int char_to_int(char c) {
 	// explode if c is not a number
-	assert(c >= '0' && c <= '9');
+	if (c < '0' || c > '9') {
+		cout << "invalid input! positive even integers only.\n";
+		throw;
+	}
 	// convert the char in c to an int by subtracting the
 	// decimal of '0' since '0' is the lowest in the range
 	return c - '0';
