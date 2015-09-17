@@ -44,6 +44,20 @@ int char_to_int(char c) {
 // Post-condition: Instructions written to stdout.
 //
 void hanoi(int n, int src, int dest) {
+	if (n == 0) {
+		cout << "No disks!\n";
+		return;
+	}
+	if (n == 1) {
+		cout << "Move disk from peg " << src << " to peg " << dest << ".\n";
+		return
+	}
+	else {
+		int other = 6 - src - dest;
+		hanoi(n-1, src, other);
+		cout << "Move disk from peg " << src << " to peg " << dest << ".\n";
+		hanoi(n-1, other, dest);
+	}
 }
 
 int main(int argc, char* argv[]) {
@@ -63,5 +77,8 @@ int main(int argc, char* argv[]) {
 		d = d * 10 + char_to_int(argv[3][i]);
 
 	cout << "got n: " << n << " s: " << s << " d: " << d << "\n";
+
+	hanoi(n, s, d);
+
 	return 0;
 }
