@@ -1,0 +1,10 @@
+// testing prime_factorization function
+
+kbum@wheatly ~/projects/user_install/project_3/prime_factorization
+$ ./prime_factorization.exe 5432
+2 2 2 7 97
+kbum@wheatly ~/projects/user_install/project_3/prime_factorization
+$ ./prime_factorization.exe 2
+2
+kbum@wheatly ~/projects/user_install/project_3/prime_factorization
+$ ./prime_factorization.exe 0
