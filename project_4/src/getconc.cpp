@@ -13,12 +13,13 @@
 
 #include <iostream>
 #include <fstream>
+#include "concordance.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 	ifstream ifs;
-	char word[9];
+	char word[concordance::WORD_MAX];
 
 	if (argc != 2) {
 		cout << "USAGE: " << argv[0] << " FILE\n";
@@ -38,17 +39,18 @@ int main(int argc, char *argv[]) {
 		// this loop takes one word from ifs
 		int index = 0;
 		while (97 <= c && c <= 122) {
-			// if the size has not exceeded add characters to word. otherwise just
-			// run through the rest of the letters in this word.
-			if (index < 8) {
+			// if the size has not exceeded max then add characters to word.
+			// otherwise just run through the rest of the letters in this word.
+			if (index < concordance::WORD_MAX - 1) {
 				word[index] = c;
 				word[index+1] = '\0';
 				index++;
 			}
-			else if (index == 8)
-				word[index] = '\0';
 
+			// this should break if eof happens
 			ifs.get(c);
+			cout << "`" << c << "`\n";
+			//cout << endl;
 			// convert again
 			if (65 <= c && c <= 91)
 				c += 32;

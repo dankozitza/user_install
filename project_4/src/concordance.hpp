@@ -22,24 +22,24 @@ using namespace std;
 class concordance {
 
 	public:
-		static const size_t ITEM_MAX = 9;
-		typedef char[ITEM_MAX] Item;
+		static const size_t WORD_MAX = 9;
+		typedef char Word[WORD_MAX];
 
 		concordance();
 		~concordance();
-		void   insert(const Item &it);
-		int    get_count(const Item &it);
+		void   insert(const Word &word);
+		int    get_count(const Word &word);
 		size_t length();
 		friend ostream& operator<<(ostream &out_s, const concordance &s);
 
 	private:
 		struct Node {
-			Item item;
+			Word item;
 			int count;
 			Node *next;
-		}
+		};
 		Node *first;
-		Node* get_node(const Item &it, Node* next_link);
+		Node* get_node(const Word &it, Node* next_link);
 
 };
 
