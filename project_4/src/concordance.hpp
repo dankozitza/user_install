@@ -15,31 +15,32 @@
 #ifndef _CONCORDANCE
 #define _CONCORDANCE
 
-#include <iostream> // provides ostream
+#include <iostream>
 
 using namespace std;
 
 class concordance {
 
 	public:
-		static const size_t WORD_MAX = 9;
-		typedef char Word[WORD_MAX];
+		static const size_t WORD_CAP = 9;
+		typedef char Word[WORD_CAP];
 
 		concordance();
 		~concordance();
-		void   insert(const Word &word);
+		void   insert(Word word);
 		int    get_count(const Word &word);
 		size_t length();
 		friend ostream& operator<<(ostream &out_s, const concordance &s);
 
 	private:
 		struct Node {
-			Word item;
+			Word word;
 			int count;
 			Node *next;
 		};
+
 		Node *first;
-		Node* get_node(const Word &it, Node* next_link);
+		Node* get_node(Word w, int cnt, Node* p);
 
 };
 

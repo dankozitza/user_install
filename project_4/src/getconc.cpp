@@ -13,13 +13,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include "concordance.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 	ifstream ifs;
-	char word[concordance::WORD_MAX];
+	concordance::Word word;
+	concordance conc;
 
 	if (argc != 2) {
 		cout << "USAGE: " << argv[0] << " FILE\n";
@@ -28,38 +30,47 @@ int main(int argc, char *argv[]) {
 
 	ifs.open(argv[1]);
 
+	int i;
+	char c;
 	while (!ifs.eof()) {
-		char c;
 		ifs.get(c);
 
 		// convert any upper case characters to lower case
-		if (65 <= c && c <= 91)
+		if ('A' <= c && c <= 'Z')
 			c += 32;
 
-		// this loop takes one word from ifs
-		int index = 0;
-		while (97 <= c && c <= 122) {
-			// if the size has not exceeded max then add characters to word.
-			// otherwise just run through the rest of the letters in this word.
-			if (index < concordance::WORD_MAX - 1) {
-				word[index] = c;
-				word[index+1] = '\0';
-				index++;
+		// this block takes one word from ifs
+		if ('a' <= c && c <= 'z') {
+			i = 0;
+			word[i] = c;
+			word[i+1] = '\0';
+			i++;
+		
+			while (!ifs.eof()) {
+				ifs.get(c);
+				// convert again
+				if ('A' <= c && c <= 'Z')
+					c += 32;
+
+				if (!('a' <= c && c <= 'z'))
+					break;
+
+				// if the size is not over capacity then add characters to word.
+				// otherwise just run through the rest of the letters in this word.
+				if (i < concordance::WORD_CAP - 1) {
+					word[i] = c;
+					word[i+1] = '\0';
+					i++;
+				}
 			}
 
-			// this should break if eof happens
-			ifs.get(c);
-			cout << "`" << c << "`\n";
-			//cout << endl;
-			// convert again
-			if (65 <= c && c <= 91)
-				c += 32;
-		}
-		if (index > 0) {
 			// word is ready to be placed in ADT
-			cout << "'" << word << "'";
+			//cout << "'" << word << "'";
+			conc.insert(word);
 		}
 	}
+
+	cout << conc;
 
 	return 0;
 }
