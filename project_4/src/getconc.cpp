@@ -70,6 +70,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	concordance::Word wrd = {'h', 'h', 'h', '\0', '\0', '\0', '\0', '\0'};
+	cout << "get_count(\"hhh\"): `" << conc.get_count(wrd) << "`\n";
+
 	cout << conc;
 
 	return 0;

@@ -28,7 +28,7 @@ class concordance {
 		concordance();
 		~concordance();
 		void   insert(Word word);
-		int    get_count(const Word &word);
+		int    get_count(Word word);
 		size_t length();
 		friend ostream& operator<<(ostream &out_s, const concordance &s);
 

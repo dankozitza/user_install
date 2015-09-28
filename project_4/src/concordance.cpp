@@ -1,9 +1,9 @@
 //
 // concordance.cpp
 //
-// ADT that stores an ordered linked list of Nodes. Each Node has an item (in
-// this case a word), a count (the number of times that item has been inserted),
-// and a pointer to the next Node.
+// ADT that stores an ordered linked list of Nodes. Each Node has a word, a
+// count (the number of times that item has been inserted), and a pointer to
+// the next Node.
 //
 // Project 4
 // Created by Daniel Kozitza
@@ -25,8 +25,7 @@ concordance::concordance() {
 }
 
 void concordance::insert(Word word) {
-	Node* p = first;
-	Node* pre = p;
+	Node* pre;
 	if (first == NULL || less_than(word, first->word)) {
 		first = get_node(word, 1, first);
 		return;
@@ -36,22 +35,17 @@ void concordance::insert(Word word) {
 		return;
 	}
 
-	while (p != NULL) {
-		cout << "comparing " << word << " and " << p->word << endl;
-		if (less_than(word, p->word)) {
-			cout << word << " is less than " << p->word << endl;
+	pre = first;
+	while (pre->next != NULL) {
+		if (less_than(word, pre->next->word)) {
 			pre->next = get_node(word, 1, pre->next);
 			return;
 		}
-		cout << "--- before equals with " << word << " and " << p->word << endl;
-		if (equals(word, p->word)) {
-			cout << word << " equals " << p->word << endl;
-			p->count++;
+		if (equals(word, pre->next->word)) {
+			pre->next->count++;
 			return;
 		}
-		cout << word << " is greater than " << p->word << endl;
-		pre = p;
-		p = p->next;
+		pre = pre->next;
 	}
 
 	// if word is the last alphabetically
@@ -59,7 +53,14 @@ void concordance::insert(Word word) {
 	pre->next = get_node(word, 1, NULL);
 }
 
-int concordance::get_count(const Word &word) {
+int concordance::get_count(Word word) {
+	Node* p = first;
+	while(p != NULL) {
+		if (equals(p->word, word))
+			return p->count;
+		p = p->next;
+	}
+	return 0;
 }
 
 size_t concordance::length() {
@@ -126,4 +127,3 @@ bool r_equals(const char a[], const char b[], int i) {
 
 	return false;
 }
-
