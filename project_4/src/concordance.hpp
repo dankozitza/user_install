@@ -19,10 +19,11 @@
 
 using namespace std;
 
+const size_t WORD_CAP = 9;
+
 class concordance {
 
 	public:
-		static const size_t WORD_CAP = 9;
 		typedef char Word[WORD_CAP];
 
 		concordance();

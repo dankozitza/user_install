@@ -85,6 +85,13 @@ int concordance::get_count(Word word) {
 // Post-condition: returns the length.
 //
 size_t concordance::length() {
+	Node* p = first;
+	size_t cnt = 0;
+	while (p != NULL) {
+		cnt++;
+		p = p->next;
+	}
+	return cnt;
 }
 
 // get_node
@@ -105,7 +112,7 @@ concordance::Node* concordance::get_node(Word w, int cnt, Node* p) {
 
 // ~concordance
 //
-// The destructor.
+// Delete all the nodes.
 //
 // Pre-condition: none
 // Post-condition: All memory returned.

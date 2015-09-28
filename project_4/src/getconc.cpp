@@ -1,9 +1,10 @@
 //
 //	getconc.cpp
 //
-
-
-
+// This program takes one filename as a command line argument and prints
+// a list of all the words found in it along with the number of times that
+// word appears.
+//
 // Project 4
 // Created by Daniel Kozitza
 // account number 10540413
@@ -13,10 +14,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <iomanip>
 #include "concordance.hpp"
 
 using namespace std;
+
+void testconc();
 
 int main(int argc, char *argv[]) {
 	ifstream ifs;
@@ -28,15 +30,10 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	cout << "`" << argv[1] << "`\n";
-	if (argv[1] == "TEST") {
-		concordance::Word wrd = {'h', 'h', 'h', '\0', '\0', '\0', '\0', '\0'};
-		conc.insert(wrd);
-		cout << "get_count(\"hhh\"): `" << conc.get_count(wrd) << "`\n";
+	// for testing concordance::get_count and concordance::length
+	if (argv[1][0] == 'Z') {
+		testconc();
 		return 0;
-	}
-	else {
-		cout << "got here\n";
 	}
 
 	ifs.open(argv[1]);
@@ -72,15 +69,13 @@ int main(int argc, char *argv[]) {
 
 				// if the size is not over capacity then add characters to word.
 				// otherwise just run through the rest of the letters in this word.
-				if (i < concordance::WORD_CAP - 1) {
+				if (i < WORD_CAP - 1) {
 					word[i] = c;
 					word[i+1] = '\0';
 					i++;
 				}
 			}
 
-			// word is ready to be placed in ADT
-			//cout << "'" << word << "'";
 			conc.insert(word);
 		}
 	}
@@ -88,4 +83,21 @@ int main(int argc, char *argv[]) {
 	cout << conc;
 
 	return 0;
+}
+
+void testconc() {
+	concordance conc;
+	cout << "---- Test Mode Activated  ----\n";
+	concordance::Word wrd = {'h', 'h', 'h', '\0', '\0', '\0', '\0', '\0'};
+	cout << "Word wrd = `" << wrd << "`\n";
+	cout << "length(): `" << conc.length() << "`\n";
+	cout << "get_count(wrd): `" << conc.get_count(wrd) << "`\n";
+	cout << "calling: `conc.insert(wrd);`\n";
+	conc.insert(wrd);
+	cout << "length(): `" << conc.length() << "`\n";
+	cout << "get_count(wrd): `" << conc.get_count(wrd) << "`\n";
+	cout << "calling: `conc.insert(wrd);`\n";
+	conc.insert(wrd);
+	cout << "length(): `" << conc.length() << "`\n";
+	cout << "get_count(wrd): `" << conc.get_count(wrd) << "`\n";
 }
