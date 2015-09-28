@@ -122,7 +122,6 @@ concordance::~concordance() {
 	while (first != NULL) {
 		tmp = first;
 		first = first->next;
-		cout << "deleting: " << tmp->word << endl;
 		delete tmp;
 	}
 }
