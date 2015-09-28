@@ -28,7 +28,22 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
+	cout << "`" << argv[1] << "`\n";
+	if (argv[1] == "TEST") {
+		concordance::Word wrd = {'h', 'h', 'h', '\0', '\0', '\0', '\0', '\0'};
+		conc.insert(wrd);
+		cout << "get_count(\"hhh\"): `" << conc.get_count(wrd) << "`\n";
+		return 0;
+	}
+	else {
+		cout << "got here\n";
+	}
+
 	ifs.open(argv[1]);
+	if (!ifs.is_open()) {
+		cout << "could not open file " << argv[1] << endl;
+		return 0;
+	}
 
 	int i;
 	char c;
@@ -69,9 +84,6 @@ int main(int argc, char *argv[]) {
 			conc.insert(word);
 		}
 	}
-
-	concordance::Word wrd = {'h', 'h', 'h', '\0', '\0', '\0', '\0', '\0'};
-	cout << "get_count(\"hhh\"): `" << conc.get_count(wrd) << "`\n";
 
 	cout << conc;
 

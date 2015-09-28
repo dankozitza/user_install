@@ -24,6 +24,13 @@ concordance::concordance() {
 	first = NULL;
 }
 
+// insert
+//
+// Inserts `word` into the list in it's appropriate place alphabetically.
+//
+// Pre-condition: A word.
+// Post-condition: That word inserted into the list.
+//
 void concordance::insert(Word word) {
 	Node* pre;
 	if (first == NULL || less_than(word, first->word)) {
@@ -35,6 +42,7 @@ void concordance::insert(Word word) {
 		return;
 	}
 
+	// if word is 2nd through 2nd to last
 	pre = first;
 	while (pre->next != NULL) {
 		if (less_than(word, pre->next->word)) {
@@ -49,10 +57,16 @@ void concordance::insert(Word word) {
 	}
 
 	// if word is the last alphabetically
-	cout << "it's last\n";
 	pre->next = get_node(word, 1, NULL);
 }
 
+// get_count
+//
+// Returns the number of times `word` appears.
+//
+// Pre-condition: A word.
+// Post-condition: Returns the count for that word.
+//
 int concordance::get_count(Word word) {
 	Node* p = first;
 	while(p != NULL) {
@@ -63,12 +77,23 @@ int concordance::get_count(Word word) {
 	return 0;
 }
 
+// length
+//
+// Returns the length of the list.
+//
+// Pre-condition: none
+// Post-condition: returns the length.
+//
 size_t concordance::length() {
 }
 
-concordance::~concordance() {
-}
-
+// get_node
+//
+// Tool used to create a new node.
+//
+// Pre-condition: a word w, it's count, and a pointer to next.
+// Post-condition: returns a pointer to a new node.
+//
 concordance::Node* concordance::get_node(Word w, int cnt, Node* p) {
 	Node* tmp = new Node;
 	for (int i = 0; i < WORD_CAP; i++)
@@ -78,6 +103,29 @@ concordance::Node* concordance::get_node(Word w, int cnt, Node* p) {
 	return tmp;
 }
 
+// ~concordance
+//
+// The destructor.
+//
+// Pre-condition: none
+// Post-condition: All memory returned.
+//
+concordance::~concordance() {
+	Node* tmp;
+	while (first != NULL) {
+		tmp = first;
+		first = first->next;
+		cout << "deleting: " << tmp->word << endl;
+		delete tmp;
+	}
+}
+
+// operator<<
+//
+// writes the list of word-count pairs to the `out_s` stream.
+//
+// Pre-condition: A concordance `s`.
+// Post-condition: That concordance written to `out_s`.
 ostream& operator<<(ostream &out_s, const concordance &s) {
 	concordance::Node* p = s.first;
 	out_s << "-------------------\n";
