@@ -10,8 +10,7 @@ Script started on September 29, 2015 05:49:48 PM CDT
 /export/home/cs301/cs301145/projects/csci301_4
 >
 
-// Test main, concordance::concordance, and concordance::operator<< on an empty
-// file/concordance.
+// Test main and concordance::operator<< on an empty file/concordance.
 
 >
 > cat emptyfile
@@ -51,7 +50,7 @@ test sentence in test file.
 // Test concordance::length and concordance::get_count.
 
 >
-> ./getconc
+> ./getconc Z
 ---- Test Mode Activated  ----
 Word wrd = `hhh`
 length(): `0`

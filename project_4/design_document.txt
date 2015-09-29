@@ -7,14 +7,12 @@ Due 09/30/2015
 Introduction:
 
    This program, getconc, takes one command line argument (a file name) and 
-outputs a concordance of it's contents along with the number of times each word 
-appears.
+outputs a concordance of it's contents.
 
 Data Structures:
 
    The program uses a linked list of Nodes. Each node has a word, count, and a 
-pointer to the next node. The Word type is actually a char array with capacity 
-9.
+pointer to the next node. The Word type is a char array with capacity of nine.
 
 Functions:
 
