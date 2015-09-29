@@ -4,4 +4,12 @@ account number 10540413
 CSCI 301 section 2
 Due 09/30/2015
 
-   In conclusion...
+	This program can read from any text file and generate a concordance 
+consisting of words with a maximum length of 8 characters. I decided to leave 
+all the file parsing code in the main rather than have a seperate function
+for it. It would probably be easier to read if there was a seperate function. 
+Another thing i would like to do would be to keep a size member and 
+increment/decrement it when necessary to avoid all the work in the 
+concordance::length function. I ended up messing around and writing
+recursive equals and less_than functions before i read the hints.
+
