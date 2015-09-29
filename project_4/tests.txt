@@ -1,0 +1,69 @@
+// Project 4 Tests
+// Created by Daniel Kozitza
+// account number 10540413
+// CSCI 301 section 2
+// Due 09/30/2015
+//
+
+Script started on September 29, 2015 05:49:48 PM CDT
+> pwd
+/export/home/cs301/cs301145/projects/csci301_4
+>
+
+// Test main, concordance::concordance, and concordance::operator<< on an empty
+// file/concordance.
+
+>
+> cat emptyfile
+>
+> ./getconc emptyfile
+-------------------
+|Word        Count|
+|-----------------|
+-------------------
+>
+
+// Test main, concordance::insert, concordance::get_node, and 
+// concordance::operator<<.
+
+>
+> cat testfile
+test sentence in test file.
+ For uSe in test only! examination examinator exam exams
+>
+> ./getconc testfile
+-------------------
+|Word        Count|
+|-----------------|
+|exam    |       1|
+|examinat|       2|
+|exams   |       1|
+|file    |       1|
+|for     |       1|
+|in      |       2|
+|only    |       1|
+|sentence|       1|
+|test    |       3|
+|use     |       1|
+-------------------
+>
+
+// Test concordance::length and concordance::get_count.
+
+>
+> ./getconc
+---- Test Mode Activated  ----
+Word wrd = `hhh`
+length(): `0`
+get_count(wrd): `0`
+calling: `conc.insert(wrd);`
+length(): `1`
+get_count(wrd): `1`
+calling: `conc.insert(wrd);`
+length(): `1`
+get_count(wrd): `2`
+>
+> exit
+exit
+
+script done on September 29, 2015 05:51:33 PM CDT
