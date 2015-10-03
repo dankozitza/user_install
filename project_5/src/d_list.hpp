@@ -1,7 +1,7 @@
 //
 // d_list.hpp
 //
-// ADT that stores an unordered linked list of Nodes. Each Node has an item, a
+// ADT that stores an unordered doubly-linked list. Each Node has an item, a
 // pointer to the next Node, and a pointer to the previous node.
 //
 // Project 5
