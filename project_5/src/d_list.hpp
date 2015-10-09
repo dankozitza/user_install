@@ -1,12 +1,12 @@
 //
 // d_list.hpp
 //
-// ADT that stores an unordered doubly-linked list. Each Node has an item, a
+// ADT that stores an unordered linked list of Nodes. Each Node has an item, a
 // pointer to the next Node, and a pointer to the previous node.
 //
 // Project 5
 // Created by Daniel Kozitza
-// account number 10540413
+// account number cs301145
 // CSCI 301 section 2
 // Due 10/12/2015
 //
@@ -21,26 +21,26 @@ using namespace std;
 class d_list {
 
    public:
-		typedef char Item;
+      typedef char Item;
 
       d_list();
       ~d_list();
-		void   empty();
+      void   empty();
       void   append(const Item& it);
-		void   remove_last();
-      friend ostream& operator<<(ostream &out_s, const d_list &s);
+      void   remove_last();
+      friend ostream& operator<<(ostream& out_s, const d_list& dl);
 
    private:
       struct Node {
          Item data;
          Node *next;
-			Node *back;
+         Node *back;
       };
 
       Node *first;
-		Node *last;
+      Node *last;
 
-      Node* get_node(Node* b, Item d, Node* n);
+      Node* get_node(Node* b, const Item& d, Node* n);
 };
 
 #endif
