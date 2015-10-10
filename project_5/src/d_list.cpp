@@ -67,7 +67,7 @@ void d_list::append(const Item& it) {
 // Pre-condition: a d_list object
 // Post-condition: that object without it's list item
 //
-void remove_last() {
+void d_list::remove_last() {
    Node* tmp;
    if (last != NULL) {
       tmp = last;
@@ -84,8 +84,8 @@ void remove_last() {
 // Pre-condition: a d_list object
 // Post-condition: that object written to out_s
 //
-friend ostream& operator<<(ostream& out_s, const d_list& dl) {
-   d_list::Node* tmp = source.first;
+ostream& operator<<(ostream& out_s, const d_list& dl) {
+   d_list::Node* tmp = dl.first;
    while (tmp != NULL) {
       out_s << tmp->data;
       tmp = tmp->next;
@@ -99,7 +99,7 @@ friend ostream& operator<<(ostream& out_s, const d_list& dl) {
 // Pre-condition: a back pointer b, an item d, and a next pointer n
 // Post-condition: a pointer to a new node
 //
-Node* d_list::get_node(Node* b, const Item& d, Node* n) {
+d_list::Node* d_list::get_node(Node* b, const Item& d, Node* n) {
    Node* tmp = new Node;
    tmp->back = b;
    tmp->data = d;

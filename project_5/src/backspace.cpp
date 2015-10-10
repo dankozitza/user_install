@@ -12,6 +12,7 @@
 // Due 10/12/2015
 //
 
+#include <iostream>
 #include "d_list.hpp"
 
 using namespace std;
@@ -35,5 +36,5 @@ int main() {
 
    cout << dl << endl;
 
-	return EXIT_SUCCESS;
+	return 0;
 }

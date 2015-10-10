@@ -15,7 +15,6 @@
 #define _D_LIST
 
 #include <iostream>
-
 using namespace std;
 
 class d_list {
@@ -25,7 +24,7 @@ class d_list {
 
       d_list();
       ~d_list();
-      void   empty();
+      bool   empty();
       void   append(const Item& it);
       void   remove_last();
       friend ostream& operator<<(ostream& out_s, const d_list& dl);
