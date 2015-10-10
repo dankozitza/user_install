@@ -72,7 +72,10 @@ void d_list::remove_last() {
    if (last != NULL) {
       tmp = last;
       last = last->back;
-      last->next = NULL;
+      if (last == NULL)
+         first = NULL;
+      else
+         last->next = NULL;
       delete tmp;
    }
 }
@@ -90,6 +93,7 @@ ostream& operator<<(ostream& out_s, const d_list& dl) {
       out_s << tmp->data;
       tmp = tmp->next;
    }
+   return out_s;
 }
 
 // get_node

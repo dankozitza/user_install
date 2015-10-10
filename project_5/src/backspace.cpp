@@ -19,22 +19,22 @@ using namespace std;
 
 int main() {
    d_list dl;
-	char c;
+   char c;
 
    cout << "enter string: ";
 
    cin.get(c);
-	while (c != '\n') {
+   while (c != '\n') {
 
       if (c != '#')
          dl.append(c);
       else
          dl.remove_last();
 
-		cin.get(c);
-	}
+      cin.get(c);
+   }
 
    cout << dl << endl;
 
-	return 0;
+   return 0;
 }
