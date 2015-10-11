@@ -1,0 +1,33 @@
+Project 5 User Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/12/2015
+
+Introduction:
+
+   This program, backspace, takes a string of characters and returns the result 
+if the '#' character were a backspace. For example the input 'woo#rd' would 
+produce the output 'word'. This can be useful for implementing a program that 
+requires text entry.
+
+Data Structures:
+
+   The program uses a doubly linked list to store the characters entered by the 
+user. Each node of the list has a character, a pointer to the previous node, 
+and a pointer to the next node.
+
+Functions:
+
+   The d_list class Has three main functions. The first, 'd_list::append', is 
+used to append characters to the end of the list. The second, 
+'d_list::remove_last', is used to remove the last character from the list. The 
+third, operator<<, is used to print all the characters in the d_list object.
+
+The Main Program:
+
+   The main program first creates a d_list object. It then promts the user to 
+enter a string of characters. It uses the cin.get function to retrieve the 
+characters from cin one at a time. If the character is a '#' remove_last is 
+called otherwise append is called. once the newline character has been reached 
+the d_list object is written to stdout.

@@ -1,0 +1,27 @@
+Project 5 User Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/12/2015
+
+This program, backspace, will promt the user for a string of characters. The # 
+character will act as a backspace character. The surviving characters are
+output to stdout.
+
+The source for this program can be found on csci2 in the directory:
+
+   /export/home/cs301/cs301145/projects/csci301_5/src
+
+From within that directory enter the following commands:
+
+Compile:
+
+   g++ -c backspace.cpp -c d_list.cpp
+
+Link:
+
+   g++ backspace.o d_list.o -o backspace
+
+Execute:
+
+   ./backspace
