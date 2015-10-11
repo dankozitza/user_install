@@ -65,7 +65,7 @@ void d_list::append(const Item& it) {
 // effect on an empty list.
 //
 // Pre-condition: a d_list object
-// Post-condition: that object without it's list item
+// Post-condition: that object without it's last item
 //
 void d_list::remove_last() {
    Node* tmp;
