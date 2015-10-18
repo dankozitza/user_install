@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include "pofxcalc.hpp"
+#include <limits>
 
 using namespace std;
 
@@ -34,13 +35,13 @@ int main(int argc, char *argv[]) {
 
    while (ifs >> calc) {
       cout << "Expression: `" << calc.expression() << "`\n";
-      cout << "Result: `" << calc << "`\n";
+      cout << "Result: `" << calc << "`\n\n";
    }
 
-   if (ifs.bad())
-      cout << "postfixcalc: I/O error while reading.\n";
-   else if (ifs.fail())
-      cout << "postfixcalc: Non-integer data encountered.\n";
+   if (ifs.bad()) {
+      cerr << "postfixcalc: I/O error while reading file: `";
+      cerr << argv[1] << "`\n";
+   }
 
    ifs.close();
    return 0;

@@ -16,7 +16,7 @@
 pofxcalc::pofxcalc() {
    expression_cnt = 0;
    valid = false;
-   expr = new(char);
+   expr = new char[EXPR_CAP];
 }
 
 pofxcalc::~pofxcalc() {
@@ -29,7 +29,9 @@ pofxcalc::~pofxcalc() {
 // operand to it's operators. If the token is an operator it stores the value
 // for later use.
 //
-void pofxcalc::evaluate(Token token) {
+// Returns false if an error is encountered. True otherwise.
+//
+bool pofxcalc::evaluate(Token token) {
    bool negative = false;
    valid = false;
 
@@ -44,10 +46,10 @@ void pofxcalc::evaluate(Token token) {
       Number n = 0;
       // convert token to integer
       for (int i = 0; token[i] != '\0'; i++) {
-         if (!(token[0] >= '0' && token[0] <= '9')) {
+         if (!(token[i] >= '0' && token[i] <= '9')) {
             cerr << "pofxcalc: In expression " << expression_cnt << ": ";
             cerr << "'" << token << "' is not a valid operand.\n";
-            return;
+            return false;
          }
          n = n * 10 + (token[i] - '0');
       }
@@ -67,7 +69,7 @@ void pofxcalc::evaluate(Token token) {
       if (stack.size() < 2) {
          cerr << "pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
-         return;
+         return false;
       }
 
       stack.push(stack.pop() + stack.pop());
@@ -81,7 +83,7 @@ void pofxcalc::evaluate(Token token) {
       if (stack.size() < 2) {
          cerr << "pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
-         return;
+         return false;
       }
 
       Number right_val = stack.pop();
@@ -96,7 +98,7 @@ void pofxcalc::evaluate(Token token) {
       if (stack.size() < 2) {
          cerr << "pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
-         return;
+         return false;
       }
 
       stack.push(stack.pop() * stack.pop());
@@ -111,7 +113,7 @@ void pofxcalc::evaluate(Token token) {
       if (stack.size() < 2) {
          cerr << "pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
-         return;
+         return false;
       }
 
       Number right_val = stack.pop();
@@ -121,6 +123,8 @@ void pofxcalc::evaluate(Token token) {
          valid = true;
       }
    }
+
+   return true;
 }
 
 // operator>>
@@ -167,7 +171,8 @@ istream& operator>>(istream& is, pofxcalc& calc) {
          }
          else if (last != ' ' && last != '	') {
             // if c is a space but last is not then the token is done
-            calc.evaluate(token);
+            if (!calc.evaluate(token))
+               parsing_err = true;
             tsize = 0;
          }
       }

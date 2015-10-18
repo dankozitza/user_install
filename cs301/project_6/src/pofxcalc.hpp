@@ -21,6 +21,7 @@ using namespace std;
 
 // this may need to be 9. a long int cannot hold all 10 digit numbers
 const size_t TOKEN_CAP = 10;
+const size_t EXPR_CAP = 100;
 
 class pofxcalc {
    private:
@@ -29,13 +30,14 @@ class pofxcalc {
       Stack stack;
       int expression_cnt;
       bool valid;
-      char* expr; // do i need new and delete?
+      char* expr;
+
+      bool evaluate(Token token);
 
    public:
 
       pofxcalc();
       ~pofxcalc();
-      void evaluate(Token token);
       char* expression();
 
       friend istream& operator>>(istream& is, pofxcalc& c); 

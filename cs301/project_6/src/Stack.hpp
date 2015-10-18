@@ -21,7 +21,7 @@ using namespace std;
 class Stack {
    public:
       typedef long int Item;
-      static const size_t STACK_CAP = 10;
+      static const size_t STACK_CAP = 13;
 
       Stack();
       size_t size();
