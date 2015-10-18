@@ -16,7 +16,7 @@
 pofxcalc::pofxcalc() {
    expression_cnt = 0;
    valid = false;
-   expr = NULL;
+   expr = new(char);
 }
 
 pofxcalc::~pofxcalc() {
@@ -136,8 +136,6 @@ istream& operator>>(istream& is, pofxcalc& calc) {
    calc.expression_cnt++;
    calc.stack.clear();
    calc.valid = false;
-
-   calc.expr = new(char);
    calc.expr[0] = '\0';
 
    token[0] = '\0';
@@ -147,6 +145,13 @@ istream& operator>>(istream& is, pofxcalc& calc) {
 
       if (!parsing_err) {
          if (c != ' ' && c != '	') {
+
+            // add a space before the new token if it's not the first token
+            if (tsize == 0 && esize != 0) {
+               calc.expr[esize++] = ' ';
+               calc.expr[esize] = '\0';
+            }
+
             if (tsize < TOKEN_CAP - 1) {
                token[tsize++] = c;
                token[tsize] = '\0';
@@ -162,12 +167,6 @@ istream& operator>>(istream& is, pofxcalc& calc) {
          }
          else if (last != ' ' && last != '	') {
             // if c is a space but last is not then the token is done
-
-            // if there are trailing spaces this will add a trailing space to
-            // calc.expr
-            calc.expr[esize++] = ' ';
-            calc.expr[esize] = '\0';
-
             calc.evaluate(token);
             tsize = 0;
          }
