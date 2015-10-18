@@ -30,10 +30,13 @@ class pofxcalc {
       Stack stack;
       int expression_cnt;
       bool valid;
+      char* expr;
 
    public:
 
       pofxcalc();
+      void evaluate(Token token);
+      char* expression();
 
       friend istream& operator>>(istream& is, calc& c); 
       friend ostream& operator<<(ostream& os, const calc& c);

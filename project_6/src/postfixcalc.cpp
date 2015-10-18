@@ -32,10 +32,18 @@ int main(int argc, char *argv[]) {
       return 0;
    }
 
-   while (ifs.peek() != EOF) {
-      ifs >> calc;
-      cout << calc;
+   while (ifs >> calc) {
+      cout << "Expression: `" << calc.expression() << "`\n";
+      cout << "Result: `" << calc << "`\n";
    }
+
+
+   if (file.bad())
+      std::cout << "I/O error while reading\n";
+   else if (file.eof())
+      std::cout << "End of file reached successfully\n";
+   else if (file.fail())
+      std::cout << "Non-integer data encountered\n";
 
    ifs.close();
    return 0;
