@@ -10,10 +10,11 @@
 // Due 10/21/2015
 //
 
-#ifndef _STACK
-#define _STACK
+#ifndef _S_STACK
+#define _S_STACK
 
 #include <cassert>
+#include <cstdlib>
 
 using namespace std;
 
@@ -31,6 +32,6 @@ class Stack {
    private:
       Item items[STACK_CAP];
       size_t s_size;
-}
+};
 
 #endif

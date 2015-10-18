@@ -14,7 +14,6 @@
 #ifndef _POFXCALC
 #define _POFXCALC
 
-#include <fstream>
 #include <iostream>
 #include "Stack.hpp"
 
@@ -30,16 +29,17 @@ class pofxcalc {
       Stack stack;
       int expression_cnt;
       bool valid;
-      char* expr;
+      char* expr; // do i need new and delete?
 
    public:
 
       pofxcalc();
+      ~pofxcalc();
       void evaluate(Token token);
       char* expression();
 
-      friend istream& operator>>(istream& is, calc& c); 
-      friend ostream& operator<<(ostream& os, const calc& c);
-}
+      friend istream& operator>>(istream& is, pofxcalc& c); 
+      friend ostream& operator<<(ostream& os, pofxcalc& c);
+};
 
 #endif

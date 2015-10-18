@@ -16,6 +16,11 @@
 pofxcalc::pofxcalc() {
    expression_cnt = 0;
    valid = false;
+   expr = NULL;
+}
+
+pofxcalc::~pofxcalc() {
+   delete expr;
 }
 
 // evaluate
@@ -25,19 +30,31 @@ pofxcalc::pofxcalc() {
 // for later use.
 //
 void pofxcalc::evaluate(Token token) {
+   bool negative = false;
    valid = false;
-   if (token[0] >= '0' || token[0] <= '9') {
+
+   // handle the negative numbers
+   if (token[0] == '-' && token[1] >= '0' && token[1] <= '9') {
+      negative = true;
+      token[0] = '0';
+   }
+
+   if (token[0] >= '0' && token[0] <= '9') {
       // token is a digit
-      Number n;
+      Number n = 0;
       // convert token to integer
       for (int i = 0; token[i] != '\0'; i++) {
-         if (!(token[0] >= '0' || token[0] <= '9')) {
+         if (!(token[0] >= '0' && token[0] <= '9')) {
             cerr << "pofxcalc: In expression " << expression_cnt << ": ";
             cerr << "'" << token << "' is not a valid operand.\n";
             return;
          }
-         n = n * 10 + atoi(token[i]);
+         n = n * 10 + (token[i] - '0');
       }
+
+      if (negative)
+         n = n * -1;
+
       stack.push(n);
    }
    else if (token[1] != '\0') {
@@ -112,13 +129,15 @@ void pofxcalc::evaluate(Token token) {
 //
 istream& operator>>(istream& is, pofxcalc& calc) {
    char c, last = ' ';
-   Token token;
+   pofxcalc::Token token;
    int tsize = 0, esize = 0;
    bool parsing_err = false;
 
    calc.expression_cnt++;
    calc.stack.clear();
    calc.valid = false;
+
+   calc.expr = new(char);
    calc.expr[0] = '\0';
 
    token[0] = '\0';
@@ -138,7 +157,7 @@ istream& operator>>(istream& is, pofxcalc& calc) {
             else {
                cerr << "pofxcalc: In expresion " << calc.expression_cnt;
                cerr << ": Token '" << token << "' excedes token capacity.\n";
-               parsing_error = true;
+               parsing_err = true;
             }
          }
          else if (last != ' ' && last != '	') {
@@ -162,7 +181,8 @@ istream& operator>>(istream& is, pofxcalc& calc) {
    if (token[0] == '\0') {
       calc.expression_cnt--;
    }
-   else if (!parsing_err) {
+   // if tsize is 0 then this token was already evaluated
+   else if (!parsing_err && tsize != 0) {
       // evaluate last token
       calc.evaluate(token);
    }
@@ -182,12 +202,13 @@ char* pofxcalc::expression() {
 //
 // Checks that the result is valid then writes it to ostream.
 //
-ostream & operator<<(ostream& os, const pofxcalc& calc) {
+ostream & operator<<(ostream& os, pofxcalc& calc) {
    if (!calc.valid) {
       os << "invalid expression";
    }
    else {
-      pofxcalc::Number tmp = calc.stack.pop();
+      pofxcalc::Number tmp;
+      tmp = calc.stack.pop();
       os << tmp;
       calc.stack.push(tmp);
    }

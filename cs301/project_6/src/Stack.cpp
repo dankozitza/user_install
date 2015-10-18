@@ -10,6 +10,8 @@
 // Due 10/21/2015
 //
 
+#include "Stack.hpp"
+
 Stack::Stack() {
    s_size = 0;
 }
@@ -24,7 +26,7 @@ void Stack::push(const Item& it) {
    items[s_size++] = it;
 }
 
-Item Stack::pop() {
+Stack::Item Stack::pop() {
    return items[--s_size];
 }
 

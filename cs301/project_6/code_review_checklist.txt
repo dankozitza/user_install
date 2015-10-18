@@ -1,0 +1,27 @@
+Code Review Checklist
+
+program name: postfixcalc
+program number: 6
+
+legend:
+   x    - no defects found
+   #    - # defects found
+
+defects found | defects found to date
+       []              []
+
+general:
+[x][x] Verify all the functions in the design are coded.
+[1][x] Verify include statements are correct.
+[x][x] Check variable and parameter initialization.
+[x][x] Check function call formats.
+[x][x] Check name and spelling use.
+[x][x] Check that pointers are initialized to NULL.
+[x][x] Check that pointers are always deleted after use of new.
+[1][x] Check output format.
+[x][x] Line-by-line syntax check. (ie: semicolons, << and >> operators, general)
+[x][x] Ensure the code conforms to the coding standards.
+[x][x] Verify files are opened, read, and closed with proper error handling.
+[x][x] Overall scan of the program.
+
+total defects found: [2]

@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
    ifs.open(argv[1]);
    if (!ifs.is_open()) {
-      cout << "could not open file `" << argv[1] << "`\n";
+      cout << "postfixcalc: Could not open file `" << argv[1] << "`.\n";
       return 0;
    }
 
@@ -37,13 +37,10 @@ int main(int argc, char *argv[]) {
       cout << "Result: `" << calc << "`\n";
    }
 
-
-   if (file.bad())
-      std::cout << "I/O error while reading\n";
-   else if (file.eof())
-      std::cout << "End of file reached successfully\n";
-   else if (file.fail())
-      std::cout << "Non-integer data encountered\n";
+   if (ifs.bad())
+      cout << "postfixcalc: I/O error while reading.\n";
+   else if (ifs.fail())
+      cout << "postfixcalc: Non-integer data encountered.\n";
 
    ifs.close();
    return 0;
