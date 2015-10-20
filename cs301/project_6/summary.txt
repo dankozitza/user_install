@@ -1,4 +1,4 @@
-Project 6 Design Document
+Project 6 Summary
 Created by Daniel Kozitza
 account number cs301145
 CSCI 301 section 2
