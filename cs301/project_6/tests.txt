@@ -1,0 +1,83 @@
+Project 6 Tests
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/21/2015
+
+csci2>
+csci2>pwd
+/export/home/cs301/cs301145/projects/csci301_6
+csci2>
+
+Testing empty file.
+
+csci2>
+csci2>cat empty_file_test
+csci2>
+csci2>./postfixcalc empty_file_test
+csci2>
+
+Testing Pofxcalc::operator>> and Pofxcalc::evaluate on invalid tokens.
+
+csci2>
+csci2>cat invalid_tokens_test
+t
+
+2147483647
+tl
+csci2>
+csci2>./postfixcalc invalid_tokens_test
+Pofxcalc: In expression 1: 't' is not a valid operator.
+Expression: `t`
+Result: `invalid expression`
+
+Expression: ``
+Result: `invalid expression`
+
+Pofxcalc: In expresion 2: Token '214748364' excedes token capacity.
+Expression: `214748364`
+Result: `invalid expression`
+
+Pofxcalc: In expression 3: 'tl' is not a valid operator.
+Expression: `tl`
+Result: `invalid expression`
+
+csci2>
+
+Testing expressions that use each operator individually, negative numbers,
+extra spaces/tabs before, between, and after tokens, and nested equations.
+
+csci2>
+csci2>cat valid_expressions_test
+1 2 +
+1 2 -
+1 2 *
+1 2 /
+-5000 5 *
+   999         1    +
+9 5 2 4 + - 2 * *
+csci2>
+csci2>./postfixcalc valid_expressions_test
+Expression: `1 2 +`
+Result: `3`
+
+Expression: `1 2 -`
+Result: `-1`
+
+Expression: `1 2 *`
+Result: `2`
+
+Expression: `1 2 /`
+Result: `0`
+
+Expression: `-5000 5 *`
+Result: `-25000`
+
+Expression: `999 1 +`
+Result: `1000`
+
+Expression: `9 5 2 4 + - 2 * *`
+Result: `-18`
+
+csci2>
+csci2>
