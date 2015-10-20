@@ -1,0 +1,36 @@
+Project 6 Design Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/21/2015
+
+Introduction:
+
+   This program, postfixcalc, takes one argument from the command line (a file
+name) and reads the file evaluating each line as if it were a postfix
+arithmetic expression. For example the expression '7 5 +' would equal '12'. It
+is capable of reading positive and negative integers up to 9 digits long and
+can apply addition, subtraction, multiplication, and division operations on
+them.
+
+Data Structures:
+
+   The main data structure being used is a sequential stack with a capacity of
+100. It is used to hold the operands in the expression until they are used by
+an operator. The Pofxcalc object also uses a character array with a capacity of
+100 to store the expression as a string.
+
+Functions:
+
+   There are two primary functions being used in the Pofxcalc object.The first,
+evaluate, Adds a token to the expression. If the token is an operator it
+applies the operator to it's operands. If the token is an operand it is pushed
+onto the stack. The second function, operator>>, reads one line from the stream
+building tokens and calling evaluate on them.
+
+The Main Program:
+
+   The main program first creates a Pofxcalc object. It then handles the
+command line arguments, opens the file, reads the contents into the Pofxcalc
+object, and outputs the result.
+
