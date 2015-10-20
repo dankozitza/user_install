@@ -1,9 +1,9 @@
-# bdc381a4fa3c955eec5b54514c0c942f
+# 8f98f52c24914259f1334477fb1df4d1
 PREFIX=/usr/local
 CFLAGS=-O$(O) 
 O=2
 LFLAGS=
-OBJS=objs/pofxcalc.o objs/postfixcalc.o objs/Stack.o
+OBJS=objs/Pofxcalc.o objs/postfixcalc.o objs/Stack.o
 
 
 .PHONY: all
@@ -13,10 +13,10 @@ all: objs postfixcalc
 	@ echo "    LINK ./postfixcalc"
 	@ $(CXX) $(OBJS) -o "./postfixcalc" $(LFLAGS)
 
-objs/pofxcalc.o: src/pofxcalc.cpp src/pofxcalc.hpp src/Stack.hpp
-	@ echo "    CXX  src/pofxcalc.cpp"
-	@ $(CXX) $(CFLAGS) -c "src/pofxcalc.cpp" -o $@
-objs/postfixcalc.o: src/postfixcalc.cpp src/pofxcalc.hpp src/Stack.hpp
+objs/Pofxcalc.o: src/Pofxcalc.cpp src/Pofxcalc.hpp src/Stack.hpp
+	@ echo "    CXX  src/Pofxcalc.cpp"
+	@ $(CXX) $(CFLAGS) -c "src/Pofxcalc.cpp" -o $@
+objs/postfixcalc.o: src/postfixcalc.cpp src/Pofxcalc.hpp src/Stack.hpp
 	@ echo "    CXX  src/postfixcalc.cpp"
 	@ $(CXX) $(CFLAGS) -c "src/postfixcalc.cpp" -o $@
 objs/Stack.o: src/Stack.cpp src/Stack.hpp
