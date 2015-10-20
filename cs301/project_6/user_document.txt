@@ -1,0 +1,27 @@
+Project 6 User Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/21/2015
+
+This program, postfixcalc, takes one argument from the command line (a file 
+name) and reads the file evaluating each line as if it were a postfix 
+arithmetic expression. Ex: the expression '7 5 +' would equal '12'.
+
+The source for this program can be found on csci2 in the directory:
+
+   /export/home/cs301/cs301145/projects/csci301_6/src
+
+From within that directory enter the folowing commands:
+
+Compile:
+
+   g++ -c Pofxcalc.cpp -c Stack.cpp -c postfixcalc.cpp
+
+Link:
+
+   g++ Pofxcalc.o Stack.o postfixcalc.o -o postfixcalc
+
+Execute:
+
+   ./postfixcalc FILE
