@@ -1,0 +1,17 @@
+Project 6 Design Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/21/2015
+
+   I decided to build a calculator object rather than build it into 
+postfixcalc.cpp. I also decided to use the operator>> on the calculator object 
+to input expressions. This should work for any kind of input stream. I would 
+have liked to use a linked list for the stack and for my expr character array. 
+This way there would be no limitations on the size of an equation. This could 
+also be done for the token size. Another idea i thought would be nice was to 
+make the creation of new operators in the Pofxcalc object dynamic. This would 
+require building a 'handle' function that would take an operator string and a 
+function of type 'bool (*)(Number, Number)'. operator-function pairs could be 
+held in a struct and those in an array which could be iterated over in the 
+evaluate function.
