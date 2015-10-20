@@ -13,13 +13,12 @@
 
 #include <fstream>
 #include <iostream>
-#include "pofxcalc.hpp"
-#include <limits>
+#include "Pofxcalc.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-   pofxcalc calc;
+   Pofxcalc calc;
    ifstream ifs;
 
    if (argc != 2) {

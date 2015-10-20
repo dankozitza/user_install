@@ -1,5 +1,5 @@
 //
-// pofxcalc.cpp
+// Pofxcalc.cpp
 //
 // Calculator that reads arithmetic expressions from a file using postfix
 // notation. Each line of the file is considered one expression.
@@ -11,15 +11,15 @@
 // Due 10/21/2015
 //
 
-#include "pofxcalc.hpp"
+#include "Pofxcalc.hpp"
 
-pofxcalc::pofxcalc() {
+Pofxcalc::Pofxcalc() {
    expression_cnt = 0;
    valid = false;
    expr = new char[EXPR_CAP];
 }
 
-pofxcalc::~pofxcalc() {
+Pofxcalc::~Pofxcalc() {
    delete expr;
 }
 
@@ -31,7 +31,10 @@ pofxcalc::~pofxcalc() {
 //
 // Returns false if an error is encountered. True otherwise.
 //
-bool pofxcalc::evaluate(Token token) {
+// Pre-condition: a token
+// Post-condition: that token evaluated
+//
+bool Pofxcalc::evaluate(Token token) {
    bool negative = false;
    valid = false;
 
@@ -47,7 +50,7 @@ bool pofxcalc::evaluate(Token token) {
       // convert token to integer
       for (int i = 0; token[i] != '\0'; i++) {
          if (!(token[i] >= '0' && token[i] <= '9')) {
-            cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+            cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
             cerr << "'" << token << "' is not a valid operand.\n";
             return false;
          }
@@ -61,13 +64,13 @@ bool pofxcalc::evaluate(Token token) {
    }
    else if (token[1] != '\0') {
       // invalid token
-      cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+      cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
       cerr << "'" << token << "' is not a valid operator.\n";
    }
    else if (token[0] == '+') {
       // do operation
       if (stack.size() < 2) {
-         cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+         cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
          return false;
       }
@@ -81,7 +84,7 @@ bool pofxcalc::evaluate(Token token) {
    else if (token[0] == '-') {
       // do operation
       if (stack.size() < 2) {
-         cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+         cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
          return false;
       }
@@ -96,7 +99,7 @@ bool pofxcalc::evaluate(Token token) {
    else if (token[0] == '*') {
       // do operation
       if (stack.size() < 2) {
-         cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+         cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
          return false;
       }
@@ -111,7 +114,7 @@ bool pofxcalc::evaluate(Token token) {
    else if (token[0] == '/') {
       // do operation
       if (stack.size() < 2) {
-         cerr << "pofxcalc: In expression " << expression_cnt << ": ";
+         cerr << "Pofxcalc: In expression " << expression_cnt << ": ";
          cerr << "Not enough operands for operator '" << token << "'.\n";
          return false;
       }
@@ -123,6 +126,11 @@ bool pofxcalc::evaluate(Token token) {
          valid = true;
       }
    }
+   else {
+      cerr << "Pofxcalc: In expression " << expression_cnt << ": '";
+      cerr << token << "' is not a valid operator.\n";
+      return false;
+   }
 
    return true;
 }
@@ -131,9 +139,12 @@ bool pofxcalc::evaluate(Token token) {
 //
 // Takes one line from istream evaluating the expression as it goes.
 //
-istream& operator>>(istream& is, pofxcalc& calc) {
+// Pre-condition: an in stream and a Pofxcalc object
+// Post-condition: one expression read from the stream and evaluated
+//
+istream& operator>>(istream& is, Pofxcalc& calc) {
    char c, last = ' ';
-   pofxcalc::Token token;
+   Pofxcalc::Token token;
    int tsize = 0, esize = 0;
    bool parsing_err = false;
 
@@ -148,6 +159,7 @@ istream& operator>>(istream& is, pofxcalc& calc) {
    while (is.good() && c != '\n') {
 
       if (!parsing_err) {
+         // ignore spaces and tabs
          if (c != ' ' && c != '	') {
 
             // add a space before the new token if it's not the first token
@@ -164,7 +176,7 @@ istream& operator>>(istream& is, pofxcalc& calc) {
                calc.expr[esize] = '\0';
             }
             else {
-               cerr << "pofxcalc: In expresion " << calc.expression_cnt;
+               cerr << "Pofxcalc: In expresion " << calc.expression_cnt;
                cerr << ": Token '" << token << "' excedes token capacity.\n";
                parsing_err = true;
             }
@@ -196,9 +208,12 @@ istream& operator>>(istream& is, pofxcalc& calc) {
 
 // expression
 //
-// Returns the expression as a c string.
+// Returns the current expression.
 //
-char* pofxcalc::expression() {
+// Pre-condition: none
+// Post-condition: the expression returned.
+//
+char* Pofxcalc::expression() {
    return expr;
 }
 
@@ -206,12 +221,15 @@ char* pofxcalc::expression() {
 //
 // Checks that the result is valid then writes it to ostream.
 //
-ostream & operator<<(ostream& os, pofxcalc& calc) {
+// Pre-condition: a Pofxcalc object
+// Post-condition: The result of the most recently input expression
+//
+ostream & operator<<(ostream& os, Pofxcalc& calc) {
    if (!calc.valid) {
       os << "invalid expression";
    }
    else {
-      pofxcalc::Number tmp;
+      Pofxcalc::Number tmp;
       tmp = calc.stack.pop();
       os << tmp;
       calc.stack.push(tmp);

@@ -1,5 +1,5 @@
 //
-// pofxcalc.hpp
+// Pofxcalc.hpp
 //
 // Calculator that reads arithmetic expressions from a file using postfix
 // notation. Each line of the file is considered one expression.
@@ -19,11 +19,10 @@
 
 using namespace std;
 
-// this may need to be 9. a long int cannot hold all 10 digit numbers
 const size_t TOKEN_CAP = 10;
 const size_t EXPR_CAP = 100;
 
-class pofxcalc {
+class Pofxcalc {
    private:
       typedef char Token[TOKEN_CAP];
       typedef long int Number;
@@ -36,12 +35,12 @@ class pofxcalc {
 
    public:
 
-      pofxcalc();
-      ~pofxcalc();
+      Pofxcalc();
+      ~Pofxcalc();
       char* expression();
 
-      friend istream& operator>>(istream& is, pofxcalc& c); 
-      friend ostream& operator<<(ostream& os, pofxcalc& c);
+      friend istream& operator>>(istream& is, Pofxcalc& c); 
+      friend ostream& operator<<(ostream& os, Pofxcalc& c);
 };
 
 #endif
