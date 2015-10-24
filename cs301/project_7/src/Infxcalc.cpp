@@ -14,42 +14,70 @@
 #include "Infxcalc.hpp"
 
 Infxcalc::Infxcalc() {
-   expression_cnt = 0;
    valid = false;
-   expr = new char[EXPR_CAP];
 }
 
-Infxcalc::~Infxcalc() {
-   delete expr;
+bool Infxcalc::evaluate(char* expr, char delim = '\0') {
+   int tmp = 0;
+   return evaluate(expr, tmp, delim);
 }
 
 // evaluate
 //
 //
 //
-bool Infxcalc::evaluate(char* expr, int start = 0) {
-   Token token, next_t;
+bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
+   Token token;
    char last_c = ' ';
-   bool done = false, token_pair_ready = false;
-   int tsize = 0, ntsize = 0;
-
-   bool kk
+   bool done = false, token_ready = false;
+   int tsize = 0;
 
    optr_stack.clear();
    opnd_stack.clear();
    valid = false;
 
    token[0] = '\0';
-   next_t[0] = '\0';
 
+   // looping through each character in expr including final \0
    for (int i = start; !done; ++i) {
 
-      // ignore spaces and tabs
-      if (expr[i] != ' ' && expr[i] != '	') {
+      //if (last_c == ' ' && expr[i] == '(') {
+      //   // make recursive call then place resulting token or convert
+      //   // into token and set token_ready
+
+      //   cout << "\ngot here. i: " << i << "\n\n";
+      //   Infxcalc r_calc;
+      //   int r_i = i;
+      //   if (!r_calc.evaluate(expr, r_i, ')')) {
+      //      cerr << "Infxcalc::evaluate: could not evaluate subexpression!\n";
+      //      return false;
+      //   }
+      //   cout << "\ngot here 2. i: " << r_i << "\n\n";
+      //
+      //   //opnd_stack.push(r_calc.result());
+      //   last_c = ' ';
+      //   continue;
+      //}
+
+      // check for end of token and collect characters into token array
+      if (expr[i] == delim) {
+         done = true;
+         if (token[0] != '\0')
+            token_ready = true;
+      }
+      else if (expr[i] == '\0' || expr[i] == ')') {
+         cerr << "Infxcalc: found delimiter '" << expr[i] << "' when ";
+         cerr << "expecting delimiter '" << delim << "'\n";
+         return false;
+      }
+      else if (expr[i] == ' ' && last_c != ' ') {
+         token_ready = true;
+      }
+      else if (expr[i] != ' ') {
 
          if (tsize < TOKEN_CAP - 1) {
-            next_t[ntsize++] = c;
-            next_t[ntsize] = '\0';
+            token[tsize++] = expr[i];
+            token[tsize] = '\0';
          }
          else {
             cerr << "Infxcalc: In expresion `" << expr;
@@ -57,63 +85,82 @@ bool Infxcalc::evaluate(char* expr, int start = 0) {
             return false;
          }
       }
-      else if (last != ' ' && last != '	') {
-         // if c is a space but last is not then next_t is done
-         if (token[0] == '\0')
-            strcpy(token, next_t);
-         else
-            token_pair_ready = true;
+
+      //cout << "expr[" << i << "]: `" << expr[i] << "` token: `" << token << "`\n";
+
+      if (done) {
+         cout << "done, applying\n";
+         if (token_ready)
+            if (!place(token))
+               return false;
+         while (apply()) {};
       }
+      else if (token_ready) {
+         token_ready = false;
 
-      while (token_pair_ready) {
-         // if we can apply what's on the stacks do it
-         if (optr_stack.size() == opnd_stack.size() - 1
-               && precedes(optr_stack.peek(), next_t)) {
-         }
-         // otherwise place token in the stack and collect the next token
-         else {
+         //cout << "not done, token " << token << " is ready!\n";
 
-            // handle the token (place it in it's appropriate stack)
+         //cout << "Not done! applying\n";
+         while (is_operator(token)
+               && precedes(optr_stack.peek(), token[0])
+               && apply()) {}
 
-            strcpy(token, next_t)
+         if (!place(token))
+            return false;
 
-            // break
-            token_pair_ready = false;
-         }
+         token[0] = '\0';
+         tsize = 0;
       }
 
       last_c = expr[i];
-   } // end of loop
+   }
+
+   return valid;
 }
 
-// evaluate
+// result
 //
-// Adds a token to the expression. If the token is an operand it applies the
-// operand to it's operators. If the token is an operator it stores the value
-// for later use.
+// Returns result of the expression.
 //
-// Returns false if an error is encountered. True otherwise.
-//
-// Pre-condition: a token
-// Post-condition: that token evaluated
-//
-bool Infxcalc::evaluate(Token token) {
+Infxcalc::Number Infxcalc::result() {
+   if (valid) {
+      return opnd_stack.peek();
+   }
+   else {
+      return 0;
+   }
+}
+
+bool Infxcalc::is_operator(Token t) {
+   if (t[1] == '\0') {
+      switch (t[0]) {
+         case '+':
+         case '-':
+         case '*':
+         case '/':
+            return true;
+            break;
+      }
+   }
+   return false;
+}
+ 
+bool Infxcalc::place(Token token) {
    bool negative = false;
-   valid = false;
 
    // handle the negative numbers
    if (token[0] == '-' && token[1] >= '0' && token[1] <= '9') {
       negative = true;
       token[0] = '0';
    }
-
+   
    if (token[0] >= '0' && token[0] <= '9') {
       // token is a digit
       Number n = 0;
       // convert token to integer
       for (int i = 0; token[i] != '\0'; i++) {
          if (!(token[i] >= '0' && token[i] <= '9')) {
-            cerr << "Infxcalc: In expression " << expression_cnt << ": ";
+            cerr << "Infxcalc::place: ";
             cerr << "'" << token << "' is not a valid operand.\n";
             return false;
          }
@@ -123,77 +170,86 @@ bool Infxcalc::evaluate(Token token) {
       if (negative)
          n = n * -1;
 
-      stack.push(n);
+      opnd_stack.push(n);
    }
-   else if (token[1] != '\0') {
-      // invalid token
-      cerr << "Infxcalc: In expression " << expression_cnt << ": ";
-      cerr << "'" << token << "' is not a valid operator.\n";
-   }
-   else if (token[0] == '+') {
-      // do operation
-      if (stack.size() < 2) {
-         cerr << "Infxcalc: In expression " << expression_cnt << ": ";
-         cerr << "Not enough operands for operator '" << token << "'.\n";
-         return false;
-      }
-
-      stack.push(stack.pop() + stack.pop());
-
-      if (stack.size() == 1) {
-         valid = true;
-      }
-   }
-   else if (token[0] == '-') {
-      // do operation
-      if (stack.size() < 2) {
-         cerr << "Infxcalc: In expression " << expression_cnt << ": ";
-         cerr << "Not enough operands for operator '" << token << "'.\n";
-         return false;
-      }
-
-      Number right_val = stack.pop();
-      stack.push(stack.pop() - right_val);
-
-      if (stack.size() == 1) {
-         valid = true;
-      }
-   }
-   else if (token[0] == '*') {
-      // do operation
-      if (stack.size() < 2) {
-         cerr << "Infxcalc: In expression " << expression_cnt << ": ";
-         cerr << "Not enough operands for operator '" << token << "'.\n";
-         return false;
-      }
-
-      stack.push(stack.pop() * stack.pop());
-
-
-      if (stack.size() == 1) {
-         valid = true;
-      }
-   }
-   else if (token[0] == '/') {
-      // do operation
-      if (stack.size() < 2) {
-         cerr << "Infxcalc: In expression " << expression_cnt << ": ";
-         cerr << "Not enough operands for operator '" << token << "'.\n";
-         return false;
-      }
-
-      Number right_val = stack.pop();
-      stack.push(stack.pop() / right_val);
-
-      if (stack.size() == 1) {
-         valid = true;
-      }
+   else if (is_operator(token)) {
+      optr_stack.push(token[0]);
    }
    else {
-      cerr << "Infxcalc: In expression " << expression_cnt << ": '";
-      cerr << token << "' is not a valid operator.\n";
+      // invalid token
+      cerr << "Infxcalc::place: '" << token << "' is not a valid operator.\n";
       return false;
    }
 
    return true;
+}
+
+// precedes
+//
+// Returns true if c1 precedes c2 in order of operations. False otherwise.
+//
+bool Infxcalc::precedes(char c1, char c2) {
+   switch (c1) {
+      case '+':
+      case '-':
+         switch (c2) {
+            case '*':
+            case '/':
+               return false;
+            default: // c2 is either + or -
+               return true;
+         }
+      default: // c1 is either * or /
+         return true;
+   }
+}
+
+// apply
+//
+// applies the top operator in optr_stack to the two top operands in opnd_stack.
+//
+bool Infxcalc::apply() {
+   Number right_opnd;
+   char optr;
+
+   if (optr_stack.size() >= 1
+         && optr_stack.size() == opnd_stack.size() - 1) {
+      optr = optr_stack.pop();
+      right_opnd = opnd_stack.pop();
+
+      //cout << "applying " << optr << " to " << opnd_stack.peek() << " and ";
+      //cout << right_opnd << "\n";
+
+      switch (optr) {
+         case '+':
+            opnd_stack.push(opnd_stack.pop() + right_opnd);
+            if (opnd_stack.size() == 1)
+               valid = true;
+            break;
+         case '-':
+            opnd_stack.push(opnd_stack.pop() - right_opnd);
+            if (opnd_stack.size() == 1)
+               valid = true;
+            break;
+         case '*':
+            opnd_stack.push(opnd_stack.pop() * right_opnd);
+            if (opnd_stack.size() == 1)
+               valid = true;
+            break;
+         case '/':
+            opnd_stack.push(opnd_stack.pop() / right_opnd);
+            if (opnd_stack.size() == 1)
+               valid = true;
+            break;
+         default:
+            cerr << "Infxcalc::apply: '" << optr;
+            cerr << " is not a valid operation\n";
+            valid = false;
+            return false;
+      }
+      return true;
+   }
+   else {
+      return false;
+   }
 }

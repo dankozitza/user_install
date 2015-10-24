@@ -1,5 +1,5 @@
 //
-// Stack.cpp
+// C_Stack.cpp
 //
 // Simple array based stack implementation.
 //
@@ -10,26 +10,30 @@
 // Due 10/21/2015
 //
 
-#include "Stack.hpp"
+#include "C_Stack.hpp"
 
-Stack::Stack() {
+C_Stack::C_Stack() {
    s_size = 0;
 }
 
-size_t Stack::size() {
+size_t C_Stack::size() {
    return s_size;
 }
 
-void Stack::push(const Item& it) {
+void C_Stack::push(const Item& it) {
    assert(s_size < STACK_CAP);
 
    items[s_size++] = it;
 }
 
-Stack::Item Stack::pop() {
+C_Stack::Item C_Stack::pop() {
    return items[--s_size];
 }
 
-void Stack::clear() {
+C_Stack::Item C_Stack::peek() {
+   return items[s_size - 1];
+}
+
+void C_Stack::clear() {
    s_size = 0;
 }

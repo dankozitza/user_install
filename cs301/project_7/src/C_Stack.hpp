@@ -1,5 +1,5 @@
 //
-// Stack.hpp
+// C_Stack.hpp
 //
 // Simple array based stack implementation.
 //
@@ -10,23 +10,24 @@
 // Due 10/21/2015
 //
 
-#ifndef _S_STACK
-#define _S_STACK
+#ifndef _C_STACK
+#define _C_STACK
 
 #include <cassert>
 #include <cstdlib>
 
 using namespace std;
 
-class Stack {
+class C_Stack {
    public:
-      typedef long int Item;
+      typedef char Item;
       static const size_t STACK_CAP = 13;
 
-      Stack();
+      C_Stack();
       size_t size();
       void push(const Item& it);
       Item pop();
+      Item peek();
       void clear();
 
    private:

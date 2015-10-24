@@ -15,7 +15,8 @@
 #define _POFXCALC
 
 #include <iostream>
-#include "Stack.hpp"
+#include "C_Stack.hpp"
+#include "N_Stack.hpp"
 
 using namespace std;
 
@@ -25,17 +26,22 @@ class Infxcalc {
    private:
       typedef char Token[TOKEN_CAP];
       typedef long Number;
-      C_stack optr_stack;
-      N_stack opnd_stack;
+      C_Stack optr_stack;
+      N_Stack opnd_stack;
       bool valid;
+
+      
+      bool apply();
+      bool is_operator(Token t);
+      bool place(Token token);
+      bool precedes(char c1, char c2);
 
    public:
 
       Infxcalc();
-      bool apply();
-      bool evaluate(char* expr, int start);
-      bool precedes(Token t1, Token t2);
-      bool place(Token t);
+      bool evaluate(char* expr, char delim);
+      bool evaluate(char* expr, int& start, char delim);
+      Number result();
 };
 
 #endif
