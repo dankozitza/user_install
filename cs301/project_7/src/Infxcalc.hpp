@@ -39,6 +39,7 @@ class Infxcalc {
    public:
 
       Infxcalc();
+      bool evaluate(char* expr);
       bool evaluate(char* expr, char delim);
       bool evaluate(char* expr, int& start, char delim);
       Number result();

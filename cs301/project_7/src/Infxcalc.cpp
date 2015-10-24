@@ -17,16 +17,18 @@ Infxcalc::Infxcalc() {
    valid = false;
 }
 
-bool Infxcalc::evaluate(char* expr, char delim = '\0') {
-   int tmp = 0;
-   return evaluate(expr, tmp, delim);
-}
-
 // evaluate
 //
 //
 //
-bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
+bool Infxcalc::evaluate(char* expr) {
+   return evaluate(expr, '\0');
+}
+bool Infxcalc::evaluate(char* expr, char delim) {
+   int tmp = 0;
+   return evaluate(expr, tmp, delim);
+}
+bool Infxcalc::evaluate(char* expr, int& i, char delim) {
    Token token;
    char last_c = ' ';
    bool done = false, token_ready = false;
@@ -39,25 +41,19 @@ bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
    token[0] = '\0';
 
    // looping through each character in expr including final \0
-   for (int i = start; !done; ++i) {
+   for (i; !done; ++i) {
 
-      //if (last_c == ' ' && expr[i] == '(') {
-      //   // make recursive call then place resulting token or convert
-      //   // into token and set token_ready
-
-      //   cout << "\ngot here. i: " << i << "\n\n";
-      //   Infxcalc r_calc;
-      //   int r_i = i;
-      //   if (!r_calc.evaluate(expr, r_i, ')')) {
-      //      cerr << "Infxcalc::evaluate: could not evaluate subexpression!\n";
-      //      return false;
-      //   }
-      //   cout << "\ngot here 2. i: " << r_i << "\n\n";
-      //
-      //   //opnd_stack.push(r_calc.result());
-      //   last_c = ' ';
-      //   continue;
-      //}
+      // make recursive call then push resulting number onto opnd_stack
+      if (last_c == ' ' && expr[i] == '(') {
+         Infxcalc r_calc;
+         if (!r_calc.evaluate(expr, ++i, ')')) {
+            return false;
+         }
+      
+         opnd_stack.push(r_calc.result());
+         valid = true;
+         last_c = ' ';
+      }
 
       // check for end of token and collect characters into token array
       if (expr[i] == delim) {
@@ -86,10 +82,8 @@ bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
          }
       }
 
-      //cout << "expr[" << i << "]: `" << expr[i] << "` token: `" << token << "`\n";
-
+      // apply if we can
       if (done) {
-         cout << "done, applying\n";
          if (token_ready)
             if (!place(token))
                return false;
@@ -98,9 +92,6 @@ bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
       else if (token_ready) {
          token_ready = false;
 
-         //cout << "not done, token " << token << " is ready!\n";
-
-         //cout << "Not done! applying\n";
          while (is_operator(token)
                && precedes(optr_stack.peek(), token[0])
                && apply()) {}
@@ -123,12 +114,9 @@ bool Infxcalc::evaluate(char* expr, int& start, char delim = '\0') {
 // Returns result of the expression.
 //
 Infxcalc::Number Infxcalc::result() {
-   if (valid) {
-      return opnd_stack.peek();
-   }
-   else {
-      return 0;
-   }
+   assert(valid);
+   assert(opnd_stack.size() == 1 && optr_stack.size() == 0);
+   return opnd_stack.peek();
 }
 
 bool Infxcalc::is_operator(Token t) {
@@ -139,7 +127,6 @@ bool Infxcalc::is_operator(Token t) {
          case '*':
          case '/':
             return true;
-            break;
       }
    }
    return false;
@@ -189,19 +176,7 @@ bool Infxcalc::place(Token token) {
 // Returns true if c1 precedes c2 in order of operations. False otherwise.
 //
 bool Infxcalc::precedes(char c1, char c2) {
-   switch (c1) {
-      case '+':
-      case '-':
-         switch (c2) {
-            case '*':
-            case '/':
-               return false;
-            default: // c2 is either + or -
-               return true;
-         }
-      default: // c1 is either * or /
-         return true;
-   }
+   return (!(c1 == '+' || c1 == '-') && (c2 == '*' || c2 == '/'));
 }
 
 // apply
@@ -216,9 +191,6 @@ bool Infxcalc::apply() {
          && optr_stack.size() == opnd_stack.size() - 1) {
       optr = optr_stack.pop();
       right_opnd = opnd_stack.pop();
-
-      //cout << "applying " << optr << " to " << opnd_stack.peek() << " and ";
-      //cout << right_opnd << "\n";
 
       switch (optr) {
          case '+':
@@ -247,9 +219,9 @@ bool Infxcalc::apply() {
             valid = false;
             return false;
       }
+      cout << "Infxcalc::apply: returning TRUE\n";
       return true;
    }
-   else {
-      return false;
-   }
+   cout << "Infxcalc::apply: returning false\n";
+   return false;
 }
