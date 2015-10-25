@@ -66,11 +66,14 @@ int main(int argc, char *argv[]) {
    }
 
    ifs.close();
+   delete expression;
    return 0;
 }
 
 void append(char* &str, int& size, int& dyn_cap, char new_c) {
    if (size >= dyn_cap - 1) {
+      cout << "infixcalc::append: allocating dyn_cap=" << dyn_cap + STR_CAP;
+      cout << endl;
       dyn_cap += STR_CAP;
       char* tmp = new char[dyn_cap];
       for (int i = 0; i <= size; ++i)

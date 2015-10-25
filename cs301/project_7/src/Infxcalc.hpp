@@ -15,6 +15,7 @@
 #define _POFXCALC
 
 #include <iostream>
+#include <cassert>
 #include "C_Stack.hpp"
 #include "N_Stack.hpp"
 
@@ -29,7 +30,6 @@ class Infxcalc {
       C_Stack optr_stack;
       N_Stack opnd_stack;
       bool valid;
-
       
       bool apply();
       bool is_operator(Token t);
@@ -39,9 +39,9 @@ class Infxcalc {
    public:
 
       Infxcalc();
-      bool evaluate(char* expr);
-      bool evaluate(char* expr, char delim);
-      bool evaluate(char* expr, int& start, char delim);
+      bool evaluate(const char* expr);
+      bool evaluate(const char* expr, char delim);
+      bool evaluate(const char* expr, int& start, char delim);
       Number result();
 };
 

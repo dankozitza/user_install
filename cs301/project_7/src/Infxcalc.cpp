@@ -19,16 +19,24 @@ Infxcalc::Infxcalc() {
 
 // evaluate
 //
+// Takes a character array `expr`, optional integer reference `i`, and
+// delimiter `delim`. The array is read one character at a time starting at i
+// and ending at delim. by default i is set to 0 and delim is set to \0.
 //
+// Return:
+//    true  - The expression was evaluated successfully. result function can
+//            be called.
+//    false - The expression is invalid. calling result function will cause
+//            error.
 //
-bool Infxcalc::evaluate(char* expr) {
+bool Infxcalc::evaluate(const char* expr) {
    return evaluate(expr, '\0');
 }
-bool Infxcalc::evaluate(char* expr, char delim) {
+bool Infxcalc::evaluate(const char* expr, char delim) {
    int tmp = 0;
    return evaluate(expr, tmp, delim);
 }
-bool Infxcalc::evaluate(char* expr, int& i, char delim) {
+bool Infxcalc::evaluate(const char* expr, int& i, char delim) {
    Token token;
    char last_c = ' ';
    bool done = false, token_ready = false;
@@ -40,7 +48,7 @@ bool Infxcalc::evaluate(char* expr, int& i, char delim) {
 
    token[0] = '\0';
 
-   // looping through each character in expr including final \0
+   // loop through each character in expr including final \0
    for (i; !done; ++i) {
 
       // make recursive call then push resulting number onto opnd_stack
@@ -49,9 +57,10 @@ bool Infxcalc::evaluate(char* expr, int& i, char delim) {
          if (!r_calc.evaluate(expr, ++i, ')')) {
             return false;
          }
-      
+
          opnd_stack.push(r_calc.result());
-         valid = true;
+         if (opnd_stack.size() == 1 && optr_stack.size() == 0)
+            valid = true;
          last_c = ' ';
       }
 
@@ -59,7 +68,8 @@ bool Infxcalc::evaluate(char* expr, int& i, char delim) {
       if (expr[i] == delim) {
          done = true;
          if (token[0] != '\0')
-            token_ready = true;
+            if (!place(token))
+               return false;
       }
       else if (expr[i] == '\0' || expr[i] == ')') {
          cerr << "Infxcalc: found delimiter '" << expr[i] << "' when ";
@@ -84,9 +94,6 @@ bool Infxcalc::evaluate(char* expr, int& i, char delim) {
 
       // apply if we can
       if (done) {
-         if (token_ready)
-            if (!place(token))
-               return false;
          while (apply()) {};
       }
       else if (token_ready) {
@@ -119,6 +126,10 @@ Infxcalc::Number Infxcalc::result() {
    return opnd_stack.peek();
 }
 
+// is_operator
+//
+// Returns true if the token is an operator.
+//
 bool Infxcalc::is_operator(Token t) {
    if (t[1] == '\0') {
       switch (t[0]) {
@@ -132,6 +143,16 @@ bool Infxcalc::is_operator(Token t) {
    return false;
 }
  
+// place
+// 
+// Pushes a token onto the operator stack or the operand stack. When a token
+// is added to a stack the expression is no longer valid. Apply must be called
+// and perform a successful operation for the expression to become valid again.
+//
+// Return:
+//    true  - The token was valid and placed on the appropriate stack.
+//    false - The token was invalid.
+//
 bool Infxcalc::place(Token token) {
    bool negative = false;
 
@@ -157,9 +178,11 @@ bool Infxcalc::place(Token token) {
       if (negative)
          n = n * -1;
 
+      valid = false;
       opnd_stack.push(n);
    }
    else if (is_operator(token)) {
+      valid = false;
       optr_stack.push(token[0]);
    }
    else {
@@ -173,7 +196,7 @@ bool Infxcalc::place(Token token) {
 
 // precedes
 //
-// Returns true if c1 precedes c2 in order of operations. False otherwise.
+// Returns true if c1 precedes c2 in order of operations.
 //
 bool Infxcalc::precedes(char c1, char c2) {
    return (!(c1 == '+' || c1 == '-') && (c2 == '*' || c2 == '/'));
@@ -181,7 +204,13 @@ bool Infxcalc::precedes(char c1, char c2) {
 
 // apply
 //
-// applies the top operator in optr_stack to the two top operands in opnd_stack.
+// Applies the top operator in optr_stack to the two top operands in opnd_stack.
+// The valid member is set to true by this function when an operation is applied
+// successfully AND there is a single item left on the operand stack.
+//
+// Return:
+//    true  - An operation was applied successfully.
+//    false - No operation was applied.
 //
 bool Infxcalc::apply() {
    Number right_opnd;
@@ -214,14 +243,11 @@ bool Infxcalc::apply() {
                valid = true;
             break;
          default:
-            cerr << "Infxcalc::apply: '" << optr;
-            cerr << " is not a valid operation\n";
-            valid = false;
-            return false;
+            // place ensures all operators in the stack are valid
+            cerr << "Infxcalc::apply: invalid operator '" << optr << "'\n";
+            assert(false);
       }
-      cout << "Infxcalc::apply: returning TRUE\n";
       return true;
    }
-   cout << "Infxcalc::apply: returning false\n";
    return false;
 }
