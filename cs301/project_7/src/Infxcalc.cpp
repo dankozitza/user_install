@@ -100,7 +100,8 @@ bool Infxcalc::evaluate(const char* expr, int& i, char delim) {
          token_ready = false;
 
          while (is_operator(token)
-               && precedes(optr_stack.peek(), token[0])
+               && optr_stack.size() > 0
+               && precedes(optr_stack.peek_c(), token[0])
                && apply()) {}
 
          if (!place(token))
@@ -123,7 +124,7 @@ bool Infxcalc::evaluate(const char* expr, int& i, char delim) {
 Infxcalc::Number Infxcalc::result() {
    assert(valid);
    assert(opnd_stack.size() == 1 && optr_stack.size() == 0);
-   return opnd_stack.peek();
+   return opnd_stack.peek_l();
 }
 
 // is_operator
@@ -218,27 +219,29 @@ bool Infxcalc::apply() {
 
    if (optr_stack.size() >= 1
          && optr_stack.size() == opnd_stack.size() - 1) {
-      optr = optr_stack.pop();
-      right_opnd = opnd_stack.pop();
+      optr = optr_stack.pop_c();
+      right_opnd = opnd_stack.pop_l();
+
+      cout << "applying " << opnd_stack.peek_l() << " " << optr << " " << right_opnd << endl;
 
       switch (optr) {
          case '+':
-            opnd_stack.push(opnd_stack.pop() + right_opnd);
+            opnd_stack.push(opnd_stack.pop_l() + right_opnd);
             if (opnd_stack.size() == 1)
                valid = true;
             break;
          case '-':
-            opnd_stack.push(opnd_stack.pop() - right_opnd);
+            opnd_stack.push(opnd_stack.pop_l() - right_opnd);
             if (opnd_stack.size() == 1)
                valid = true;
             break;
          case '*':
-            opnd_stack.push(opnd_stack.pop() * right_opnd);
+            opnd_stack.push(opnd_stack.pop_l() * right_opnd);
             if (opnd_stack.size() == 1)
                valid = true;
             break;
          case '/':
-            opnd_stack.push(opnd_stack.pop() / right_opnd);
+            opnd_stack.push(opnd_stack.pop_l() / right_opnd);
             if (opnd_stack.size() == 1)
                valid = true;
             break;

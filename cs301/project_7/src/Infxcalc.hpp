@@ -16,8 +16,7 @@
 
 #include <iostream>
 #include <cassert>
-#include "C_Stack.hpp"
-#include "N_Stack.hpp"
+#include "L_Stack.hpp"
 
 using namespace std;
 
@@ -27,8 +26,8 @@ class Infxcalc {
    private:
       typedef char Token[TOKEN_CAP];
       typedef long Number;
-      C_Stack optr_stack;
-      N_Stack opnd_stack;
+      L_Stack optr_stack;
+      L_Stack opnd_stack;
       bool valid;
       
       bool apply();

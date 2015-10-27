@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include "Infxcalc.hpp"
+#include "L_Stack.hpp"
 
 using namespace std;
 
