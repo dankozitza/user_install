@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
    ifs.open(argv[1]);
    if (!ifs.is_open()) {
-      cout << "infixcalc: Could not open file `" << argv[1] << "`.\n";
+      cerr << "infixcalc: Could not open file `" << argv[1] << "`.\n";
       return 0;
    }
 
@@ -73,8 +73,6 @@ int main(int argc, char *argv[]) {
 
 void append(char* &str, size_t& str_size, size_t& dyn_cap, char new_c) {
    if (str_size >= dyn_cap - 1) {
-      cout << "infixcalc::append: allocating dyn_cap=" << dyn_cap + STR_CAP;
-      cout << endl;
       dyn_cap += STR_CAP;
       char* tmp = new char[dyn_cap];
       for (size_t i = 0; i <= str_size; ++i)

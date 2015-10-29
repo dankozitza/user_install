@@ -1,9 +1,9 @@
-# 97f538f243b7ae65f82df771f8f99fdc
+# d76739025e19b285de4a9939384c4015
 PREFIX=/usr/local
 CFLAGS=-O$(O) 
 O=2
 LFLAGS=
-OBJS=objs/Infxcalc.o objs/infixcalc.o objs/L_Stack.o
+OBJS=objs/infixcalc.o objs/Infxcalc.o objs/L_Stack.o
 
 
 .PHONY: all
@@ -13,12 +13,12 @@ all: objs infixcalc
 	@ echo "    LINK ./infixcalc"
 	@ $(CXX) $(OBJS) -o "./infixcalc" $(LFLAGS)
 
-objs/Infxcalc.o: src/Infxcalc.cpp src/Infxcalc.hpp src/L_Stack.hpp
-	@ echo "    CXX  src/Infxcalc.cpp"
-	@ $(CXX) $(CFLAGS) -c "src/Infxcalc.cpp" -o $@
 objs/infixcalc.o: src/infixcalc.cpp src/Infxcalc.hpp src/L_Stack.hpp
 	@ echo "    CXX  src/infixcalc.cpp"
 	@ $(CXX) $(CFLAGS) -c "src/infixcalc.cpp" -o $@
+objs/Infxcalc.o: src/Infxcalc.cpp src/Infxcalc.hpp src/L_Stack.hpp
+	@ echo "    CXX  src/Infxcalc.cpp"
+	@ $(CXX) $(CFLAGS) -c "src/Infxcalc.cpp" -o $@
 objs/L_Stack.o: src/L_Stack.cpp src/L_Stack.hpp
 	@ echo "    CXX  src/L_Stack.cpp"
 	@ $(CXX) $(CFLAGS) -c "src/L_Stack.cpp" -o $@

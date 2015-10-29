@@ -12,8 +12,8 @@ defects found | defects found to date
 
 general:
 [x][x] Verify all the functions in the design are coded.
-[x][1] Verify include statements are correct.
-[x][x] Check variable and parameter initialization.
+[x][2] Verify include statements are correct.
+[x][2] Check variable and parameter initialization.
 [x][x] Check function call formats.
 [x][x] Check name and spelling use.
 [x][x] Check that pointers are initialized to NULL.

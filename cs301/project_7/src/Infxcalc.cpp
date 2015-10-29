@@ -73,8 +73,8 @@ bool Infxcalc::evaluate(const char* expr, size_t& i, char delim) {
                return false;
       }
       else if (expr[i] == '\0' || expr[i] == ')') {
-         cerr << "Infxcalc: found delimiter '" << expr[i] << "' when ";
-         cerr << "expecting delimiter '" << delim << "'\n";
+         cerr << "Infxcalc: Found delimiter `" << expr[i] << "` when ";
+         cerr << "expecting delimiter `" << delim << "`.\n";
          return false;
       }
       else if (expr[i] == ' ' && last_c != ' ') {
@@ -157,6 +157,7 @@ bool Infxcalc::is_operator(Token t) {
 //
 bool Infxcalc::place(Token token) {
    bool negative = false;
+   valid = false;
 
    // handle the negative numbers
    if (token[0] == '-' && token[1] >= '0' && token[1] <= '9') {
@@ -170,8 +171,8 @@ bool Infxcalc::place(Token token) {
       // convert token to integer
       for (int i = 0; token[i] != '\0'; i++) {
          if (!(token[i] >= '0' && token[i] <= '9')) {
-            cerr << "Infxcalc::place: ";
-            cerr << "'" << token << "' is not a valid operand.\n";
+            cerr << "Infxcalc::place: `";
+            cerr << token << "` is not a valid operand.\n";
             return false;
          }
          n = n * 10 + (token[i] - '0');
@@ -180,16 +181,14 @@ bool Infxcalc::place(Token token) {
       if (negative)
          n = n * -1;
 
-      valid = false;
       opnd_stack.push(n);
    }
    else if (is_operator(token)) {
-      valid = false;
       optr_stack.push(token[0]);
    }
    else {
       // invalid token
-      cerr << "Infxcalc::place: '" << token << "' is not a valid operator.\n";
+      cerr << "Infxcalc::place: `" << token << "` is not a valid operator.\n";
       return false;
    }
 
@@ -224,31 +223,21 @@ bool Infxcalc::apply() {
       right_opnd = opnd_stack.pop_l();
 
       switch (optr) {
-         case '+':
-            opnd_stack.push(opnd_stack.pop_l() + right_opnd);
-            if (opnd_stack.size() == 1)
-               valid = true;
+         case '+': opnd_stack.push(opnd_stack.pop_l() + right_opnd);
             break;
-         case '-':
-            opnd_stack.push(opnd_stack.pop_l() - right_opnd);
-            if (opnd_stack.size() == 1)
-               valid = true;
+         case '-': opnd_stack.push(opnd_stack.pop_l() - right_opnd);
             break;
-         case '*':
-            opnd_stack.push(opnd_stack.pop_l() * right_opnd);
-            if (opnd_stack.size() == 1)
-               valid = true;
+         case '*': opnd_stack.push(opnd_stack.pop_l() * right_opnd);
             break;
-         case '/':
-            opnd_stack.push(opnd_stack.pop_l() / right_opnd);
-            if (opnd_stack.size() == 1)
-               valid = true;
+         case '/': opnd_stack.push(opnd_stack.pop_l() / right_opnd);
             break;
          default:
             // place ensures all operators in the stack are valid
-            cerr << "Infxcalc::apply: invalid operator '" << optr << "'\n";
+            cerr << "Infxcalc::apply: Invalid operator `" << optr << "`.\n";
             assert(false);
       }
+      if (opnd_stack.size() == 1)
+         valid = true;
       return true;
    }
    return false;

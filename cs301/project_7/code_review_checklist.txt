@@ -1,7 +1,7 @@
 Code Review Checklist
 
-program name:
-program number:
+program name: infixcalc
+program number: 7
 
 legend:
    x    - no defects found
@@ -24,4 +24,4 @@ general:
 [x][x] Verify files are opened, read, and closed with proper error handling.
 [x][x] Overall scan of the program.
 
-total defects found: [x]
+total defects found: [3]
