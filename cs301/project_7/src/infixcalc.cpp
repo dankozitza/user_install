@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
          expression[0] = '\0';
          esize = 0;
       }
-      
       ifs.get(c);
    }
 
