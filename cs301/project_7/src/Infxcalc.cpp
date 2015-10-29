@@ -21,7 +21,8 @@ Infxcalc::Infxcalc() {
 //
 // Takes a character array `expr`, optional integer reference `i`, and
 // delimiter `delim`. The array is read one character at a time starting at i
-// and ending at delim. by default i is set to 0 and delim is set to \0.
+// and ending at delim. by default i is set to 0 and delim is set to \0. After
+// this function has run and returned true the result function can be called.
 //
 // Return:
 //    true  - The expression was evaluated successfully. result function can
@@ -33,10 +34,10 @@ bool Infxcalc::evaluate(const char* expr) {
    return evaluate(expr, '\0');
 }
 bool Infxcalc::evaluate(const char* expr, char delim) {
-   int tmp = 0;
+   size_t tmp = 0;
    return evaluate(expr, tmp, delim);
 }
-bool Infxcalc::evaluate(const char* expr, int& i, char delim) {
+bool Infxcalc::evaluate(const char* expr, size_t& i, char delim) {
    Token token;
    char last_c = ' ';
    bool done = false, token_ready = false;
@@ -221,8 +222,6 @@ bool Infxcalc::apply() {
          && optr_stack.size() == opnd_stack.size() - 1) {
       optr = optr_stack.pop_c();
       right_opnd = opnd_stack.pop_l();
-
-      cout << "applying " << opnd_stack.peek_l() << " " << optr << " " << right_opnd << endl;
 
       switch (optr) {
          case '+':

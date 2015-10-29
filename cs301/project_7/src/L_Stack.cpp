@@ -4,11 +4,11 @@
 // Linked list stack implementation. Is capable of storing char or long type.
 // User is expected to keep track of type being used.
 //
-// Project 6
+// Project 7
 // Created by Daniel Kozitza
 // account number cs301145
 // CSCI 301 section 2
-// Due 10/21/2015
+// Due 10/30/2015
 //
 
 #include "L_Stack.hpp"

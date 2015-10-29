@@ -11,11 +11,11 @@
 // Due 10/30/2015
 //
 
-#ifndef _POFXCALC
-#define _POFXCALC
+#ifndef _INFXCALC
+#define _INFXCALC
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 #include "L_Stack.hpp"
 
 using namespace std;
@@ -40,7 +40,7 @@ class Infxcalc {
       Infxcalc();
       bool evaluate(const char* expr);
       bool evaluate(const char* expr, char delim);
-      bool evaluate(const char* expr, int& start, char delim);
+      bool evaluate(const char* expr, size_t& start, char delim);
       Number result();
 };
 

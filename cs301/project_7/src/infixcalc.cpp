@@ -4,11 +4,11 @@
 // This program is a calculator that reads arithmetic expressions from a file
 // using infix notation. Each line of the file is considered one expression.
 //
-// Project 6
+// Project 7
 // Created by Daniel Kozitza
 // account number cs301145
 // CSCI 301 section 2
-// Due 10/21/2015
+// Due 10/30/2015
 //
 
 #include <fstream>
@@ -20,13 +20,13 @@ using namespace std;
 
 const size_t STR_CAP = 25;
 
-void append(char* &str, int& size, int& dyn_cap, char new_c);
+void append(char* &str, size_t& str_size, size_t& dyn_cap, char new_c);
 
 int main(int argc, char *argv[]) {
    Infxcalc calc;
    ifstream ifs;
    char c;
-   int esize = 0, str_cap = STR_CAP;
+   size_t esize = 0, str_cap = STR_CAP;
    char *expression = new char[str_cap];
 
    if (argc != 2) {
@@ -71,19 +71,19 @@ int main(int argc, char *argv[]) {
    return 0;
 }
 
-void append(char* &str, int& size, int& dyn_cap, char new_c) {
-   if (size >= dyn_cap - 1) {
+void append(char* &str, size_t& str_size, size_t& dyn_cap, char new_c) {
+   if (str_size >= dyn_cap - 1) {
       cout << "infixcalc::append: allocating dyn_cap=" << dyn_cap + STR_CAP;
       cout << endl;
       dyn_cap += STR_CAP;
       char* tmp = new char[dyn_cap];
-      for (int i = 0; i <= size; ++i)
+      for (size_t i = 0; i <= str_size; ++i)
          tmp[i] = str[i];
 
       delete []str;
       str = tmp;
    }
 
-   str[size++] = new_c;
-   str[size] = '\0';
+   str[str_size++] = new_c;
+   str[str_size] = '\0';
 }
