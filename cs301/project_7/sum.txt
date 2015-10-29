@@ -1,0 +1,7 @@
+Project 7 Summary
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 10/30/2015
+
+   Again i decided to use an object for the calculator rather than building it into the main. This allowed me to use recursion for parenthesised expressions. Instead of sticking with using friend operator<< and operator>> functions i used a char array to hold the expression and had it be passed to an evaluate function. This way i was able to print the expression in the main and avoided having to store an expression variable in the object. To my surprise i realized that this is actually capable of reading small postfix and prefix notation expressions as well. Because the only real criteria for a valid expression is that there is at least one operator and two operands the order of the tokens doesn't matter. This should probably be changed errors happen if the order is incorrect. Otherwise seemingly invalid expressions like '1 2 +' will be evaluated just the same as the expression '1 + 2'.
