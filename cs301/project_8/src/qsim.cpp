@@ -17,26 +17,37 @@
 
 using namespace std;
 
-struct Teller {
-   Q<int> line;
-   int    wait;
-   int    customer;
+struct Customer {
+   int id;
+   int total_wait;
 };
 
-size_t mins(Teller a[], size_t a_size, size_t lows[]);
+struct Teller {
+   Q<Customer> line;
+   int         wait;
+   Customer    customer;
+};
+
+void print(int time, int staff_size, int cst_prob, int max_trans_time,
+           int sim_duration, int seed, Teller staff[]);
+int mins(Teller a[], int a_size, int lows[]);
+ostream& operator<<(ostream& out, const Customer& cstmr);
 
 int main(int argc, char* argv[]) {
    int time = 0;
-   int cust_id = 77;
+   int cust_id = 1;
+   int customers_served = 0;
+   int average_wait = 0;
+   int longest_wait = 0;
    int staff_size;     // Number of queue/server pairs.
-   int cust_prob;      // Probablility that a customer will arive in one tick.
+   int cst_prob;      // Probablility that a customer will arive in one tick.
    int max_trans_time; // Maximum amount of time for a single transaction.
    int sim_duration;   // Amount of time to run for.
    int seed;           // Seed to be used to generate random number.
 
    if (argc == 6) {
       staff_size = atoi(argv[1]);
-      cust_prob = atoi(argv[2]);
+      cst_prob = atoi(argv[2]);
       max_trans_time = atoi(argv[3]);
       sim_duration = atoi(argv[4]);
       seed = atoi(argv[5]);
@@ -46,10 +57,13 @@ int main(int argc, char* argv[]) {
       cout << "These values can also be entered as command line arguments.\n";
       cout << "   ex: " << argv[0];
       cout << " QS_PAIRS CUST_PROB MAX_TRANS_TIME SIM_DURATION SEED\n\n";
+      cout << "A customer will be represented as an 'id|wait_time' pair.\n";
+      cout << "   ex: customer 12 who's been waiting 30 minutes would be\n";
+      cout << "       represented as '12|30'.\n\n";
       cout << "Enter the number of queue/server pairs: ";
       cin >> staff_size;
       cout << "Enter the customer arrival probability (1 - 100): ";
-      cin >> cust_prob;
+      cin >> cst_prob;
       cout << "Enter the maximum transaction time (minutes): ";
       cin >> max_trans_time;
       cout << "Enter the simulation duration time (minutes): ";
@@ -66,56 +80,116 @@ int main(int argc, char* argv[]) {
    srand(seed);
    Teller *staff = new Teller[staff_size];
 
-   for (time; time <= sim_duration; ++time) {
+   for (time; time < sim_duration; ++time) {
 
-      cout << "\nclock: " << time << endl;
-      cout << "teller   wait time   line\n";
-      for (int i = 0; i < staff_size; ++i) {
-         cout << right << setw(4) << i + 1;
-         cout << left << " ";
-         cout << right << setw(9) << staff[i].wait;
-         cout << left << "         " << staff[i].line << "\n";
+      if (cst_prob >= rand() % 100) {
+
+         // check for available tellers
+         int at_size = 0;
+         int *available_tellers = new int[staff_size];
+         for (int teller = 0; teller < staff_size; ++teller)
+            if (staff[teller].customer.id == 0)
+               available_tellers[at_size++] = teller;
+
+         // a teller is ready to serve the customer
+         if (at_size > 0) {
+            int rat = available_tellers[rand() % at_size];
+            Customer cstmr = {cust_id++, 0};
+            staff[rat].customer = cstmr;
+            staff[rat].wait = rand() % max_trans_time + 1;
+         }
+         // the customer needs to get into the shortest line
+         else {
+            // mins places the indexes of the tellers with the lowest and equal
+            // line sizes into the lows array.
+            int *lows = new int[staff_size];
+            int l_size = mins(staff, staff_size, lows);
+
+            // randomly pick a teller index from the array mins gives.
+            int r_teller = lows[rand() % l_size];
+            delete []lows;
+
+            // place a new customer in the line.
+            Customer cstmr = {cust_id++, 0};
+            staff[r_teller].line.enq(cstmr);
+         }
+         delete available_tellers;
       }
-      cout << endl;
 
-      if (cust_prob > rand() % 100) {
+      print(time, staff_size, cst_prob, max_trans_time,
+            sim_duration, seed, staff);
 
-         // mins places the indexes of the tellers with the lowest and equal
-         // line sizes into the lows array.
-         size_t *lows = new size_t[staff_size];
-         size_t l_size = mins(staff, staff_size, lows);
-
-         // randomly pick a teller index from the array mins gives.
-         int r_teller = lows[rand() % l_size];
-         delete []lows;
-         staff[r_teller].line.enq(cust_id++);
-
-         // randomly generate a wait time for tellers without one.
-         if (staff[r_teller].line.size() == 1)
-            staff[r_teller].wait = rand() % max_trans_time + 1;
-      }
-
+      // serve customers
       for (int i = 0; i < staff_size; ++i) {
-
-         if (staff[i].line.size() > 0) {
-           
-            if (staff[i].wait == 0) {
-               cout << "staff[" << i << "].deq(): ";
-               cout << staff[i].line.deq() << endl;
-
-               if (staff[i].line.size() > 0)
-                  staff[i].wait = rand() % max_trans_time + 1;
+         if (staff[i].customer.id != 0) {
+            --staff[i].wait;
+            staff[i].customer.total_wait++;
+            int linesize = staff[i].line.size();
+            for (int n = 0; n < linesize; ++n) {
+               Customer tmp = staff[i].line.deq();
+               tmp.total_wait++;
+               staff[i].line.enq(tmp);
             }
-            else {
-               --staff[i].wait;
+
+            if (staff[i].wait == 0) {
+
+               customers_served++;
+
+               if (average_wait > 0)
+                  average_wait =
+                        (average_wait + staff[i].customer.total_wait) / 2;
+               else
+                  average_wait = staff[i].customer.total_wait;
+
+               if (longest_wait < staff[i].customer.total_wait)
+                  longest_wait = staff[i].customer.total_wait;
+
+               Customer cstmr = {0, 0};
+               staff[i].customer = cstmr;
+
+               if (staff[i].line.size() > 0) {
+                  staff[i].customer = staff[i].line.deq();
+                  staff[i].wait = rand() % max_trans_time + 1;
+               }
             }
          }
       }
-
    }
+
+   print(time, staff_size, cst_prob, max_trans_time, sim_duration, seed, staff);
+
+   int in_line = 0;
+   for (int k = 0; k < staff_size; ++k)
+      in_line += staff[k].line.size();
+
+   cout << "Total customers served: " << customers_served << endl;
+   cout << "Average customer total wait time: " << average_wait << endl;
+   cout << "Longest customer total wait time: " << longest_wait << endl;
+   cout << "Customers still in line: " << in_line << endl;
 
    delete []staff;
    return 0;
+}
+
+void print(int time, int staff_size, int cst_prob, int max_trans_time,
+           int sim_duration, int seed, Teller staff[]) {
+   cout << "\nclock: " << time << " staff_size: " << staff_size;
+   cout << " cst_prob: " << cst_prob;
+   cout << " max_trans_time: " << max_trans_time;
+   cout << " sim_duration: " << sim_duration;
+   cout << " seed: " << seed << endl;
+   cout << "teller   wait time   serving      line\n";
+   for (int i = 0; i < staff_size; ++i) {
+      cout << right << setw(4) << i + 1;
+      cout << left << " ";
+      cout << right << setw(9) << staff[i].wait;
+      if (staff[i].customer.id == 0)
+         cout << "           ";
+      else
+         cout << "       " << staff[i].customer;
+      cout << left << "    " << staff[i].line << "\n";
+   }
+   cout << endl;
 }
 
 // mins
@@ -132,11 +206,11 @@ int main(int argc, char* argv[]) {
 // Return value:
 //    The size of the lows array.
 //
-size_t mins(Teller a[], size_t a_size, size_t lows[]) {
-   size_t l_size = 0;
+int mins(Teller a[], int a_size, int lows[]) {
+   int l_size = 0;
    if (a_size < 1)
       return 0;
-   size_t lowest = a[0].line.size();
+   int lowest = a[0].line.size();
    lows[l_size++] = 0;
 
    for (int i = 1; i < a_size; ++i) {
@@ -150,4 +224,10 @@ size_t mins(Teller a[], size_t a_size, size_t lows[]) {
       }
    }
    return l_size;
+}
+
+ostream& operator<<(ostream& out, const Customer& cstmr) {
+   out << right << setw(4) << cstmr.id << "|";
+   out << left << setw(3) << cstmr.total_wait;
+   return out;
 }
