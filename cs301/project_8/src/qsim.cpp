@@ -11,6 +11,7 @@
 //
 
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <iomanip>
 #include "Q.hpp"
@@ -44,15 +45,21 @@ int main(int argc, char* argv[]) {
    int max_trans_time; // Maximum amount of time for a single transaction.
    int sim_duration;   // Amount of time to run for.
    int seed;           // Seed to be used to generate random number.
+   bool quiet = false;
 
-   if (argc == 6) {
-      staff_size = atoi(argv[1]);
-      cst_prob = atoi(argv[2]);
-      max_trans_time = atoi(argv[3]);
-      sim_duration = atoi(argv[4]);
-      seed = atoi(argv[5]);
+   int arg_start = 1;
+   if ((argc == 2 || argc == 7) && strcmp(argv[1], "-q") == 0) {
+      quiet = true;
+      arg_start = 2;
    }
-   else if (argc == 1) {
+   if (argc == 6 || argc == 7) {
+      staff_size = atoi(argv[arg_start++]);
+      cst_prob = atoi(argv[arg_start++]);
+      max_trans_time = atoi(argv[arg_start++]);
+      sim_duration = atoi(argv[arg_start++]);
+      seed = atoi(argv[arg_start]);
+   }
+   else if (argc == 1 || argc == 2) {
       cout << "\nYou need to enter the variables used during the simulation.\n";
       cout << "These values can also be entered as command line arguments.\n";
       cout << "   ex: " << argv[0];
@@ -70,6 +77,7 @@ int main(int argc, char* argv[]) {
       cin >> sim_duration;
       cout << "Enter a random integer: ";
       cin >> seed;
+      cout << endl;
    }
    else {
       cout << "USAGE: " << argv[0];
@@ -116,25 +124,23 @@ int main(int argc, char* argv[]) {
          delete available_tellers;
       }
 
-      print(time, staff_size, cst_prob, max_trans_time,
-            sim_duration, seed, staff);
+      if (!quiet)
+         print(time, staff_size, cst_prob, max_trans_time,
+               sim_duration, seed, staff);
 
       // serve customers
       for (int i = 0; i < staff_size; ++i) {
          if (staff[i].customer.id != 0) {
             --staff[i].wait;
             staff[i].customer.total_wait++;
-            int linesize = staff[i].line.size();
-            for (int n = 0; n < linesize; ++n) {
-               Customer tmp = staff[i].line.deq();
-               tmp.total_wait++;
-               staff[i].line.enq(tmp);
-            }
+            //for (int n = 0; n < staff[i].line.size(); ++n) {
+            //   Customer tmp = staff[i].line.deq();
+            //   tmp.total_wait++;
+            //   staff[i].line.enq(tmp);
+            //}
 
             if (staff[i].wait == 0) {
-
                customers_served++;
-
                if (average_wait > 0)
                   average_wait =
                         (average_wait + staff[i].customer.total_wait) / 2;
@@ -156,7 +162,9 @@ int main(int argc, char* argv[]) {
       }
    }
 
-   print(time, staff_size, cst_prob, max_trans_time, sim_duration, seed, staff);
+   if (!quiet)
+      print(time, staff_size, cst_prob, max_trans_time,
+            sim_duration, seed, staff);
 
    int in_line = 0;
    for (int k = 0; k < staff_size; ++k)
@@ -173,7 +181,7 @@ int main(int argc, char* argv[]) {
 
 void print(int time, int staff_size, int cst_prob, int max_trans_time,
            int sim_duration, int seed, Teller staff[]) {
-   cout << "\nclock: " << time << " staff_size: " << staff_size;
+   cout << "clock: " << time << " staff_size: " << staff_size;
    cout << " cst_prob: " << cst_prob;
    cout << " max_trans_time: " << max_trans_time;
    cout << " sim_duration: " << sim_duration;
