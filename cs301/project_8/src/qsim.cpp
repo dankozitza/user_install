@@ -21,6 +21,7 @@ using namespace std;
 struct Customer {
    int id;
    int total_wait;
+   int arrival_time;
 };
 
 struct Teller {
@@ -41,25 +42,25 @@ int main(int argc, char* argv[]) {
    int average_wait = 0;
    int longest_wait = 0;
    int staff_size;     // Number of queue/server pairs.
-   int cst_prob;      // Probablility that a customer will arive in one tick.
+   int cst_prob;       // Probablility that a customer will arive in one tick.
    int max_trans_time; // Maximum amount of time for a single transaction.
    int sim_duration;   // Amount of time to run for.
    int seed;           // Seed to be used to generate random number.
    bool quiet = false;
 
    int arg_start = 1;
-   if ((argc == 2 || argc == 7) && strcmp(argv[1], "-q") == 0) {
+   if (argc >= 2 && strcmp(argv[1], "-q") == 0) {
       quiet = true;
       arg_start = 2;
    }
-   if (argc == 6 || argc == 7) {
+   if ((argc == 6 && !quiet) || (argc == 7 && quiet)) {
       staff_size = atoi(argv[arg_start++]);
       cst_prob = atoi(argv[arg_start++]);
       max_trans_time = atoi(argv[arg_start++]);
       sim_duration = atoi(argv[arg_start++]);
       seed = atoi(argv[arg_start]);
    }
-   else if (argc == 1 || argc == 2) {
+   else if ((argc == 1 && !quiet) || (argc == 2 && quiet)) {
       cout << "\nYou need to enter the variables used during the simulation.\n";
       cout << "These values can also be entered as command line arguments.\n";
       cout << "   ex: " << argv[0];
@@ -69,7 +70,7 @@ int main(int argc, char* argv[]) {
       cout << "       represented as '12|30'.\n\n";
       cout << "Enter the number of queue/server pairs: ";
       cin >> staff_size;
-      cout << "Enter the customer arrival probability (1 - 100): ";
+      cout << "Enter the customer arrival probability (0 - 100): ";
       cin >> cst_prob;
       cout << "Enter the maximum transaction time (minutes): ";
       cin >> max_trans_time;
@@ -81,7 +82,7 @@ int main(int argc, char* argv[]) {
    }
    else {
       cout << "USAGE: " << argv[0];
-      cout << " [QS_PAIRS CUST_PROB MAX_TRANS_TIME SIM_DURATION SEED]\n";
+      cout << " [-q] [QS_PAIRS CUST_PROB MAX_TRANS_TIME SIM_DURATION SEED]\n";
       return 0;
    }
 
@@ -90,7 +91,7 @@ int main(int argc, char* argv[]) {
 
    for (time; time < sim_duration; ++time) {
 
-      if (cst_prob >= rand() % 100) {
+      if (cst_prob > rand() % 100) {
 
          // check for available tellers
          int at_size = 0;
@@ -102,7 +103,7 @@ int main(int argc, char* argv[]) {
          // a teller is ready to serve the customer
          if (at_size > 0) {
             int rat = available_tellers[rand() % at_size];
-            Customer cstmr = {cust_id++, 0};
+            Customer cstmr = {cust_id++, 0, time};
             staff[rat].customer = cstmr;
             staff[rat].wait = rand() % max_trans_time + 1;
          }
@@ -118,7 +119,7 @@ int main(int argc, char* argv[]) {
             delete []lows;
 
             // place a new customer in the line.
-            Customer cstmr = {cust_id++, 0};
+            Customer cstmr = {cust_id++, 0, time};
             staff[r_teller].line.enq(cstmr);
          }
          delete available_tellers;
@@ -132,25 +133,35 @@ int main(int argc, char* argv[]) {
       for (int i = 0; i < staff_size; ++i) {
          if (staff[i].customer.id != 0) {
             --staff[i].wait;
-            staff[i].customer.total_wait++;
-            //for (int n = 0; n < staff[i].line.size(); ++n) {
-            //   Customer tmp = staff[i].line.deq();
-            //   tmp.total_wait++;
-            //   staff[i].line.enq(tmp);
-            //}
+
+// if not quiet the Customer operator<< function  will use
+// the total_wait variable.
+// increases complexity to about:
+//    sim_duration * staff_size * (total_customers_in_line / staff_size)
+//    = sim_duration * total_customers_in_line
+
+            if (!quiet) {
+               staff[i].customer.total_wait++;
+               for (int n = 0; n < staff[i].line.size(); ++n) {
+                  Customer tmp = staff[i].line.deq();
+                  tmp.total_wait++;
+                  staff[i].line.enq(tmp);
+               }
+            }
 
             if (staff[i].wait == 0) {
                customers_served++;
+
+               int total_wait = time - staff[i].customer.arrival_time + 1;
                if (average_wait > 0)
-                  average_wait =
-                        (average_wait + staff[i].customer.total_wait) / 2;
+                  average_wait = (average_wait + total_wait) / 2;
                else
-                  average_wait = staff[i].customer.total_wait;
+                  average_wait = total_wait;
 
-               if (longest_wait < staff[i].customer.total_wait)
-                  longest_wait = staff[i].customer.total_wait;
+               if (longest_wait < total_wait)
+                  longest_wait = total_wait;
 
-               Customer cstmr = {0, 0};
+               Customer cstmr = {0, 0, 0};
                staff[i].customer = cstmr;
 
                if (staff[i].line.size() > 0) {
@@ -171,8 +182,8 @@ int main(int argc, char* argv[]) {
       in_line += staff[k].line.size();
 
    cout << "Total customers served: " << customers_served << endl;
-   cout << "Average customer total wait time: " << average_wait << endl;
-   cout << "Longest customer total wait time: " << longest_wait << endl;
+   cout << "Average customer wait time: " << average_wait << endl;
+   cout << "Longest customer wait time: " << longest_wait << endl;
    cout << "Customers still in line: " << in_line << endl;
 
    delete []staff;
