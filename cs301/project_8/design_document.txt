@@ -1,0 +1,46 @@
+Program 8 Design Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 11/09/2015
+
+Introduction:
+
+   This program, qsim, is a queue simulator. It can simulate a bank lobby with 
+user entered variables: number of tellers, customer arrival probability, 
+maximum transaction time, total duration, and a random seed. During each clock 
+tick customers arrive, the state of the bank is printed to the screen, and the 
+customers are served. After the simulation is finished these values are 
+printed: total number of customers served, average customer wait time, longest 
+customer wait time, and number of customers left in line.
+
+Data Structures:
+
+   There are several structures being used in this program. The main two 
+structs are Customer and Teller. The Customer struct has an id, an arrival 
+time, and a pointer to the clock (to calculate total wait time). The Teller 
+struct has a line (queue), a wait time for the current customer, and a current 
+customer. The template class Q is a linked queue implementation. It is used to 
+represent lines of customers in the program. All these structures are held 
+together in one dynamically allocated array of Tellers.
+
+Functions:
+
+   There are three primary functions in qsim.cpp. The first, print, takes 
+multiple variables and the staff array and prints the state of the simulation. 
+the second, mins, takes the staff array and produces an array of the indexes of 
+tellers with the shortest lines. It is used to select randomly from the 
+shortest lines when enqueuing a new customer. The third, operator<<, is used to 
+print a customer. There are 2 primary functions in Q.hpp. The first, enq, 
+enqueues an item onto the end of the list. This is used to represent a customer 
+getting in line. The second, deq, dequeues an item from the front of the list. 
+This is used to represent a customer leaving the line.
+
+The Main Fuction:
+
+   The main function does most of the work in this program. First it handles 
+the different ways of getting user input. Then it creates the staff array (an 
+array of Tellers). Next it begins the main 'time' loop which is executed 
+sim_duration times. during each loop it adds customers to the system, prints 
+the state, and handles teller activity. Finally it calculates some statistics 
+and prints them.
