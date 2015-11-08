@@ -19,9 +19,9 @@
 using namespace std;
 
 struct Customer {
-   int id;
-   int total_wait;
-   int arrival_time;
+   int  id;
+   int  arrival_time;
+   int* time;
 };
 
 struct Teller {
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
          // a teller is ready to serve the customer
          if (at_size > 0) {
             int rat = available_tellers[rand() % at_size];
-            Customer cstmr = {cust_id++, 0, time};
+            Customer cstmr = {cust_id++, time, &time};
             staff[rat].customer = cstmr;
             staff[rat].wait = rand() % max_trans_time + 1;
          }
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
             delete []lows;
 
             // place a new customer in the line.
-            Customer cstmr = {cust_id++, 0, time};
+            Customer cstmr = {cust_id++, time, &time};
             staff[r_teller].line.enq(cstmr);
          }
          delete available_tellers;
@@ -133,21 +133,6 @@ int main(int argc, char* argv[]) {
       for (int i = 0; i < staff_size; ++i) {
          if (staff[i].customer.id != 0) {
             --staff[i].wait;
-
-// if not quiet the Customer operator<< function  will use
-// the total_wait variable.
-// increases complexity to about:
-//    sim_duration * staff_size * (total_customers_in_line / staff_size)
-//    = sim_duration * total_customers_in_line
-
-            if (!quiet) {
-               staff[i].customer.total_wait++;
-               for (int n = 0; n < staff[i].line.size(); ++n) {
-                  Customer tmp = staff[i].line.deq();
-                  tmp.total_wait++;
-                  staff[i].line.enq(tmp);
-               }
-            }
 
             if (staff[i].wait == 0) {
                customers_served++;
@@ -247,6 +232,6 @@ int mins(Teller a[], int a_size, int lows[]) {
 
 ostream& operator<<(ostream& out, const Customer& cstmr) {
    out << right << setw(4) << cstmr.id << "|";
-   out << left << setw(3) << cstmr.total_wait;
+   out << left << setw(3) << *cstmr.time - cstmr.arrival_time;
    return out;
 }
