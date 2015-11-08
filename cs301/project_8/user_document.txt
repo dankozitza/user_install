@@ -1,0 +1,35 @@
+Program 8 User Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 11/09/2015
+
+   This program, qsim, is a queue simulator. A number of variables need to be 
+entered to run the simulation. They can either be entered on the command line 
+arguments or within the program at io prompts. There is one option, -q, which 
+turns state output off. This greatly increases efficiency so that large 
+simulations can be run.
+
+The source for this program can be found on csci2 in the directory:
+
+/export/home/cs301/cs301145/projects/csci301_8/src
+
+From within that directory enter the following commands:
+
+Compile:
+
+   g++ -c qsim.cpp
+
+Link:
+
+   g++ qsim.o -o qsim
+
+Execute:
+
+   ./qsim
+
+Examples:
+
+   ./qsim 1 100 1 3 7
+
+   ./qsim -q 3 100 5 5000 7
