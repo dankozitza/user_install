@@ -1,0 +1,15 @@
+Program 8 Summary
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 11/09/2015
+
+   I enjoyed messing round with this thing seeing what kind of behavior i could 
+get. One thing i noticed is that the average wait time and longest wait time 
+are only calculated for served customers. I wasn't sure whether this was the 
+desired behavior or not so i left it. This program inspired me to write a 
+seperate tool that times my program execution time. Originally i wrote it so 
+that a customer had a wait_time variable that was incremented every loop. This 
+meant looping through every customer sum_duration times. Because the print 
+function already does this i didn't think it would matter but then i added the 
+-q option and decided a pointer to the time variable would be better.

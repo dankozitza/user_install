@@ -101,7 +101,7 @@ Longest customer wait time: 1
 Customers still in line: 0
 csci2>
 
-Testing line behavior in qsim.cpp in code blocks at lines 111 and 167.
+Testing line behavior in qsim.cpp in code blocks at lines 111 and 152.
 
 csci2>
 csci2>./qsim 1 100 100 2 777
@@ -141,7 +141,7 @@ Longest customer wait time: 2
 Customers still in line: 0
 csci2>
 
-Testing line selection in qsim.cpp in code blocks at lines 236 and 239.
+Testing line selection in qsim.cpp in code blocks at lines 221 and 224.
 
 csci2>
 csci2>./qsim 4 100 100 5 777
