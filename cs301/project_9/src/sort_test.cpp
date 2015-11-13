@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
    bool quiet = false;
    bool increment = false;
    bool decrement = false;
-   unsigned long count;
+   unsigned long long count;
 
    for (int i = 1; i < argc; ++i) {
       if (argv[i][0] == '-') {
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
       cout << fuzz1[f_size - 1] << "\n";
    }
 
-   count = sorters::insert<Value, size_t, unsigned long>(fuzz1, f_size);
+   count = sorters::insert<Value, size_t, unsigned long long>(fuzz1, f_size);
 
    if (!quiet) {
       cout << "\nArray after insert sort:\n   ";
@@ -120,7 +120,9 @@ int main(int argc, char* argv[]) {
       cout << fuzz1[f_size - 1] << "\n";
    }
 
-   cout << "Insert Sort count: " << count << endl;
+   cout << "Insert Sort count: " << count << endl << endl;;
+
+   count = sorters::merge<Value, size_t, unsigned long long>(fuzz2, f_size);
 
    if (!quiet) {
       cout << "\nArray after merge sort:\n   ";
