@@ -18,7 +18,6 @@
 using namespace std;
 
 namespace sorters {
-
    template<class T>
    void exchange(T &v1, T &v2);
 
@@ -27,6 +26,9 @@ namespace sorters {
 
    template<class T, class SizeT, class CountT>
    CountT merge(T a[], SizeT a_size);
+
+   template<class T, class SizeT, class CountT>
+   CountT quick(T a[], SizeT a_size);
 }
 
 template<class T>
@@ -100,5 +102,14 @@ void real_merge(T a[], SizeT low, SizeT mid, SizeT high) {
       a[i] = tmp[tmp_index++];
    delete []tmp;
 }
+
+//template<class T, class SizeT
+//
+//// quick
+////
+////
+//template<class T, class SizeT, class CountT>
+//CountT quick(T a[], SizeT a_size);
+
 
 #endif

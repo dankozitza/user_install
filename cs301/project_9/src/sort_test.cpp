@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
    Value *fuzz1, *fuzz2, *fuzz3; // Arrays of random values to be sorted.
    size_t f_size = 0;            // Size of the fuzz array.
    int seed = 0;                 // Seed to be used to generate random number.
-   int rand_cap = 1000;          // Capacity for numbers generated as values.
+   int rand_cap = 100;           // Capacity for numbers generated as values.
    bool quiet = false;
    bool increment = false;
    bool decrement = false;
