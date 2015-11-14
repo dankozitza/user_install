@@ -133,6 +133,8 @@ int main(int argc, char* argv[]) {
 
    cout << "Merge Sort count: " << count << endl;
 
+   count = sorters::quick<Value, size_t, unsigned long long>(fuzz3, f_size);
+
    if (!quiet) {
       cout << "\nArray after quick sort:\n   ";
       for (int i = 0; i < f_size - 1; ++i)
@@ -150,15 +152,15 @@ int main(int argc, char* argv[]) {
 void help() {
    cout << "\nsort_test is a program used to compare sorting algorithms.\n\n";
    cout << "Usage:\n\n   ";
-   cout << "sort_test [-q] [-n #] [-s #] [-c #]\n\n";
+   cout << "sort_test [-q] [-i] [-d] [-n i] [-s i] [-c i]\n\n";
    cout << "Arguments:\n\n";
    cout << "   -q      Turns quiet mode on. ";
    cout << "Only the final counts will be printed.\n";
    cout << "   -i      Generated values will increment.\n";
    cout << "   -d      Generated Values will decrement.\n";
-   cout << "   -n #    Sets the number of values generated to #.\n";
-   cout << "   -s #    Sets the random seed to #. Ignored if -i or -d options ";
+   cout << "   -n i    Sets the number of values generated to i.\n";
+   cout << "   -s i    Sets the random seed to i. Ignored if -i or -d options ";
    cout << "are given.\n";
-   cout << "   -c #    Sets the maximum random number allowed to # - 1. ";
+   cout << "   -c i    Sets the maximum random number allowed to i - 1. ";
    cout << "Ignored\n           if -i or -d options are given.\n\n";
 }
