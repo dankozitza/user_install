@@ -13,6 +13,8 @@
 #ifndef _SORTERS
 #define _SORTERS
 
+#include <cassert>
+
 using namespace std;
 
 namespace sorters {
@@ -49,34 +51,53 @@ CountT sorters::insert(T a[], SizeT a_size) {
 }
 
 template<class T, class SizeT, class CountT>
+CountT r_merge(T a[], SizeT low, SizeT high);
+
+template<class T, class SizeT>
+void real_merge(T a[], SizeT low, SizeT mid, SizeT high);
+
+template<class T, class SizeT, class CountT>
 CountT sorters::merge(T a[], SizeT a_size) {
+   return r_merge<T, SizeT, CountT>(a, 0, a_size - 1);
+}
+
+template<class T, class SizeT, class CountT>
+CountT r_merge(T a[], SizeT low, SizeT high) {
+   SizeT mid = (low + high) / 2;
+   CountT count = 0;
+   if (low < high) {
+      count += r_merge<T, SizeT, CountT>(a, low, mid);
+      count += r_merge<T, SizeT, CountT>(a, mid + 1, high);
+      real_merge<T, SizeT>(a, low, mid, high);
+      count += high - low + 1;
+   }
+   return count;
+}
+
+template<class T, class SizeT>
+void real_merge(T a[], SizeT low, SizeT mid, SizeT high) {
+   SizeT j = low, k = mid + 1;
+   SizeT tmp_size = high - low + 1;
+   SizeT tmp_index = 0;
    T *tmp;
-   SizeT low = 0, med = a_size / 2;
-   SizeT j = 0, k = med;
-   SizeT tmp_size = 0;
 
-   cout << "a[low ... mid-1]:\n   ";
-   for (int i = 0; i < med; i++)
-      cout << a[i] << " ";
-   cout << endl;
-
-   cout << "a[med ... a_size-1]:\n   ";
-   for (int i = med; i < a_size; ++i)
-      cout << a[i] << " ";
-   cout << endl;
-
-   tmp = new T[a_size];
-   while(j < med && k < a_size) {
+   tmp = new T[tmp_size];
+   while(j < mid + 1 && k < high + 1) {
       if (a[j] < a[k])
-         tmp[tmp_size++] = a[j++];
+         tmp[tmp_index++] = a[j++];
       else
-         tmp[tmp_size++] = a[k++];
+         tmp[tmp_index++] = a[k++];
    }
 
-   cout << "tmp[]:\n";
-   for (int i = 0; i < tmp_size; ++i)
-      cout << tmp[i] << " ";
+   while(j < mid + 1)
+      tmp[tmp_index++] = a[j++];
+   while(k < high + 1)
+      tmp[tmp_index++] = a[k++];
 
+   assert(tmp_index == tmp_size);
+   tmp_index = 0;
+   for (int i = low; i <= high; ++i)
+      a[i] = tmp[tmp_index++];
    delete []tmp;
 }
 

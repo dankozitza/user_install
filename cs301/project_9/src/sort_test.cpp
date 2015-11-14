@@ -2,8 +2,8 @@
 // sort_test.cpp
 //
 // This program is used to compare different sorting algorithms. Each sorting
-// function will be called. The 'count' variable the functions tells the number
-// of characteristic operations done during the sort.
+// function will be called. The 'count' variable the functions return tells the
+// number of characteristic operations done during the sort.
 //
 // Project 9
 // Created by Daniel Kozitza
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
       cout << fuzz1[f_size - 1] << "\n";
    }
 
-   cout << "Insert Sort count: " << count << endl << endl;;
+   cout << "Insert Sort count: " << count << endl;
 
    count = sorters::merge<Value, size_t, unsigned long long>(fuzz2, f_size);
 
