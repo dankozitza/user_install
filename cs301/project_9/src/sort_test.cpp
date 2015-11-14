@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
       }
    }
 
-   if (f_size == 0) {
+   while (f_size <= 0) {
       cout << "Enter the number of generated values: ";
       cin >> f_size;
    }

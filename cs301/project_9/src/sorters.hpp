@@ -60,7 +60,7 @@ template<class T, class SizeT, class CountT>
 CountT r_merge(T a[], SizeT low, SizeT high);
 
 template<class T, class SizeT>
-void real_merge(T a[], SizeT low, SizeT mid, SizeT high);
+void merge_segments(T a[], SizeT low, SizeT mid, SizeT high);
 
 // merge
 //
@@ -78,14 +78,14 @@ CountT r_merge(T a[], SizeT low, SizeT high) {
    if (low < high) {
       count += r_merge<T, SizeT, CountT>(a, low, mid);
       count += r_merge<T, SizeT, CountT>(a, mid + 1, high);
-      real_merge<T, SizeT>(a, low, mid, high);
+      merge_segments<T, SizeT>(a, low, mid, high);
       count += 2 * (high - low + 1);
    }
    return count;
 }
 
 template<class T, class SizeT>
-void real_merge(T a[], SizeT low, SizeT mid, SizeT high) {
+void merge_segments(T a[], SizeT low, SizeT mid, SizeT high) {
    SizeT j = low, k = mid + 1;
    SizeT tmp_size = high - low + 1;
    SizeT tmp_index = 0;
@@ -132,7 +132,7 @@ CountT r_quick(T a[], SizeT low, SizeT high) {
    CountT count = 0;
    SizeT i, j;
    if (low < high) {
-      T pivot = a[low];
+      T pivot = a[(high + low) / 2];
       partition<T, SizeT>(a, low, high, pivot, i, j);
       count += high - low + 1;
 
@@ -147,11 +147,11 @@ void partition(T a[], SizeT low, SizeT high, T pivot, SizeT &i, SizeT &j) {
    SizeT lasts1 = low, firstU = low, firsts3 = high + 1;
    while (firstU < firsts3) {
       if (a[firstU] < pivot) // s1
-         sorters::exchange(a[firstU++], a[lasts1++]);
+         sorters::exchange<T>(a[firstU++], a[lasts1++]);
       else if (a[firstU] == pivot) // s2
          ++firstU;
       else // s3
-         sorters::exchange(a[firstU], a[--firsts3]);
+         sorters::exchange<T>(a[firstU], a[--firsts3]);
    }
    if (lasts1 > 0)
       --lasts1;
