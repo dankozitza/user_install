@@ -1,0 +1,74 @@
+Project 9 Tests
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 Section 2
+Due 11/16/2015
+
+csci2>
+csci2>pwd
+/export/home/cs301/cs301145/projects/csci301_9
+csci2>
+
+Testing boundary case for sort functions.
+
+csci2>
+csci2>./sort_test -s 7 -n 1
+Fuzz array before being sorted:
+   64
+
+Array after insert sort:
+   64
+Insert Sort count: 0
+
+Array after merge sort:
+   64
+Merge Sort count: 0
+
+Array after quick sort:
+   64
+Quick Sort count: 0
+
+csci2>
+
+Testing sorter behavior on populated array.
+
+csci2>
+csci2>./sort_test -s 7 -c 10 -n 5 
+Fuzz array before being sorted:
+   4 6 8 4 1
+
+Array after insert sort:
+   1 4 4 6 8
+Insert Sort count: 10
+
+Array after merge sort:
+   1 4 4 6 8
+Merge Sort count: 24
+
+Array after quick sort:
+   1 4 4 6 8
+Quick Sort count: 12
+
+csci2>
+
+Testing general count results.
+
+csci2>
+csci2>./sort_test -q -s 7 -n 100
+Insert Sort count: 2477
+Merge Sort count: 1344
+Quick Sort count: 539
+
+csci2>
+csci2>./sort_test -q -i -n 100
+Insert Sort count: 99
+Merge Sort count: 1344
+Quick Sort count: 586
+
+csci2>
+csci2>./sort_test -q -d -n 100
+Insert Sort count: 5049
+Merge Sort count: 1344
+Quick Sort count: 573
+
+csci2>
