@@ -1,4 +1,4 @@
-# e3b3630f37a77f61eb8e51d964e44e85
+# 5daab7d992519e6ca4ffe0fd34cd8b39
 # Generated with vfnmkmc by the mc program.
 PREFIX=/usr/local
 CFLAGS=-O$(O) 
