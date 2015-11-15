@@ -1,0 +1,7 @@
+alias vfnmake '/export/home/cs301/cs301145/projects/mc/deps/vfnmake/vfnmake'
+alias mc '/export/home/cs301/cs301145/projects/mc/mc'
+alias vim '/export/home/cs301/cs301145/programs/vim'
+alias wget_user_install 'rm -f master.zip; wget https://github.com/dankozitza/user_install/archive/master.zip --no-check-certificate'
+
+setenv VIMRUNTIME /export/home/cs301/cs301145/programs/vim-master/runtime
+setenv PATH "$PATH"":/export/home/cs301/cs301145/bin"
