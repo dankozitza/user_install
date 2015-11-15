@@ -8,10 +8,6 @@ CountT r_quick(T a[], SizeT low, SizeT high);
 template<class T, class SizeT>
 void partition(T a[], SizeT low, SizeT high, T pivot, SizeT &i, SizeT &j);
 
-// quick
-//
-//
-//
 template<class T, class SizeT, class CountT>
 CountT sorters::quick(T a[], SizeT a_size) {
    return r_quick<T, SizeT, CountT>(a, 0, a_size - 1);

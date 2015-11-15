@@ -8,10 +8,6 @@ CountT r_merge(T a[], SizeT low, SizeT high);
 template<class T, class SizeT>
 void merge_segments(T a[], SizeT low, SizeT mid, SizeT high);
 
-// merge
-//
-//
-//
 template<class T, class SizeT, class CountT>
 CountT sorters::merge(T a[], SizeT a_size) {
    return r_merge<T, SizeT, CountT>(a, 0, a_size - 1);

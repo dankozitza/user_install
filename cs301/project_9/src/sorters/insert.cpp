@@ -9,10 +9,6 @@ void sorters::exchange(T &v1, T &v2) {
    v1 = tmp;
 }
 
-// insert
-//
-//
-//
 template<class T, class SizeT, class CountT>
 CountT sorters::insert(T a[], SizeT a_size) {
    SizeT k, j;
