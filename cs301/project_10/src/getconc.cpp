@@ -64,9 +64,11 @@ int main(int argc, char *argv[]) {
 
       ifs.get(c);
    }
+   // in case the last character in the file is a letter
+   if (w_size > 0)
+      conc.insert(word);
 
    cout << conc;
-
    return 0;
 }
 

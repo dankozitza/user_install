@@ -100,6 +100,7 @@ size_t concordance::length() {
 //
 // Pre-condition: A concordance `s`.
 // Post-condition: That concordance written to `out_s`.
+//
 ostream& operator<<(ostream &out_s, concordance &conc) {
    out_s << "Word        Count\n";
    out_s << "-----------------\n";
