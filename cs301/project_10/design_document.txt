@@ -1,0 +1,36 @@
+Project 10 Design Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 11/25/2015
+
+Introduction:
+
+   This program, getconc, takes one command line argument (a file name) and 
+outputs a concordance of it's contents. A concordance is a listing of all the
+words that appear in the file along with the number of times each word appears.
+
+Data Structures:
+
+   The main data structure being used is a binary search tree implemented in
+the concordance class. It's nodes consist of words and counts along with pointers
+to it's child nodes. Other data structures used are character arrays used to hold
+words.
+
+Functions:
+
+   The concordance class has four main functions. The insert function takes a 
+word and adds it to the concordance. if the word already exists that node's 
+count gets incremented. The get_count function takes a word and returns the 
+count for that node. The length function returns the number of nodes in the 
+list. The operator<< function is used to write the contents of the concordance
+to a stream.
+
+The Main Program:
+
+   The main program first handles the command line, then opens the file given 
+on the command line. Most of the work it does is parsing that file and placing 
+words into the concordance object. After it has parsed the entire file it 
+writes the concordance to stdout using the overloaded operator<< function. It 
+also contains a small function for testing the unused concordance functions. 
+This can be activated by entering 'Z' as the file name.

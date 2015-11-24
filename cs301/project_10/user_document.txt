@@ -1,0 +1,28 @@
+Project 10 User Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 11/25/2015
+
+This program, getconc, will generate a concordance for the file entered on the
+command line. It will work on any text file. Because this version of getconc
+uses a binary search tree to store the words it is much more efficient. It can
+be called on very large text files.
+
+The source for this program can be found on csci2 in the directory:
+
+/export/home/cs301/cs301145/projects/csci301_10/src
+
+From within that directory enter the following commands:
+
+Compile:
+
+   g++ -c concordance.cpp -c getconc.cpp
+
+Link:
+
+   g++ concordance.o getconc.o -o getconc
+
+Execute:
+
+   ./getconc FILE
