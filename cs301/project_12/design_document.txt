@@ -1,0 +1,36 @@
+Project 12 Design Document
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 12/11/2015
+
+Introduction:
+
+   This program, sort_test, is used to compare different sorting algorithms. 
+The four algorithms being tested are insert, merge, quick, and heap sort. Each
+function has been augmented to return a 'count' variable that tells the number 
+of characteristic operations performed during the sort.
+
+Data Structures:
+
+   The only data structures being used in this program are three arrays of 
+values. These arrays are first populated with random values then each one is 
+sorted by one of the three sorting algorithms. With the -i or -d options the 
+arrays also can be filled with incrementing or decrementing values.
+
+Functions:
+
+   There are four primary functions being used in this program. The first, 
+sorters::insert, sorts an array of values using the insert sort algorithm. The 
+second, sorters::merge, sorts an array of values using the merge sort 
+algorithm. The third, sorters::quick, sorts an array of values using the quick 
+sort algorithm. The last, sorters::heap, sorts an array of values using the heap
+sort algorithm. Each of these functions returns a 'count' variable which tells
+the number of characteristic operations done during the sort.
+
+The Main Function:
+
+   The main function handles everything other than the sorting. First it 
+handles user input, then it allocates three arrays of values and fills them 
+with values. Lastly it runs each of the sorting algorithms and prints the
+results.

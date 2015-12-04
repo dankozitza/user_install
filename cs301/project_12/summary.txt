@@ -1,0 +1,10 @@
+Project 12 Summary
+Created by Daniel Kozitza
+account number cs301145
+CSCI 301 section 2
+Due 12/11/2015
+
+   It was interesting finding the characteristic operations of each of these. 
+Working with all three of them gave me a much better idea of how they all work. 
+I found out by accident that in the partition function in sorters/quick.cpp i 
+was able to call sorters::exchange(...) without a type specifier.
