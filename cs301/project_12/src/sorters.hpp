@@ -29,9 +29,13 @@ namespace sorters {
 
    template<class T, class SizeT, class CountT>
    CountT quick(T a[], SizeT a_size);
+
+   template<class T, class SizeT, class CountT>
+   CountT heap(T a[], SizeT a_size);
 }
 
 #include "sorters/insert.tpp"
 #include "sorters/merge.tpp"
 #include "sorters/quick.tpp"
+#include "sorters/heap.tpp"
 #endif

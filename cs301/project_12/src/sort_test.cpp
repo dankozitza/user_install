@@ -13,6 +13,7 @@
 //
 
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include "sorters.hpp"
 
@@ -146,21 +147,21 @@ int main(int argc, char* argv[]) {
          cout << fuzz2[i] << " ";
       cout << fuzz2[f_size - 1] << "\n";
    }
-   cout << "Quick Sort count: " << count << "\n\n";
+   cout << "Quick Sort count: " << count << endl;
 
-   //// set fuzz2 values for heap sort
-   //for (int i = 0; i < f_size; ++i)
-   //   fuzz2[i] = fuzz1[i];
+   // set fuzz2 values for heap sort
+   for (int i = 0; i < f_size; ++i)
+      fuzz2[i] = fuzz1[i];
 
-   //count = sorters::heap<Value, size_t, unsigned long long>(fuzz2, f_size);
+   count = sorters::heap<Value, size_t, unsigned long long>(fuzz2, f_size);
 
-   //if (!quiet) {
-   //   cout << "\nArray after heap sort:\n   ";
-   //   for (int i = 0; i < f_size - 1; ++i)
-   //      cout << fuzz2[i] << " ";
-   //   cout << fuzz2[f_size - 1] << "\n";
-   //}
-   //cout << "Heap Sort count: " << count << "\n\n";
+   if (!quiet) {
+      cout << "\nArray after heap sort:\n   ";
+      for (int i = 0; i < f_size - 1; ++i)
+         cout << fuzz2[i] << " ";
+      cout << fuzz2[f_size - 1] << "\n";
+   }
+   cout << "Heap Sort count: " << count << "\n\n";
 
    delete []fuzz1;
    delete []fuzz2;

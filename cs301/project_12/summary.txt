@@ -6,5 +6,6 @@ Due 12/11/2015
 
    It was interesting finding the characteristic operations of each of these. 
 Working with all three of them gave me a much better idea of how they all work. 
-I found out by accident that in the partition function in sorters/quick.cpp i 
-was able to call sorters::exchange(...) without a type specifier.
+The heap sort seems to be the most efficient assuming it's counting
+characteristic operations correctly. The only time it is beaten is by insert
+sort on an incrementing list.
