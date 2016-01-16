@@ -310,7 +310,7 @@
     <keybind key="A-z">
       <action name="Resize"/>
     </keybind>
-    <keybind key="A-x">
+    <keybind key="A-d">
       <action name="Close"/>
     </keybind>
   </keyboard>

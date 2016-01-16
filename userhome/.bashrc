@@ -28,8 +28,10 @@ function off {
 	else
 		echo "no vms running, shutting down"
 		echo
-		su -c 'shutdown'
+		#su -c 'shutdown'
+		shutdown now
 	fi
 }
 
 #PS1='[\u@\h \W]\$ '
+}}}}}}}}}}}}

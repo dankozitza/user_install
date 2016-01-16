@@ -16,6 +16,6 @@
 # exec startxfce4
 # ...or the Window Manager of your choice
 
-$HOME/.screenlayout/2-hp19-dell32.sh
+$HOME/.screenlayout/2-acer19-dell32.sh
 startp
 exec dbus-launch openbox
