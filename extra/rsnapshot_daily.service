@@ -1,10 +1,12 @@
 [Unit]
 Description=startup service for daily rsnapshot
+After=network.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/bash -c "/usr/bin/timedatectl | /usr/bin/grep Local > /root/backuptimestamp"
 ExecStart=/usr/bin/rsnapshot daily
+ExecStartPost=/usr/bin/rsnapshot_post_stat.pl
 
 [Install]
 WantedBy=multi-user.target
