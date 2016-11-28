@@ -1,0 +1,23 @@
+#! /bin/sh
+# /etc/init.d/mount_media
+#
+
+touch /var/lock/mount_media
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting script mount_media "
+    mount /dev/sdc3 /mnt/media
+    ;;
+  stop)
+    echo "Stopping script mount_media"
+    umount /dev/sdc3
+    ;;
+  *)
+    echo "Usage: /etc/init.d/mount_media {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -5,11 +5,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+#export GOPATH=$HOME/go
+#export PATH=$PATH:$GOPATH/bin
 
 alias ls='ls --color=auto'
-alias sc='systemctl'
+#alias sc='systemctl'
 alias cpueat="while true; do date; ps auxf | awk '{if(\$8==\"D\") print $0;}\'; sleep 1; done"
 alias save_vms="echo 'shutting down running vms'; VBoxManage list runningvms | sed -r 's/\"//' | sed -r 's/\".*$//' | xargs -i VBoxManage controlvm '{}' savestate"
 
@@ -34,4 +34,3 @@ function off {
 }
 
 #PS1='[\u@\h \W]\$ '
-}}}}}}}}}}}}
