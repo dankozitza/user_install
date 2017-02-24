@@ -1,0 +1,23 @@
+#! /bin/sh
+# /etc/init.d/mount_backup
+#
+
+touch /var/lock/mount_backup
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting script mount_backup "
+    mount /dev/sdb1 /mnt/backup
+    ;;
+  stop)
+    echo "Stopping script mount_backup"
+    umount /dev/sdb1
+    ;;
+  *)
+    echo "Usage: /etc/init.d/mount_backup {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -9,6 +9,10 @@ sleep 2
 ln init.d/mount_media /etc/init.d/mount_media
 chmod 755 /etc/init.d/mount_media
 update-rc.d mount_media defaults
+
+ln init.d/mount_backup /etc/init.d/mount_backup
+chmod 755 /etc/init.d/mount_backup
+update-rc.d mount_backup defaults
 #
 ###
 
@@ -20,8 +24,10 @@ fi
 
 ### set git name and email ###
 #
-git config --global user.name "Dan Kozitza"
-git config --global user.email "dankoz@gmx.us"
+#git config --system user.name "Dan Kozitza"
+#git config --system user.email "dankoz@gmx.us"
+#git config --system color.diff always
+#git config --system color.status true
 #
 ###
 
@@ -69,39 +75,39 @@ git config --global user.email "dankoz@gmx.us"
 #
 ###
 
-### program download+installation ***
-#
-#echo "\n!--- Now going to install a few programs ---!\n"
-#sleep 2
-#
+#### program download+installation ***
+##
+##echo "\n!--- Now going to install a few programs ---!\n"
+##sleep 2
+##
 #apt-get -q install vim
-apt-get -q install wget
-apt-get -q install rsnapshot
-#apt-get -q install openbox
-#apt-get -q install xorg
-#apt-get -q install xorg-xinit
-#apt-get -q install xfce4-terminal
-#apt-get -q install xfce4
-#apt-get -q install arandr
-#apt-get -q install git
-#apt-get -q install go
+#apt-get -q install wget
+#apt-get -q install rsnapshot
+##apt-get -q install openbox
+##apt-get -q install xorg
+##apt-get -q install xorg-xinit
+##apt-get -q install xfce4-terminal
+##apt-get -q install xfce4
+##apt-get -q install arandr
+##apt-get -q install git
+##apt-get -q install go
 #apt-get -q install mpc
-apt-get -q install ncmpcpp
-#apt-get -q install alsa-utils
-apt-get -q install htop
-#apt-get -q install surf
-apt-get -q install dwb
-#apt-get -q install gst-plugins-good
-#apt-get -q install dmenu
+#apt-get -q install ncmpcpp
+##apt-get -q install alsa-utils
+#apt-get -q install htop
+##apt-get -q install surf
+#apt-get -q install dwb
+##apt-get -q install gst-plugins-good
+##apt-get -q install dmenu
 #apt-get -q install figlet
-#apt-get -q install flashplugin
-#apt-get -q install transmission-gtk
-apt-get -q install scrot
-#apt-get -q install gimp
-apt-get -q install epdfview
-apt-get -q install tor
-#
-###
+##apt-get -q install flashplugin
+##apt-get -q install transmission-gtk
+#apt-get -q install scrot
+##apt-get -q install gimp
+##apt-get -q install epdfview
+#apt-get -q install tor
+##
+####
 
 ### user setup ###
 #
@@ -132,7 +138,7 @@ cp userhome/.vimrc "$USER_HOME.vimrc"
 #mkdir $USER_HOME/go/pkg
 
 # make sure user owns all their files
-chown -R $USER_NAME $USER_HOME
+#chown -R $USER_NAME $USER_HOME
 #
 ###
 
