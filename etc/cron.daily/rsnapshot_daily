@@ -1,0 +1,5 @@
+#!/bin/sh
+# daily script to do timestamp backup and post status
+/bin/date > /root/backuptimestamp
+/usr/bin/rsnapshot daily
+#/usr/bin/rsnapshot_post_stat.pl

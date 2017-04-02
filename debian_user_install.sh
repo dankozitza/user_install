@@ -6,13 +6,23 @@ USER_NAME=$1
 #
 echo "\n!--- installing init.d scripts ---!\n"
 sleep 2
-ln init.d/mount_media /etc/init.d/mount_media
+ln etc/init.d/mount_media /etc/init.d/mount_media
 chmod 755 /etc/init.d/mount_media
 update-rc.d mount_media defaults
 
-ln init.d/mount_backup /etc/init.d/mount_backup
+ln etc/init.d/mount_backup /etc/init.d/mount_backup
 chmod 755 /etc/init.d/mount_backup
 update-rc.d mount_backup defaults
+#
+###
+
+### install cron scripts ###
+#
+echo "\n!--- installing cron scripts ---!\n"
+sleep 2
+ln etc/rsnapshot.conf /etc/rsnapshot.conf
+ln etc/cron.daily/rsnapshot_daily /etc/cron.daily/rsnapshot_daily
+chmod 755 /etc/cron.daily/rsnapshot_daily
 #
 ###
 
