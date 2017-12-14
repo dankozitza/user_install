@@ -4,25 +4,25 @@ USER_NAME=$1
 
 ### install init.d scripts ###
 #
-echo "\n!--- installing init.d scripts ---!\n"
-sleep 2
-ln etc/init.d/mount_media /etc/init.d/mount_media
-chmod 755 /etc/init.d/mount_media
-update-rc.d mount_media defaults
+#echo "\n!--- installing init.d scripts ---!\n"
+#sleep 2
+#ln etc/init.d/mount_media /etc/init.d/mount_media
+#chmod 755 /etc/init.d/mount_media
+#update-rc.d mount_media defaults
 
-ln etc/init.d/mount_backup /etc/init.d/mount_backup
-chmod 755 /etc/init.d/mount_backup
-update-rc.d mount_backup defaults
+#ln etc/init.d/mount_backup /etc/init.d/mount_backup
+#chmod 755 /etc/init.d/mount_backup
+#update-rc.d mount_backup defaults
 #
 ###
 
 ### install cron scripts ###
 #
-echo "\n!--- installing cron scripts ---!\n"
-sleep 2
-ln etc/rsnapshot.conf /etc/rsnapshot.conf
-ln etc/cron.daily/rsnapshot_daily /etc/cron.daily/rsnapshot_daily
-chmod 755 /etc/cron.daily/rsnapshot_daily
+#echo "\n!--- installing cron scripts ---!\n"
+#sleep 2
+#ln etc/rsnapshot.conf /etc/rsnapshot.conf
+#ln etc/cron.daily/rsnapshot_daily /etc/cron.daily/rsnapshot_daily
+#chmod 755 /etc/cron.daily/rsnapshot_daily
 #
 ###
 
@@ -34,10 +34,10 @@ fi
 
 ### set git name and email ###
 #
-#git config --system user.name "Dan Kozitza"
-#git config --system user.email "dankoz@gmx.us"
-#git config --system color.diff always
-#git config --system color.status true
+git config --system user.name "Dan Kozitza"
+git config --system user.email "dankoz@gmx.us"
+git config --system color.diff always
+git config --system color.status true
 #
 ###
 
@@ -90,7 +90,7 @@ fi
 ##echo "\n!--- Now going to install a few programs ---!\n"
 ##sleep 2
 ##
-#apt-get -q install vim
+apt-get -q install vim
 #apt-get -q install wget
 #apt-get -q install rsnapshot
 ##apt-get -q install openbox
@@ -104,7 +104,7 @@ fi
 #apt-get -q install mpc
 #apt-get -q install ncmpcpp
 ##apt-get -q install alsa-utils
-#apt-get -q install htop
+apt-get -q install htop
 ##apt-get -q install surf
 #apt-get -q install dwb
 ##apt-get -q install gst-plugins-good
@@ -125,7 +125,7 @@ fi
 #sleep 2
 #
 #useradd -m -s /bin/bash $USER_NAME
-#passwd $USER_NAME
+passwd $USER_NAME
 #
 ###
 
@@ -142,13 +142,17 @@ sleep 2
 cp -r userhome/.irssi "$USER_HOME.irssi"
 cp userhome/.vimrc "$USER_HOME.vimrc"
 
+if [[ "$USER_NAME" != "root" ]]; then
+   cp userhome/.vimrc /root/.vimrc;
+fi
+
 #openbox --reconfigure
 
 #mkdir -p $USER_HOME/go/src/github.com/dankozitza
 #mkdir $USER_HOME/go/pkg
 
 # make sure user owns all their files
-#chown -R $USER_NAME $USER_HOME
+chown -R $USER_NAME $USER_HOME
 #
 ###
 
