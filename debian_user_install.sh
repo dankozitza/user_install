@@ -85,13 +85,32 @@ git config --system color.status true
 #
 ###
 
-#### program download+installation ***
-##
+### user setup ###
+#
+echo "\n!--- Now going to set up user $USER_NAME ---!\n"
+sleep 2
+#
+#useradd -m -s /bin/bash $USER_NAME
+#
+# for remote userhome
+mkdir /mnt/winderp
+mount /dev/sda2 /mnt/winderp
+useradd -m -s /bin/bash -d /mnt/winderp/$USER_NAME $USER_NAME
+USER_HOME="/mnt/winderp/$USER_NAME/"
+
+echo "\n!--- Set password for user $USER_NAME ---!\n"
+passwd $USER_NAME
+#
+###
+
+### program download+installation ###
+#
 ##echo "\n!--- Now going to install a few programs ---!\n"
 ##sleep 2
 ##
 apt-get -q install vim
-#apt-get -q install wget
+apt-get -q install htop
+apt-get -q install wget
 #apt-get -q install rsnapshot
 ##apt-get -q install openbox
 ##apt-get -q install xorg
@@ -104,7 +123,6 @@ apt-get -q install vim
 #apt-get -q install mpc
 #apt-get -q install ncmpcpp
 ##apt-get -q install alsa-utils
-apt-get -q install htop
 ##apt-get -q install surf
 #apt-get -q install dwb
 ##apt-get -q install gst-plugins-good
@@ -116,20 +134,10 @@ apt-get -q install htop
 ##apt-get -q install gimp
 ##apt-get -q install epdfview
 #apt-get -q install tor
-##
-####
-
-### user setup ###
-#
-#echo "\n!--- Now going to set up user $USER_NAME ---!\n"
-#sleep 2
-#
-#useradd -m -s /bin/bash $USER_NAME
-passwd $USER_NAME
 #
 ###
 
-### user+program configuration ***
+## user+program configuration ***
 #
 echo "\n!--- Now going to configure programs ---!\n"
 sleep 2
@@ -139,8 +147,8 @@ sleep 2
 #find userhome/ -maxdepth 1 -mindepth 1 -exec cp -r {} $USER_HOME \;
 
 #cp userhome/.bashrc "$USER_HOME.bashrc"
-cp -r userhome/.irssi "$USER_HOME.irssi"
-cp userhome/.vimrc "$USER_HOME.vimrc"
+#cp -r userhome/.irssi "$USER_HOME.irssi"
+#cp userhome/.vimrc "$USER_HOME.vimrc"
 
 if [[ "$USER_NAME" != "root" ]]; then
    cp userhome/.vimrc /root/.vimrc;
@@ -152,11 +160,11 @@ fi
 #mkdir $USER_HOME/go/pkg
 
 # make sure user owns all their files
-chown -R $USER_NAME $USER_HOME
+#chown -R $USER_NAME $USER_HOME
 #
 ###
 
-echo "\n!--- Done ---!\n"
+echo "\n!--- Done! ---!\n"
 
 ### virtualbox host setup ###
 #

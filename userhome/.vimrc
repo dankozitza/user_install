@@ -1,7 +1,7 @@
 " ~/.vimrc (configuration file for vim only)
 set tabstop=3
 set shiftwidth=3
-"set expandtab
+set expandtab
 set nu
 set smarttab
 set nobackup
