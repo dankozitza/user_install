@@ -94,8 +94,8 @@ sleep 2
 
 # for remote userhome
 mkdir /mnt/winderp
-useradd -m -s /bin/bash -u 828 -d /mnt/winderp/$USER_NAME $USER_NAME
-mount -t ntfs-3g -o uid=828 /dev/sda2 /mnt/winderp
+useradd -m -s /bin/bash -u 1521 -d /mnt/winderp/$USER_NAME $USER_NAME
+mount -t ntfs-3g -o uid=1521 /dev/sda2 /mnt/winderp
 
 USER_HOME="/mnt/winderp/$USER_NAME/"
 
@@ -106,12 +106,18 @@ passwd $USER_NAME
 
 ### program download+installation ###
 #
-##echo "\n!--- Now going to install a few programs ---!\n"
-##sleep 2
-##
+echo "\n!--- Now going to install a few programs ---!\n"
+sleep 2
+
+apt-get update
 apt-get -q install vim
 apt-get -q install htop
 apt-get -q install wget
+apt-get -q install make
+apt-get -q install g++
+apt-get -q install freeglut3-dev
+apt-get -q install libpcre++-dev
+apt-get -q install libglm-dev
 #apt-get -q install rsnapshot
 ##apt-get -q install openbox
 ##apt-get -q install xorg
@@ -153,6 +159,7 @@ sleep 2
 
 if [[ "$USER_NAME" != "root" ]]; then
    cp userhome/.vimrc /root/.vimrc;
+   rm /root/.bashrc;
    ln extra/root_bashrc /root/.bashrc;
 fi
 
