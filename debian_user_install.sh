@@ -93,8 +93,8 @@ sleep 2
 #useradd -m -s /bin/bash $USER_NAME
 
 # for remote userhome
-useradd -m -s /bin/bash -u 828 -d /mnt/winderp/$USER_NAME $USER_NAME
 mkdir /mnt/winderp
+useradd -m -s /bin/bash -u 828 -d /mnt/winderp/$USER_NAME $USER_NAME
 mount -t ntfs-3g -o uid=828 /dev/sda2 /mnt/winderp
 
 USER_HOME="/mnt/winderp/$USER_NAME/"
@@ -153,6 +153,7 @@ sleep 2
 
 if [[ "$USER_NAME" != "root" ]]; then
    cp userhome/.vimrc /root/.vimrc;
+   ln extra/root_bashrc /root/.bashrc;
 fi
 
 #openbox --reconfigure
