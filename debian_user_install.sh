@@ -89,13 +89,14 @@ git config --system color.status true
 #
 echo "\n!--- Now going to set up user $USER_NAME ---!\n"
 sleep 2
-#
+
 #useradd -m -s /bin/bash $USER_NAME
-#
+
 # for remote userhome
+useradd -m -s /bin/bash -u 828 -d /mnt/winderp/$USER_NAME $USER_NAME
 mkdir /mnt/winderp
-mount /dev/sda2 /mnt/winderp
-useradd -m -s /bin/bash -d /mnt/winderp/$USER_NAME $USER_NAME
+mount -t ntfs-3g -o uid=828 /dev/sda2 /mnt/winderp
+
 USER_HOME="/mnt/winderp/$USER_NAME/"
 
 echo "\n!--- Set password for user $USER_NAME ---!\n"
