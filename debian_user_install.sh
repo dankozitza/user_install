@@ -99,6 +99,9 @@ mount -t ntfs-3g -o uid=1521 /dev/sda2 /mnt/winderp
 
 USER_HOME="/mnt/winderp/$USER_NAME/"
 
+echo "\n!--- Set password for root ---!\n"
+passwd
+
 echo "\n!--- Set password for user $USER_NAME ---!\n"
 passwd $USER_NAME
 #
@@ -110,14 +113,16 @@ echo "\n!--- Now going to install a few programs ---!\n"
 sleep 2
 
 apt-get update
+apt-get upgrade
+apt-get -q install irssi
 apt-get -q install vim
 apt-get -q install htop
-apt-get -q install wget
-apt-get -q install make
-apt-get -q install g++
-apt-get -q install freeglut3-dev
-apt-get -q install libpcre++-dev
-apt-get -q install libglm-dev
+#apt-get -q install wget
+#apt-get -q install make
+#apt-get -q install g++
+#apt-get -q install freeglut3-dev
+#apt-get -q install libpcre++-dev
+#apt-get -q install libglm-dev
 #apt-get -q install rsnapshot
 ##apt-get -q install openbox
 ##apt-get -q install xorg
