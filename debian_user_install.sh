@@ -94,8 +94,8 @@ sleep 2
 
 # for remote userhome
 mkdir /mnt/winderp
-useradd -m -s /bin/bash -u 1521 -d /mnt/winderp/$USER_NAME $USER_NAME
-mount -t ntfs-3g -o uid=1521 /dev/sda2 /mnt/winderp
+useradd -m -s /bin/bash -u 1524 -d /mnt/winderp/$USER_NAME $USER_NAME
+mount -t ntfs-3g -o uid=1524 /dev/sda2 /mnt/winderp
 
 USER_HOME="/mnt/winderp/$USER_NAME/"
 
@@ -117,6 +117,7 @@ apt-get upgrade
 apt-get -q install irssi
 apt-get -q install vim
 apt-get -q install htop
+#apt-get -q install curl
 #apt-get -q install wget
 #apt-get -q install make
 #apt-get -q install g++
@@ -146,6 +147,7 @@ apt-get -q install htop
 ##apt-get -q install gimp
 ##apt-get -q install epdfview
 #apt-get -q install tor
+##apt-get -q install libjsoncpp-dev
 #
 ###
 
