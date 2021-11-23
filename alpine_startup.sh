@@ -16,6 +16,7 @@ if [ ! yes ]; then
 	git config --system user.email "dankoz@gmx.us";
 	git config --system color.diff always;
 	git config --system color.status true;
+	git config --global credential.helper manager-core
 fi
 
 echo "Installing mechanizm includes"
