@@ -13,15 +13,22 @@ echo "Installing applications"
 #sudo apk add gcc
 
 if [ ! yes ]; then
-	git config --system user.name "dankozitza";
-	git config --system user.email "dankoz@gmx.us";
-	git config --system color.diff always;
-	git config --system color.status true;
-	git config --system credential.helper store;
+echo "Configuring git"
+git config --system user.name "dankozitza"
+git config --system user.email "dankoz@gmx.us"
+git config --system color.diff always
+git config --system color.status true
+git config --system credential.helper store
 fi
 
-echo "Installing mechanizm includes"
-#sudo apk add freeglut-dev
-#sudo apk add jsoncpp-dev
-#sudo apk add glm-dev
+if [ ! yes ]; then
+echo "Installing mechanizm libs"
+sudo apk add freeglut-dev
+sudo apk add jsoncpp-dev
+sudo apk add glm-dev
+fi
 
+if [ ! yes ]; then
+echo "Installing mechanizm"
+git clone https://github.com/dankozitza/mechanizm ~/m;
+fi
