@@ -1,16 +1,22 @@
 # alpine_startup.sh
 
-if [  yes ]; then
+if [ ! yes ]; then
 	echo "script must be configured";
 	exit;
 fi
 
+if [ ! yes ]; then
 echo "Installing applications"
 #sudo apk add screen
 #sudo apk add vim
 #sudo apk add git
 #sudo apk add make
 #sudo apk add gcc
+
+echo "Configuring applications"
+#cp userhome/.bashrc ~
+#cp userhome/.vimrc ~
+fi
 
 if [ ! yes ]; then
 echo "Configuring git"
@@ -36,15 +42,17 @@ fi
 # xfce and vnc
 # https://www.amitnepal.com/alpine-linux-with-xfce-and-vnc-on-a-virtual-machine/
 if [ ! yes ]; then
+echo "Installing xfce4 and vnc"
 # uncomment community in /etc/apk/repositories
-sudo apk update
-sudo apk add setup-xorg-base xfce4 xfce4-terminal lightdm-gtk-greeter xfce4-screensaver dbus-x11 open-vm-tools-gtk faenza-icon-theme xf86-video-vmware xf86-input-mouse xf86-input-keyboard
-sudo Xorg -configure
-cp /root/xorg.conf.new /etc/X11/xorg.conf
-rc-service lightdm start
-rc-update add lightdm
-rc-update add open-vm-tools
-apk add --no-cache ca-certificates curl openssl sudo xvfb x11vnc xfce4 faenza-icon-theme bash
+#sudo apk update
+#sudo apk add alpine-conf
+#sudo setup-xorg-base xfce4 xfce4-terminal lightdm-gtk-greeter xfce4-screensaver dbus-x11 open-vm-tools-gtk faenza-icon-theme xf86-video-vmware xf86-input-mouse xf86-input-keyboard
+#sudo Xorg -configure
+#cp /root/xorg.conf.new /etc/X11/xorg.conf
+#rc-service lightdm start
+#rc-update add lightdm
+#rc-update add open-vm-tools
+#apk add --no-cache ca-certificates curl openssl sudo xvfb x11vnc xfce4 faenza-icon-theme bash
 # start at boot
 #rc-update add local default
 # write following to /etc/local.d/vnc.start

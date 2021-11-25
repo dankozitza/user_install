@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+PS1="\u@\w) "
+
 #export GOPATH=$HOME/go
 #export PATH=$PATH:$GOPATH/bin
 
