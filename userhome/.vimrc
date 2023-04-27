@@ -14,7 +14,7 @@ let perl_sync_dist = 250
 filetype plugin indent on
 
 syntax on
-colorscheme desert
+colorscheme pablo
 
 set so=7
 
