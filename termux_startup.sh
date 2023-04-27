@@ -1,6 +1,6 @@
 # termux_startup.sh
 
-pdir="$HOME/pt"
+pdir="$HOME/p"
 
 if [ ! yes ]; then
 	echo "script must be configured";
