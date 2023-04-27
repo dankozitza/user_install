@@ -1,6 +1,8 @@
 # termux_startup.sh
 
-if [  yes ]; then
+pdir="$HOME/pt"
+
+if [ ! yes ]; then
 	echo "script must be configured";
 	exit;
 fi
@@ -11,10 +13,13 @@ pkg install screen
 pkg install vim
 pkg install clang
 pkg install make
+pkg install jsoncpp
 
 echo "Configuring applications"
 #cp userhome/.bashrc ~
 cp userhome/.vimrc ~
+
+echo "Dont forget to call screen!"
 fi
 
 if [ ! yes ]; then
@@ -28,13 +33,14 @@ fi
 
 if [ ! yes ]; then
 echo "Installing rndstream"
-pkg install jsoncpp
-mkdir p
-git clone https://github.com/dankozitza/rndstream p
-cd p/rndstream; make;
+mkdir $pdir
+git clone https://github.com/dankozitza/rndstream $pdir/rndstream
+make -C $pdir/rndstream;
 fi
 
 if [ ! yes ]; then
 echo "Installing mechanizm"
 git clone https://github.com/dankozitza/mechanizm ~/m;
 fi
+
+
