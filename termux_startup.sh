@@ -3,7 +3,7 @@
 pdir="$HOME/p"
 
 if [ ! yes ]; then
-	echo "script must be configured";
+	echo "Script must be configured!";
 	exit;
 fi
 
@@ -32,14 +32,21 @@ git config --system credential.helper store
 fi
 
 if [ ! yes ]; then
-echo "Installing rndstream"
-mkdir $pdir
-git clone https://github.com/dankozitza/rndstream $pdir/rndstream
-make -C $pdir/rndstream;
+   echo "Downloading rndstream"
+   mkdir $pdir
+   git clone https://github.com/dankozitza/rndstream $pdir/rndstream
+   echo "Building rndstream"
+   make -C $pdir/rndstream
 fi
 
 if [ ! yes ]; then
-echo "Installing mechanizm"
+   echo "Installing rndstream"
+   cp $pdir/rndstream/rndstream $PREFIX/bin
+   chmod +x $PREFIX/bin/rndstream
+fi
+
+if [ ! yes ]; then
+echo "Downloading mechanizm"
 git clone https://github.com/dankozitza/mechanizm ~/m;
 fi
 
