@@ -1,0 +1,3 @@
+EVSwitch Primary State: SCRIPT
+EVSwitch Primary State Safety Kill Switch Tolerance (Performance): %70
+EVSWITCH Verbosity: 5/10

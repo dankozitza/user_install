@@ -1,0 +1,21 @@
+{
+"recursion_str": [""],
+"output_vstr": ["none"],
+"output_str": ["none"],
+"ignore": [0],
+"output": [" ~"],
+"pn": ["rndstream"],
+"handle_ctrl_c": true,
+"verbose": [0],
+"delay": [0.500000],
+"recursion_vstr": [],
+"seed": [2071325196],
+"output_list": ["none"],
+"lines": [1],
+"config": ["/home/morphis/cmd/engineering/terminal/who"],
+"print": [1],
+"frames": [1],
+"delete_temporary_files": true,
+"instance": ["rhkosly"],
+"width": [20]
+}

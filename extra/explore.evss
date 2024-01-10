@@ -1,0 +1,104 @@
+#!~/cmd/evswitch.pl
+##19# #EVSF_beep# # beep # Copyright 2024 Daniel Kozitza
+#20# # command reference
+#21# # message
+##23# # ambient sounds
+##14# # ship engine 1
+##15# # ship engine 2
+##16# # ship engine 3
+##26# # words
+echo You have entered a forrest.; #EVSP_cd_forrest#
+#cmd/engineering/terminal/
+#~/cmd/engineering/audio/
+#~/cmd/engineering/terminal/explore/
+#~/cmd/forrest/
+#~/cmd/
+# mpg123 -q --loop -1 #11#mysterion-low-ship-humming-25686.mp3
+# mpg123 -q --loop -1 #11#archi_soundscape_electric1wav-14417.mp3
+# mpg123 -q --loop -1 #11#deepscanmp3-14662.mp3
+# mpg123 -q --loop -1 #11#under-water-7548.mp3
+# mpg123 -q #EVSA# #11#AIRSTRING_PLUCK_DKM.mp3
+# cat #10#7_evswitch_ship_config.txt; grep -e \#_cmddef evswitch.pl;
+# rndstream -c #12#message -w 30 -l 1 -d -p 1 -rRRRRRRRRRR
+
+# while [ 1 ]; do sleep 1; if [ $(($RANDOM % 60)) -lt 1 ]; then #+1#; fi done
+# mpg123 -q #11#ambient/$(($RANDOM % 2)).mp3
+
+# while [ 1 ]; do #+1#; sleep 5; done
+# rndstream -c #10#words.cfg -rRRRRRRRRRR gen file #10#words_rnd_output -p 80; #+1# #EVSF_listen#
+# sim.pl -m=3 -file-r=#10#words.txt -file-r=#10#words_rnd_output -v=1
+
+# sleep 2; #+1#; sleep 2; #+6#; sleep 1; #+1#;
+# echo who; rndstream -c #10#who -rRRRRRRRRRR #EVSF_who#
+# echo what; rndstream -c #10#what -rRRRRRRRRRR #EVSF_what#
+# echo where; rndstream -c #10#where -rRRRRRRRRRR #EVSF_where#
+# echo when; rndstream -c #10#when -rRRRRRRRRRR #EVSF_when#
+# echo why; rndstream -c #10#why -rRRRRRRRRRR #EVSF_why#
+# echo how; rndstream -c #10#how -rRRRRRRRRRR #EVSF_how#
+# echo sensor status; rndstream -c #10#smsg -rRRRRRRRRRR #EVSF_status#
+# echo image; rndstream -c #10#image -rRRRRRRRRRR #EVSF_sketch#
+
+# #+1# # continuous status
+# while [ 1 ]; do #-4#; sleep #+5#; done
+# 30
+
+# #+1# #EVSF_start# # enter the forrest
+# if [ ! -d forrest ]; then mkdir forrest; fi; echo Welcome to the Forrest\!; #EVSP_cd_forrest#
+
+# if [ ! -f log ]; then ln -s #12#log.txt log; fi
+# #+1# #EVSF_look# # look
+# if [ ! -f map ]; then rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #+4#; fi; #47#; cat map; pwd; ls -fmh --color
+# 100
+# 33
+# ^^.^^.^^nnoorrTTP77,,,,,/\\|-,,,,,,,,                                                                                                                                                                                                                                                                                                                                 
+# echo 100x100 foot area >> map; #+1# >> map; #+2#
+# echo legend: TP7 - trees, ^., - foliage, -\| - trails, nor - rocks
+# #+1# #EVSF_search# # search the area
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Building >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Scroll >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Ghost >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Vehicle >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Cave >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Lake >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Temple >> map; echo Found something\!; fi; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then #+1#; fi
+# name=`#14#rndstream -c #12#person_name -w 6 -l 1 -p 1 -t 0 -o az -rRRRRRR`; touch "person_$name"; #+1# #EVSF_birth#
+# echo Person Emulation $name: >> person_$name; #+1#
+# echo strength $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo luck $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo charisma $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo intelligence $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo dexterity $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo constitution $((($RANDOM % 20) + 1)) >> person_$name; #+1#
+# echo height $((($RANDOM % 5) + 5)) feet >> person_$name; #+1#
+# echo beauty $((($RANDOM % 5) + 5)) >> person_$name; #+1#
+# echo Skills: >> person_$name; #+1#
+# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#+5#' >> person_$name; #+1#
+# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -dnS '#+4#' >> person_$name; #+1#
+# if [ $(($RANDOM % 10)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rdS '#+3#' >> person_$name; fi; #+1#
+# if [ $(($RANDOM % 15)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rndS '#+2#' >> person_$name; fi; #+1#
+# if [ $(($RANDOM % 20)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rnndS '#+1#' >> person_$name; fi
+# acrobatics,animal handling,arcana,athletics,deception,history,insight,intimiddation,investigation,medicine,nature,perception,performance,persuasion,honesty,sleight of hand,stealth,survival,explosives,implotions,potions,advice,soothsaying,arguing,levetation
+
+# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#-2#' #EVSF_train#
+
+# #+1# #EVSF_direction# # check if a direction is blocked
+# #+1# #EVSF_dir#
+# if [ $(($RANDOM % #+1#)) -lt 1 ]; then echo direction blocked; else echo direction is not blocked; fi
+# 8
+
+# #+1# #EVSF_yesno# # ask a yes or no question
+# #+1# #EVSF_yn#
+# if [ $(($RANDOM % 2)) -lt 1 ]; then echo no; else echo yes; fi
+
+# #+1# #EVSF_north# # go north
+# if [ ! -d north ]; then mkdir north; ln -s .. north/south; fi; echo moving north from; pwd; #EVSP_cd_north#
+# #+1# #EVSF_south# # go south
+# if [ ! -d south ]; then mkdir south; ln -s .. south/north; fi; echo moving south from; pwd; #EVSP_cd_south#
+# #+1# #EVSF_east# # go east
+# if [ ! -d east ]; then mkdir east; ln -s .. east/west; fi; echo moving east from; pwd; #EVSP_cd_east#
+# #+1# #EVSF_west# # go west
+# if [ ! -d west ]; then mkdir west; ln -s .. west/east; fi; echo moving west from; pwd; #EVSP_cd_west#
+
+#\n                  <KOAIR_82811_DS_SHUTTLE_Terminal>\n
+
