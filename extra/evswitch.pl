@@ -128,7 +128,7 @@ while (1) {
    <index><s|n> [options] - Run system call at index.
    <size><s|n> [command]  - Define new system call.
    list                   - List system calls.
-   lhk                    - List system calls that begin with an index symbol.
+   lf                     - List functions.
    lc                     - List comments.
    eval [index]           - Evaluate and print one or all system calls.
    script <r|w|ra|wa> <filename.evss>  - Read/Write/Append script from file system.
@@ -252,21 +252,6 @@ while (1) {
       print "\n";
       $prompt = 1;
    }
-   elsif ($in eq "lhk") { # list hot keys #_cmddef
-      my $li = 0;
-      foreach my $line (@cmd_list) {
-         if ($line =~ /^\s*(#?\s*#)(\+?\-?\d+)#/) {
-            my $msg = "$li> ";
-            if ($1 =~ /##/) { $msg = "$li\s> "; }
-            my $tl = $line;
-            if ($tl =~ /#EVSF_(\w+)#/) { $msg .= $1; }
-            if ($tl =~ / #( .+)$/) { $msg .= " -" . $1; }
-            print $msg . "\n";
-         }
-         $li++;
-      }
-      $prompt = 1;
-   }
    elsif ($in eq "lc") { # list comments #_cmddef
       my $ii = 0;
       foreach my $line (@cmd_list) {
@@ -280,7 +265,11 @@ while (1) {
       my $ii = 0; my $found = 0;
       foreach my $line (@cmd_list) {
          if ($line =~ /#EVSF_(\w+)#/) {
-            print "$ii> $line\n";
+            my $func = $1;
+            my $l = $line;
+            $l =~ s/ ?#EVSA#//g;
+            $l =~ s/ ?#EVSF_\w+#//g;
+            print "\[$ii\]\[$func\]> $l\n";
          }
          $ii++;
       }
@@ -292,7 +281,7 @@ while (1) {
       if ($arg ne "") {
          $cmdi = $arg;
          $cmd = $cmd_list[$cmdi];
-         $cmd =~ s/^\s*#\s+//;
+         $cmd =~ s/^#\s+//;
          $eval_print = 0;
          evaluate(); $eval_print = 1;
          print "$arg> $cmd\n";
@@ -302,8 +291,15 @@ while (1) {
          foreach my $tc (@cmd_list) {
             $cmdi = $ii;
             $cmd = $cmd_list[$cmdi];
+            my $fname = "";
+
+            if ($cmd =~ /#EVSF_(\w+)#/) { $fname = $1; $cmd =~ s/^#\s+//; }
+
             $eval_print = 0;
-            if (evaluate() == 0) { print "$ii> $cmd\n"; }
+            if (evaluate() == 0 && $cmd ne "") {
+               if ($fname ne "") { print "\[$ii\]\[$fname\]> $cmd\n"; }
+               else              { print "\[$ii\]> $cmd\n"; }
+            }
             $eval_print = 1;
             $ii++;
          }
@@ -386,13 +382,15 @@ while (1) {
          if ($line =~ /#EVSF_(\w+)#/) { # function syntax #_cmddef
             my $tc = $1;
             my $start = ""; my $end = "";
-            if ($in =~ /^(.*)$tc/) { $start = $1; }
-            if ($in =~ /$tc(.*)$/) { $end = $1; }
+            if ($in =~ /^(.*) $tc /) { $start = $1; }
+            if ($in =~ /^(.*) $tc$/) { $start = $1; }
+            if ($in =~ / $tc (.*)$/) { $end = $1; }
+            if ($in =~ /^$tc (.*)$/) { $end = $1; }
 
             if ($tc eq $in || $start ne "" || $end ne "") {
                $cmdi = $ii;
                $cmd = $start . $line . $end;
-               $cmd =~ s/^\s*#\s*//;
+               $cmd =~ s/^\s*#\s+//;
                fcall_cmd();
                $found = 1;
                break;
@@ -421,15 +419,12 @@ while (1) {
 # Return 0 if command can be executed, 1 if some other action is taken.
 sub evaluate {
 
-   if ($cmd =~ /^\s*#(\D)(.++)/ && $cmd !~ /^\s*#[\+\-]/) { # comment syntax #_cmddef
-      if ($eval_print = 0) { $cmd = ""; return; }
-      my $arg = $1;
+   if ($cmd =~ /^#( |\!)(.++)/) { # comment syntax #_cmddef
+      if ($eval_print == 0) { $cmd = ""; return; }
       my $prefix = "$cmdi> ";
       my $comment = $2;
-      if ($arg eq "#") { $prefix = ""; }
-      elsif ($arg ne " ") { $comment = $arg . $comment; }
       $comment =~ s/\\n/\n$prefix/g;
-      if ($eval_print) { print "$prefix$comment\n"; }
+      print "$prefix$comment\n";
       return 1;
    }
 
@@ -437,76 +432,92 @@ sub evaluate {
       if ($1 =~ /cd_(\w+|_+|\/+)/) { # internal cd symbol #_cmddef
          $chdirl = $1;
       }
+      $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
    }
 
-   if ($cmd =~ /^(.+)( # \S.*)$/) {
+   while ($cmd =~ /^(.+)( # \S.*)$/) {
       $cmd = $1;
    }
 
-   while ($cmd =~ /#EVSC_(\w+)#/) {
-      my $fname = $1;
-      my $found = 0;
-      foreach my $line (@cmd_list) {
-         my $tcmd = "";
-         if ($line =~ /#EVSF_$fname\#/) {
-            $tcmd = $line;
-
-            if ($tcmd =~ /^\s*#(.)/) {
-               if ($1 !~ /^[\+\-\d]/ && $1 !~ /^EVS/) {
-                  $tcmd =~ s/^\s*#\s*//;
-               }
-            }
-
-            $cmd =~ s/#EVSC_$fname\#/$tcmd/;
-            $found = 1;
-            break;
-         }
-      }
-      if (!$found) { break; }
-   }
-
+   my $symbol = "";
    my $last_i = $cmdi;
-   while ($cmd =~ /#(\-?\+?\d+)#/) {
-      my $tci = $1;
-      my $mode = "index";
-      if ($tci =~ /^\+/) { $mode = "inc"; }
-      if ($tci =~ /^\-/) { $mode = "dec"; }
 
-      $tci =~ s/[\-\+]//g;
+   my $T = 1;
+   while ($T) {
 
-      if ($mode eq "inc") {
-         $tci = $last_i + $tci;
-      }
-      if ($mode eq "dec") {
-         $tci = $last_i - $tci;
-      }
+      my $tci = "";
+      my $fname = "";
 
-      my $tcmd = $cmd_list[$tci];
-
-      if ($tcmd =~ /#EVSP_(\w+|_+|\/+)#/) {
+      if ($cmd =~ /#EVSP_(\w+|_+|\/+)#/) {
          if ($1 =~ /cd_(\w+|_+|\/+)/) { # internal cd symbol #_cmddef
             $chdirl = $1;
          }
+         $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
       }
 
-      if ($tcmd =~ /^(.+)( # \S.*)$/) { # trailing comments must have spaces surrounding #_cmddef
-         $tcmd = $1;
-      }
+      if ($cmd =~ /#(\-?\+?\d+)#/) { $tci = $1; $symbol = "index"; }
+      elsif ($cmd =~ /#EVSC_(\w+)#/) { $fname = $1; $symbol = "function"; }
+      else { $T = 0; $symbol = "exit"; }
 
-      if ($tcmd =~ /^\s*#(.)/) {
-         if ($1 !~ /^[\+\-\d]/ && $1 !~ /^EVS/) {
-            $tcmd =~ s/^\s*#\s*//; # line combiner treats comments like a system call #_cmddef
+      if ($symbol eq "index") {
+         
+         my $mode = "index";
+         if ($tci =~ /^\+/) { $mode = "inc"; }
+         if ($tci =~ /^\-/) { $mode = "dec"; }
+
+         $tci =~ s/[\-\+]//g;
+
+         if ($mode eq "inc") {
+            $tci = $last_i + $tci;
          }
-      }
-      $cmd =~ s/#(\+?\-?\d+)#/$tcmd/; # line combination #_cmddef
+         if ($mode eq "dec") {
+            $tci = $last_i - $tci;
+         }
 
-      if ($tcmd =~ /#(\+|\-)\d+#/) {$last_i = $tci;} # line combiner enters line if symbols are found
+         my $tcmd = $cmd_list[$tci];
+
+
+         if ($tcmd =~ /^(.+)( # \S.*)$/) { # trailing comments must have spaces surrounding #_cmddef
+            $tcmd = $1;
+         }
+
+         if ($tcmd =~ /^# /) {
+            $tcmd =~ s/^#\s+//; # line combiner treats commented lines like system calls #_cmddef
+         }
+         $cmd =~ s/#(\+?\-?\d+)#/$tcmd/; # line combination #_cmddef
+
+         if ($tcmd =~ /#(\+|\-)\d+#/) {$last_i = $tci;} # line combiner enters line if symbols are found
+      }
+      elsif ($symbol eq "function") {
+
+	    my $found = 0;
+	    foreach my $line (@cmd_list) {
+	       my $tcmd = "";
+	       if ($line =~ /#EVSF_$fname\#/) {
+	          $tcmd = $line;
+
+               if ($tcmd =~ /^(.+)( # \S.*)$/) {
+                  $tcmd = $1;
+               }
+      
+               if ($tcmd =~ /^# /) {
+                  $tcmd =~ s/^#\s+//;
+               }
+	
+	          $cmd =~ s/#EVSC_$fname\#/$tcmd/;
+	          $found = 1;
+	       }
+	    }
+	    if (!$found) { die "Command $fname has not been defined.\n"; }
+      }
+      else {
+         $T = 0;
+      }
    }
 
-   $cmd =~ s/ ?#EVSA#//g; # argument placement #_cmddef
+   $cmd =~ s/ ?#EVSA#//g;
    $cmd =~ s/ ?#EVSF_\w+#//g;
    $cmd =~ s/ ?#EVSC_\w+#//g;
-   $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//g;
 
    if ($cmd =~ /^\s*$/) {
       return 1;
@@ -528,18 +539,17 @@ sub fcall_cmd {
       }
    }
 
+   if ($chdirl ne "") {
+      chdir($chdirl) or print "EVSwitch cannot enter directory '$chdirl'.\n";
+      $chdirl = "";
+   }
+
+   print "$sc_msg\[ix:$cmdi\]: $cmd\n";
+
    my $ppid = open(my $outfh, "-|", "$cmd 2>&1")
                        || die "can't fork: $!";
 
    push(@cpids, $ppid);
-
-   print "$sc_msg\[id:$ppid\]\[ix:$cmdi\]: $cmd\n";
-
-   if ($chdirl ne "") {
-      sleep 1;
-      chdir($chdirl) or print "EVSwitch cannot enter directory '$chdirl'.\n";
-      $chdirl = "";
-   }
 
    if (!$task_management) {
       $pid = 0;

@@ -1,18 +1,18 @@
-#!~/cmd/evswitch.pl
-##19# #EVSF_beep# # beep # Copyright 2024 Daniel Kozitza
-#20# # command reference
-#21# # message
-##23# # ambient sounds
-##14# # ship engine 1
-##15# # ship engine 2
-##16# # ship engine 3
-##26# # words
+#!/home/morphis/cmd/evswitch.pl
+# #19# #EVSF_beep# # beep # Copyright 2024 Daniel Kozitza
+# 20# # command reference
+# 21# # message
+# #23# # ambient sounds
+# #15# # ship engine 1 mysterion #EVSF_engine_1#
+# #16# # ship engine 2 archi #EVSF_engine_2#
+# #17# # ship engine 3 warp #EVSF_engine_3#
+# #26# # words
 echo You have entered a forrest.; #EVSP_cd_forrest#
-#cmd/engineering/terminal/
-#~/cmd/engineering/audio/
-#~/cmd/engineering/terminal/explore/
-#~/cmd/forrest/
-#~/cmd/
+# /home/morphis/cmd/engineering/terminal/
+# /home/morphis/cmd/engineering/audio/
+# /home/morphis/cmd/engineering/terminal/explore/
+# /home/morphis/cmd/forrest/
+# /home/morphis/cmd/
 # mpg123 -q --loop -1 #11#mysterion-low-ship-humming-25686.mp3
 # mpg123 -q --loop -1 #11#archi_soundscape_electric1wav-14417.mp3
 # mpg123 -q --loop -1 #11#deepscanmp3-14662.mp3
@@ -54,42 +54,69 @@ echo You have entered a forrest.; #EVSP_cd_forrest#
 # echo 100x100 foot area >> map; #+1# >> map; #+2#
 # echo legend: TP7 - trees, ^., - foliage, -\| - trails, nor - rocks
 # #+1# #EVSF_search# # search the area
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Building >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Scroll >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Ghost >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Vehicle >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Cave >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Lake >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then echo Temple >> map; echo Found something\!; fi; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then #+1#; fi
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Building >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Scroll >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Ghost >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Vehicle >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Cave >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Lake >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then echo Temple >> map; echo Found something\!; fi; #+1#
+# #EVSC_var_d10# if [ $d10 -lt 2 ]; then #+1#; fi
 # name=`#14#rndstream -c #12#person_name -w 6 -l 1 -p 1 -t 0 -o az -rRRRRRR`; touch "person_$name"; #+1# #EVSF_birth#
 # echo Person Emulation $name: >> person_$name; #+1#
-# echo strength $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo luck $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo charisma $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo intelligence $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo dexterity $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo constitution $((($RANDOM % 20) + 1)) >> person_$name; #+1#
-# echo height $((($RANDOM % 5) + 5)) feet >> person_$name; #+1#
-# echo beauty $((($RANDOM % 5) + 5)) >> person_$name; #+1#
+# #EVSC_var_d20# echo strength $d20 >> person_$name; #+1#
+# #EVSC_var_d20# echo luck $d20 >> person_$name; #+1#
+# #EVSC_var_d20# echo charisma $d20 >> person_$name; #+1#
+# #EVSC_var_d20# echo intelligence $d20 >> person_$name; #+1#
+# #EVSC_var_d20# echo dexterity $d20 >> person_$name; #+1#
+# #EVSC_var_d20# echo constitution $d20 >> person_$name; #+1#
+# #EVSC_var_d10# echo height $d10 feet >> person_$name; #+1#
+# #EVSC_var_d10# echo beauty $d10 >> person_$name; #+1#
 # echo Skills: >> person_$name; #+1#
 # #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#+5#' >> person_$name; #+1#
 # #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -dnS '#+4#' >> person_$name; #+1#
-# if [ $(($RANDOM % 10)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rdS '#+3#' >> person_$name; fi; #+1#
-# if [ $(($RANDOM % 15)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rndS '#+2#' >> person_$name; fi; #+1#
-# if [ $(($RANDOM % 20)) -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rnndS '#+1#' >> person_$name; fi
+# #EVSC_var_d10# if [ $d10 -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rdS '#+3#' >> person_$name; fi; #+1#
+# #EVSC_var_d12# if [ $d12 -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rndS '#+2#' >> person_$name; fi; #+1#
+# #EVSC_var_d12# if [ $d12 -lt 1 ]; then #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rnndS '#+1#' >> person_$name; fi
 # acrobatics,animal handling,arcana,athletics,deception,history,insight,intimiddation,investigation,medicine,nature,perception,performance,persuasion,honesty,sleight of hand,stealth,survival,explosives,implotions,potions,advice,soothsaying,arguing,levetation
 
 # #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#-2#' #EVSF_train#
 
 # #+1# #EVSF_direction# # check if a direction is blocked
 # #+1# #EVSF_dir#
-# if [ $(($RANDOM % #+1#)) -lt 1 ]; then echo direction blocked; else echo direction is not blocked; fi
-# 8
+# #EVSC_var_coin# if [ $coin -lt 1 ]; then echo direction blocked; else echo direction is not blocked; fi
 
 # #+1# #EVSF_yesno# # ask a yes or no question
 # #+1# #EVSF_yn#
 # if [ $(($RANDOM % 2)) -lt 1 ]; then echo no; else echo yes; fi
+
+# #14#rndstream -c #12#yn -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -o 01 #EVSF_raw_coin#
+# coin=`#EVSC_raw_coin#`; #EVSF_var_coin#
+# #EVSC_var_coin# if [ $coin -lt 1 ]; then echo tails; else echo heads; fi #EVSF_coin#
+
+# #14#rndstream -c #12#d4 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -o 14 #EVSF_raw_d4#
+# d4=`#EVSC_raw_d4#`; #EVSF_var_d4#
+# #EVSC_var_d4# echo; echo "   [$d4]"; #EVSF_d4#
+
+# #14#rndstream -c #12#d6 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -o 16 #EVSF_raw_d6#
+# d6=`#EVSC_raw_d6#`; #EVSF_var_d6#
+# #EVSC_var_d6# echo; echo "   [$d6]"; #EVSF_d6#
+
+# #14#rndstream -c #12#d8 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -o 18 #EVSF_raw_d8#
+# d8=`#EVSC_raw_d8#`; #EVSF_var_d8#
+# #EVSC_var_d8# echo; echo "   [$d8]"; #EVSF_d8#
+
+# #14#rndstream -c #12#d10 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -S '0,1,2,3,4,5,6,7,8,9,10' #EVSF_raw_d10#
+# d10=`#EVSC_raw_d10#`; #EVSF_var_d10#
+# #EVSC_var_d10# echo; echo "   [$d10]"; #EVSF_d10#
+
+# #14#rndstream -c #12#d12 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -S '0,1,2,3,4,5,6,7,8,9,10,11,12' #EVSF_raw_d12#
+# d12=`#EVSC_raw_d12#`; #EVSF_var_d12#
+# #EVSC_var_d12# echo; echo "   [$d12]"; #EVSF_d12#
+
+# #14#rndstream -c #12#d20 -r -v 0 -p 1 -w 1 -l 1 -t 1 -f 0 -S '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20' #EVSF_raw_d20#
+# d20=`#EVSC_raw_d20#`; #EVSF_var_d20#
+# #EVSC_var_d20# echo; echo "   [$d20]"; #EVSF_d20#
 
 # #+1# #EVSF_north# # go north
 # if [ ! -d north ]; then mkdir north; ln -s .. north/south; fi; echo moving north from; pwd; #EVSP_cd_north#
