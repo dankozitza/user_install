@@ -47,7 +47,7 @@
 # if [ ! -f log ]; then ln -s #12#log.txt log; fi #EVSF_link_log#
 # #+1# #EVSF_scan#
 # #+1# #EVSF_look# # look, scan: generate an image of the ground called map
-# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -fmh --color
+# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -fmhA --color
 # 100
 # 33
 # ^^.^^.^^nnoorrTTP77,,,,,/\\|-,,,,,,,,                                                                                                                                                                                                                                                                                                                                 
