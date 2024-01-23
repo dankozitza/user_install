@@ -40,22 +40,34 @@ Usage:
 }
 
 print STDOUT "EVSwitch Starting...\n";
+my $wd = $ENV{PWD} . "/";
 my $pcheck = 1;
 my @cmd_list = ();
 my $chdirl = "";
 my $sc_msg = "EVSwitch system call ";
+my $prompt_msg = "_Enter_Command> ";
 my $unknown_cmd = "/usr/bin/sh -c";
 my $task_management = 0;
+my $verbose =  0;
 my @cpids  = ();
 my $cmdi   = 0;
 my $cmd    = "";
 my $in     = "";
 my $msf    = "";
+my $script = "";
+my $stpath = "";
 my $pid    = 0;
 my $idx = -1;
 my $eval_print = 1;
 
+my $collectverbose = 0;
 foreach my $arg (@ARGV) {
+
+   if ($collectverbose) {
+      $verbose = $arg;
+      $collectverbose = 0;
+      next;
+   }
 
    if ($arg eq "help" || $arg eq "-h" || $arg eq "--help") {
       print_help();
@@ -69,6 +81,11 @@ foreach my $arg (@ARGV) {
 
    if ($arg eq "-t") {
       $task_management = 1;
+      next;
+   }
+
+   if ($arg eq "-v") {
+      $collectverbose = 1;
       next;
    }
 
@@ -94,6 +111,7 @@ foreach my $arg (@ARGV) {
 
    if ($idx == -1) {
       $in = "script ra $arg";
+      $msf = $arg;
       script();
    }
    elsif ($cmd_list[$idx] =~ /^(.*)( #EVSA#.*)$/) {
@@ -109,6 +127,14 @@ foreach my $arg (@ARGV) {
    }
 }
 
+if ($verbose > 4) {
+   print "EVSwitch environment: $0\n";
+   my @keys = keys %ENV;
+   foreach my $key (@keys) {
+      print "   $key -> $ENV{$key}\n";
+   }
+}
+
 $cmdi = 0;
 foreach my $cmdp (@cmd_list) {
    $cmd = $cmdp;
@@ -116,6 +142,7 @@ foreach my $cmdp (@cmd_list) {
    $cmdi++;
 }
 
+print "EVSwitch entering interactive mode.\n$prompt_msg";
 my $prompt = 0;
 while (1) {
 
@@ -131,6 +158,7 @@ while (1) {
    lf                     - List functions.
    lc                     - List comments.
    eval [index]           - Evaluate and print one or all system calls.
+   export [filename.sh]   - Evaluate system calls, write functions and bash profile to file system.
    script <r|w|ra|wa> <filename.evss>  - Read/Write/Append script from file system.
    rpl(a) <index> <m>/[r] - Run a regular expression replacement at index.
    evs [options]          - Start an EVSwitch instance within this one.
@@ -306,6 +334,43 @@ while (1) {
       }
 
    }
+   elsif ($in =~ /^expor(t.*)$/) { # export a bash environment #_cmddef
+      my $arg = $1;
+      my $filename = "";
+      if ($arg =~ /^t\s+/) {
+         $arg =~ s/^t\s+//;
+
+         if ($arg =~ /^\//) {
+            $filename = $arg;
+         }
+         else {
+            $filename = $stpath . $arg;
+         }
+      }
+      else {
+         $filename = $stpath . $script;
+      }
+
+      if ($filename eq "") {
+         print "EVSwitch export Usage: export [script.evss]\n";
+      }
+      else {
+         if ( ! -d "$filename" ) {
+            print "$sc_msg\'mkdir $filename\'.\n";
+            system("mkdir $filename");
+         }
+
+         if ($wd ne $filename) {
+            print "EVSwitch moving into directory $filename\n";
+            chdir($filename) or die "EVSwitch cannot enter directory '$filename'.";
+            $wd = $filename;
+         }
+
+         # export directory is cwd begin building bash scripts
+      }
+
+      $prompt = 1;
+   }
    elsif ($in =~ /^end (.+)$/) { #_cmddef
 
       my $cargs = $1;
@@ -320,7 +385,7 @@ while (1) {
       }
       $prompt = 1;
    }
-   elsif ($in =~ /^clear(.*)$/) { # delete system calls #_cmddef
+   elsif ($in =~ /^evs-clear(.*)$/) { # delete system calls #_cmddef
 
       if ($1 eq "") { # clear all #_cmddef
          print "Clearing all system calls.\n";
@@ -400,18 +465,24 @@ while (1) {
       }
 
       if (!$found) {
-         system($unknown_cmd . " \"" . $in . "\"");
+
+         if ( -f $in ) {
+            system("cat $in");
+         }
+         else {
+            system($unknown_cmd . " \"" . $in . "\"");
+         }
          $prompt = 1;
       }
    }
    else {
       check_children();
-      print "_Enter_Command> ";
+      print $prompt_msg;
    }
 
    if ($prompt) {
       check_children();
-      print "_Enter_Command> ";
+      print $prompt_msg;
       $prompt = 0;
    }
 }
@@ -460,7 +531,7 @@ sub evaluate {
       else { $T = 0; $symbol = "exit"; }
 
       if ($symbol eq "index") {
-         
+
          my $mode = "index";
          if ($tci =~ /^\+/) { $mode = "inc"; }
          if ($tci =~ /^\-/) { $mode = "dec"; }
@@ -486,7 +557,7 @@ sub evaluate {
          }
          $cmd =~ s/#(\+?\-?\d+)#/$tcmd/; # line combination #_cmddef
 
-         if ($tcmd =~ /#(\+|\-)\d+#/) {$last_i = $tci;} # line combiner enters line if symbols are found
+         if ($tcmd =~ /#(\+|\-)\d+#/) {$last_i = $tci;} # line combiner enters line if + or - symbols are found
       }
       elsif ($symbol eq "function") {
 
@@ -499,11 +570,11 @@ sub evaluate {
                if ($tcmd =~ /^(.+)( # \S.*)$/) {
                   $tcmd = $1;
                }
-      
+
                if ($tcmd =~ /^# /) {
                   $tcmd =~ s/^#\s+//;
                }
-	
+
 	          $cmd =~ s/#EVSC_$fname\#/$tcmd/;
 	          $found = 1;
 	       }
@@ -606,10 +677,28 @@ sub wait_for_children {
 sub script {
    if ($in =~ /^script (r|w|ra|wa) (.++)/) { # read/write/append script #_cmddef
 
-      if ($msf eq "") { $msf = $2; }
-
       my $arg = $1;
       my $name = $2;
+
+      if ($msf eq "") { $msf = $2; }
+
+      if ($msf =~ /^\/\w+$/) {
+         $msf = "/" . $msf;
+      }
+
+      if ($msf =~ /^\/(\/|\w+)\/(.+)$/) {
+         $stpath = $1 . "/";
+         $script = $2;
+         $script =~ s/\.evss$//; # evss file descriptor is stripped during export #_cmddef
+         if ($stpath =~ /(\.+|\/+)/) { $stpath = ""; }
+         if ($stpath eq "") { $stpath = $wd; }
+      }
+      else {
+         $script = $name;
+         $script =~ s/\.evss$//;
+         $stpath = $wd;
+      }
+
       my $mode = "";
       if ($arg eq "w")                 { $mode = ">"; }
       if ($arg eq "r" || $arg eq "ra") { $mode = "<"; }
