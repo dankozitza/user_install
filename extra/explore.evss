@@ -42,7 +42,7 @@
 # while [ 1 ]; do #-4#; sleep #+5#; done
 # 30
 
-# if [ ! -d forrest ]; then mkdir forrest; fi; echo You are above a forrest.; #EVSP_cd_forrest# #EVSF_start#
+# if [ ! -d forrest ]; then mkdir forrest; fi; echo You are above a forrest.; #EVSP_cdp_forrest# #EVSF_start#
 
 # if [ ! -f log ]; then ln -s #12#log.txt log; fi #EVSF_link_log#
 # #+1# #EVSF_scan#
@@ -99,13 +99,13 @@
 # #EVSC_var_d20# echo; echo "   [$d20]"; #EVSF_d20#
 
 # #+1# #EVSF_north# # go north
-# if [ ! -d north ]; then mkdir north; ln -s .. north/south; fi; echo moving north from; pwd; #EVSP_cd_north#
+# if [ ! -d north ]; then mkdir north; ln -s .. north/south; fi; echo moving north...; #EVSP_cdp_north#
 # #+1# #EVSF_south# # go south
-# if [ ! -d south ]; then mkdir south; ln -s .. south/north; fi; echo moving south from; pwd; #EVSP_cd_south#
+# if [ ! -d south ]; then mkdir south; ln -s .. south/north; fi; echo moving south...; #EVSP_cdp_south#
 # #+1# #EVSF_east# # go east
-# if [ ! -d east ]; then mkdir east; ln -s .. east/west; fi; echo moving east from; pwd; #EVSP_cd_east#
+# if [ ! -d east ]; then mkdir east; ln -s .. east/west; fi; echo moving east...; #EVSP_cdp_east#
 # #+1# #EVSF_west# # go west
-# if [ ! -d west ]; then mkdir west; ln -s .. west/east; fi; echo moving west from; pwd; #EVSP_cd_west#
+# if [ ! -d west ]; then mkdir west; ln -s .. west/east; fi; echo moving west...; #EVSP_cdp_west#
 
 # \n                  <KOAIR_82811_DS_SHUTTLE_Terminal>\n
 cat #12#setting.txt; #EVSC_start# # initialize the game

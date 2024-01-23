@@ -41,9 +41,11 @@ Usage:
 
 print STDOUT "EVSwitch Starting...\n";
 my $wd = $ENV{PWD} . "/";
+my $init_wd = $wd;
 my $pcheck = 1;
 my @cmd_list = ();
 my $chdirl = "";
+my $post_chdirl = "";
 my $sc_msg = "EVSwitch system call ";
 my $prompt_msg = "_Enter_Command> ";
 my $unknown_cmd = "/usr/bin/sh -c";
@@ -142,9 +144,17 @@ foreach my $cmdp (@cmd_list) {
    $cmdi++;
 }
 
-print "EVSwitch entering interactive mode.\n$prompt_msg";
+print "EVSwitch entering interactive mode.";
+print "\n";
+
 my $prompt = 0;
 while (1) {
+
+   if ($prompt) {
+      check_children();
+      print $prompt_msg;
+      $prompt = 0;
+   }
 
    $in = "";
    $in = readline(STDIN);
@@ -413,11 +423,22 @@ while (1) {
       wait_for_children();
       exit 0;
    }
-   elsif ($in =~ /^restart(.*)$/) { #_cmddef
+   elsif ($in =~ /^restar(t.*)$/) { #_cmddef
       print "Restarting...\n";
+      my $arg = $1;
+
+      if ($arg ne "t") {
+         $arg =~ s/^t\s+//;
+      }
+      else {
+         $arg = $stpath . $script . ".evss";
+      }
+
       wait_for_children();
-      print "$sc_msg\'perl $0$1':\n";
-      exec("perl $0$1");
+
+      chdir($init_wd);
+      print "$sc_msg\'perl $0 $arg':\n";
+      exec("perl $0 $arg");
    }
    elsif ($in =~ /^evs(.*)$/) { #_cmddef
 
@@ -480,11 +501,7 @@ while (1) {
       print $prompt_msg;
    }
 
-   if ($prompt) {
-      check_children();
-      print $prompt_msg;
-      $prompt = 0;
-   }
+
 }
 
 # Return 0 if command can be executed, 1 if some other action is taken.
@@ -503,6 +520,9 @@ sub evaluate {
       if ($1 =~ /cd_(\w+|_+|\/+)/) { # internal cd symbol #_cmddef
          $chdirl = $1;
       }
+      if ($1 =~ /cdp_(\w+|_+|\/+)/) { # internal post system call cd symbol #_cmddef
+         $post_chdirl = $1;
+      }
       $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
    }
 
@@ -519,9 +539,12 @@ sub evaluate {
       my $tci = "";
       my $fname = "";
 
-      if ($cmd =~ /#EVSP_(\w+|_+|\/+)#/) {
-         if ($1 =~ /cd_(\w+|_+|\/+)/) { # internal cd symbol #_cmddef
+      if ($cmd =~ /#EVSP_(\w+|_+|\/+)#/) { # duplicate above
+         if ($1 =~ /cd_(\w+|_+|\/+)/) {
             $chdirl = $1;
+         }
+         if ($1 =~ /cdp_(\w+|_+|\/+)/) {
+            $post_chdirl = $1;
          }
          $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
       }
@@ -641,6 +664,14 @@ sub fcall_cmd {
       exit 0;
    }
 
+   if ($post_chdirl ne "") {
+      while (!chdir($post_chdirl)) {
+         print "$post_chdirl...\n";
+         sleep(1);
+      }
+      $post_chdirl = "";
+   }
+
    return;
 }
 
@@ -690,12 +721,13 @@ sub script {
          $stpath = $1 . "/";
          $script = $2;
          $script =~ s/\.evss$//; # evss file descriptor is stripped during export #_cmddef
-         if ($stpath =~ /(\.+|\/+)/) { $stpath = ""; }
+         $script =~ s/\.\///;
          if ($stpath eq "") { $stpath = $wd; }
       }
       else {
          $script = $name;
          $script =~ s/\.evss$//;
+         $script =~ s/\.\///;
          $stpath = $wd;
       }
 
