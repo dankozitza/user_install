@@ -1,0 +1,21 @@
+{
+"recursion_str": [""],
+"output_vstr": ["revival stone", "crate", "pot", "pan", "kettle", "plate", "fork", "spoon", "cup", "napkin", "towel", "bouncy ball", "night stand", "tv", "radio", "phone", "minifridge", "beer", "soda", "liquor", "cheeseburger", "spaghetti", "chicken and dumplings", "jalepeneo", "onion", "carrot", "pepper", "wooden boards", "lemon", "lime", "banana", "salt", "bottled water", "potted plant", "xbox", "playstation", "nintendo", "fry", "hulk fists", "iron man suit", "lighter", "cloth", "light bulb", "led", "circuite", "pool ball", "water balloon", "snowball", "nerf gun", "rubber band", "ring", "bracelette", "scruncy", "hat", "potato", "tomato", "avaco", "pear", "peach", "false breasts", "dildo", "underwear", "strap-on", "miniskirt", "wife beater", "shoes", "socks", "pants", "shirt", "sweatshirt", "coat", "diamond", "gold piece", "silver piece", "copper piece", "tapestry", "glock", "clock", "hockey puck", "marshmellow stick", "guitar", "guitar pick", "guitar strings", "sheets of music", "ammunition", "backpack", "frontpack", "raptor pack"],
+"output_str": ["revival stone,crate,pot,pan,kettle,plate,fork,spoon,cup,napkin,towel,bouncy ball,night stand,tv,radio,phone,minifridge,beer,soda,liquor,cheeseburger,spaghetti,chicken and dumplings,jalepeneo,onion,carrot,pepper,wooden boards,lemon,lime,banana,salt,bottled water,potted plant,xbox,playstation,nintendo,fry,hulk fists,iron man suit,lighter,cloth,light bulb,led,circuite,pool ball,water balloon,snowball,nerf gun,rubber band,ring,bracelette,scruncy,hat,potato,tomato,avaco,pear,peach,false breasts,dildo,underwear,strap-on,miniskirt,wife beater,shoes,socks,pants,shirt,sweatshirt,coat,diamond,gold piece,silver piece,copper piece,tapestry,glock,clock,hockey puck,marshmellow stick,guitar,guitar pick,guitar strings,sheets of music,ammunition,backpack,frontpack,raptor pack"],
+"ignore": [0],
+"output": ["none"],
+"pn": ["rndstream"],
+"handle_ctrl_c": true,
+"verbose": [0],
+"delay": [0.500000],
+"recursion_vstr": [],
+"seed": [506366261],
+"output_list": ["none"],
+"lines": [1],
+"config": ["/home/userland/cmd/engineering/terminal/explore/item"],
+"print": [1],
+"frames": [1],
+"delete_temporary_files": true,
+"instance": ["rvcdnn"],
+"width": [1]
+}

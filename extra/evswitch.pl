@@ -39,6 +39,46 @@ Usage:
    return;
 }
 
+my $bash_fname = "/bin/bash";
+my $chmod_fname = "/bin/chmod";
+my $unknown_cmd = "$bash_fname -c";
+
+my $evss_profile = '
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+   . /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "TOKEN_PATH" ]]
+then
+    PATH="TOKEN_PATH:$PATH"
+fi
+export PATH
+
+unset rc
+
+#PS1="[\u@\h \W]\$"
+
+cb1="\[\033[01;";
+cb2="m\]";
+ce="\[\033[00m\]";
+
+user_color=$((31 + $RANDOM % 7));
+pid_color=36;
+bar_color=$user_color;
+
+# colored bar, user, host, pid, pwd
+#PS1=$cb1$bar_color$cb2"["$ce$cb1$user_color$cb2"\u"$ce"@\h#"$cb1$pid_color$cb2$$$ce" \W"$cb1$bar_color$cb2"]"$ce"\$ ";
+
+# user, pwd
+PS1=$cb1$user_color$cb2"TOKEN_SCRIPTNAME"$ce" \W"$cb1$bar_color$cb2")"$ce" ";
+
+cd TOKEN_HOME;
+';
+
 print STDOUT "EVSwitch Starting...\n";
 my $wd = $ENV{PWD} . "/";
 my $init_wd = $wd;
@@ -48,7 +88,7 @@ my $chdirl = "";
 my $post_chdirl = "";
 my $sc_msg = "EVSwitch system call ";
 my $prompt_msg = "_Enter_Command> ";
-my $unknown_cmd = "/usr/bin/sh -c";
+
 my $task_management = 0;
 my $verbose =  0;
 my @cpids  = ();
@@ -133,7 +173,7 @@ if ($verbose > 4) {
    print "EVSwitch environment: $0\n";
    my @keys = keys %ENV;
    foreach my $key (@keys) {
-      print "   $key -> $ENV{$key}\n";
+      print "$key -> $ENV{$key}\n";
    }
 }
 
@@ -361,13 +401,33 @@ while (1) {
          $filename = $stpath . $script;
       }
 
+      $filename =~ s/\.sh$//;
+      my $profile = $filename . "/profile";
+      my $start = $filename . "/start.sh";
+      my $home = $filename . "/home";
+
       if ($filename eq "") {
-         print "EVSwitch export Usage: export [script.evss]\n";
+         print "EVSwitch export Usage: export [name.sh]\n";
       }
       else {
+
+         my $exp_bin = "$filename/bin";
+
          if ( ! -d "$filename" ) {
             print "$sc_msg\'mkdir $filename\'.\n";
             system("mkdir $filename");
+         }
+         if ( ! -d "$filename/bin" ) {
+            print "$sc_msg\'mkdir $filename/bin\'.\n";
+            system("mkdir $filename/bin");
+         }
+         if ( ! -d "$filename/cfg" ) {
+            print "$sc_msg\'mkdir $filename/cfg\'.\n";
+            system("mkdir $filename/cfg");
+         }
+         if ( ! -d $home ) {
+            print "$sc_msg\'mkdir $home\'.\n";
+            system("mkdir $home");
          }
 
          if ($wd ne $filename) {
@@ -377,6 +437,60 @@ while (1) {
          }
 
          # export directory is cwd begin building bash scripts
+
+         my $ii = 0;
+         foreach my $tc (@cmd_list) {
+            $cmdi = $ii;
+            $cmd = $tc;
+            my $fname = "";
+
+            if ($cmd =~ /#EVSF_(\w+)#/) { $fname = $1; $cmd =~ s/^#\s+//; }
+
+            $eval_print = 0;
+            if (evaluate() || $fname eq "" || $cmd eq "") { $ii++; next; }
+            $eval_print = 1;
+
+            my $func_fname = $exp_bin . "/" . $fname;
+
+            print "EVSwitch exporting function $fname to location $func_fname.\n";
+
+            open(my $stfh, ">", $func_fname)
+               or die "EVSwitch could not open $func_fname. $!\n";
+      
+            print $stfh "#!$bash_fname\n$cmd\n";
+            close $stfh or die "EVSwitch failed while closing $func_fname. $!\n";
+
+            print "$sc_msg\'$chmod_fname +x $func_fname':\n";
+            system("$chmod_fname +x $func_fname");
+
+            $ii++;
+         }
+         $cmdi = 0;
+
+         # generate the profile
+         my $contents = $evss_profile;
+         $contents =~ s/TOKEN_PATH/$exp_bin/g;
+         $contents =~ s/TOKEN_SCRIPTNAME/$script/g;
+         $contents =~ s/TOKEN_HOME/$home/g;
+
+         print "EVSwitch generating bash profile $filename/profile.\n";
+
+         open(my $stfh, ">", $profile)
+            or die "EVSwitch could not open $profile. $!\n";
+         print $stfh $contents;
+         close $stfh or die "EVSwitch failed while closing $profile. $!\n";
+
+         print "EVSwitch generating start script $start.\n";
+
+         open(my $stfh, ">", $start)
+            or die "EVSwitch could not open $start. $!\n";
+         print $stfh "#!$bash_fname\n$bash_fname --rcfile $profile\n";
+         close $stfh or die "EVSwitch failed while closing $start. $!\n";
+
+         print "$sc_msg\'$chmod_fname +x $start':\n";
+         system("$chmod_fname +x $start");
+
+         print "EVSwitch finished exporting: $start\n";
       }
 
       $prompt = 1;
@@ -500,8 +614,6 @@ while (1) {
       check_children();
       print $prompt_msg;
    }
-
-
 }
 
 # Return 0 if command can be executed, 1 if some other action is taken.
@@ -523,7 +635,7 @@ sub evaluate {
       if ($1 =~ /cdp_(\w+|_+|\/+)/) { # internal post system call cd symbol #_cmddef
          $post_chdirl = $1;
       }
-      $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
+      $cmd =~ s/#EVSP_(\w+|_+|\/+)#//;
    }
 
    while ($cmd =~ /^(.+)( # \S.*)$/) {
@@ -570,7 +682,6 @@ sub evaluate {
 
          my $tcmd = $cmd_list[$tci];
 
-
          if ($tcmd =~ /^(.+)( # \S.*)$/) { # trailing comments must have spaces surrounding #_cmddef
             $tcmd = $1;
          }
@@ -578,17 +689,18 @@ sub evaluate {
          if ($tcmd =~ /^# /) {
             $tcmd =~ s/^#\s+//; # line combiner treats commented lines like system calls #_cmddef
          }
-         $cmd =~ s/#(\+?\-?\d+)#/$tcmd/; # line combination #_cmddef
+         $cmd =~ s/#(\-?\+?\d+)#/$tcmd/; # line combination #_cmddef
 
-         if ($tcmd =~ /#(\+|\-)\d+#/) {$last_i = $tci;} # line combiner enters line if + or - symbols are found
+         if ($tcmd =~ /#[\+\-]\d+#/) {$last_i = $tci;} # line combiner enters line if + or - symbols are found
       }
       elsif ($symbol eq "function") {
 
-	    my $found = 0;
-	    foreach my $line (@cmd_list) {
-	       my $tcmd = "";
-	       if ($line =~ /#EVSF_$fname\#/) {
-	          $tcmd = $line;
+         my $found = 0;
+         my $ix = 0;
+         foreach my $line (@cmd_list) {
+            my $tcmd = "";
+            if ($line =~ /#EVSF_$fname\#/) {
+               $tcmd = $line;
 
                if ($tcmd =~ /^(.+)( # \S.*)$/) {
                   $tcmd = $1;
@@ -598,20 +710,25 @@ sub evaluate {
                   $tcmd =~ s/^#\s+//;
                }
 
-	          $cmd =~ s/#EVSC_$fname\#/$tcmd/;
-	          $found = 1;
-	       }
-	    }
-	    if (!$found) { die "Command $fname has not been defined.\n"; }
+               $cmd =~ s/#EVSC_$fname\#/$tcmd/;
+               if ($tcmd =~ /#[\+\-]\d+#/) {
+                  $last_i = $ix;
+               }
+               $found = 1;
+            }
+            $ix++;
+         }
+         if (!$found) { die "Command $fname has not been defined.\n"; }
       }
       else {
          $T = 0;
       }
    }
 
-   $cmd =~ s/ ?#EVSA#//g;
-   $cmd =~ s/ ?#EVSF_\w+#//g;
-   $cmd =~ s/ ?#EVSC_\w+#//g;
+   $cmd =~ s/#EVSA#//g;
+   $cmd =~ s/#EVSF_\w+#//g;
+   $cmd =~ s/\s+$//;
+   $cmd =~ s/^\s+//;
 
    if ($cmd =~ /^\s*$/) {
       return 1;
@@ -757,4 +874,6 @@ sub script {
    return;
 }
 
+
 __END__
+

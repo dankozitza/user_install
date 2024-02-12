@@ -9,13 +9,13 @@
 "verbose": [0],
 "delay": [0.500000],
 "recursion_vstr": [],
-"seed": [346159712],
+"seed": [1584580984],
 "output_list": ["none"],
-"lines": [0],
-"config": ["/home/userland/cmd/engineering/terminal/words.cfg"],
-"print": [80],
-"frames": [80],
+"lines": [1],
+"config": ["/home/userland/cmd/engineering/terminal/explore/name"],
+"print": [1],
+"frames": [1],
 "delete_temporary_files": true,
-"instance": ["mhfgfpf"],
-"width": [1]
+"instance": ["cwcodt"],
+"width": [5]
 }

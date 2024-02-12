@@ -9,13 +9,13 @@
 "verbose": [0],
 "delay": [0.500000],
 "recursion_vstr": [],
-"seed": [2093282876],
+"seed": [1754243826],
 "output_list": ["none"],
 "lines": [0],
-"config": ["/home/morphis/cmd/engineering/terminal/why"],
+"config": ["/home/userland/cmd/engineering/terminal/why"],
 "print": [0],
 "frames": [0],
 "delete_temporary_files": true,
-"instance": ["uqfgefojpx"],
+"instance": ["omucdph"],
 "width": [1]
 }

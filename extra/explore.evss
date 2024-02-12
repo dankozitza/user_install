@@ -1,71 +1,64 @@
-#!/home/morphis/cmd/evswitch.pl
-# #19# #EVSF_beep# # beep # Copyright 2024 Daniel Kozitza
-# 20# # command reference
-# 21# # message
-# #23# # ambient sounds
-# #15# # ship engine 1 mysterion #EVSF_engine_1#
-# #16# # ship engine 2 archi #EVSF_engine_2#
-# #17# # ship engine 3 warp #EVSF_engine_3#
-# #26# # words
+#!/home/userland/cmd/evswitch.pl
+# # Copyright 2024 Daniel Kozitza
 
-# /home/morphis/cmd/engineering/terminal/
-# /home/morphis/cmd/engineering/audio/
-# /home/morphis/cmd/engineering/terminal/explore/
-# /home/morphis/cmd/forrest/
-# /home/morphis/cmd/
-# mpg123 -q --loop -1 #11#mysterion-low-ship-humming-25686.mp3
-# mpg123 -q --loop -1 #11#archi_soundscape_electric1wav-14417.mp3
-# mpg123 -q --loop -1 #11#deepscanmp3-14662.mp3
-# mpg123 -q --loop -1 #11#under-water-7548.mp3
-# mpg123 -q #EVSA# #11#AIRSTRING_PLUCK_DKM.mp3
-# cat #10#7_evswitch_ship_config.txt; grep -e \#_cmddef evswitch.pl;
+
+
+
+
+
+
+
+# /home/userland/cmd/engineering/terminal/
+# /home/userland/cmd/engineering/audio/
+# /home/userland/cmd/engineering/terminal/explore/
+
+# /home/userland/cmd/
+# /home/userland/cmd/explore/
+
 # rndstream -c #12#message -w 30 -l 1 -d -p 1 -rRRRRRRRRRR
 
-# while [ 1 ]; do sleep 1; if [ $(($RANDOM % 60)) -lt 1 ]; then #+1#; fi done
-# mpg123 -q #11#ambient/$(($RANDOM % 2)).mp3
-
-# while [ 1 ]; do #+1#; sleep 5; done
-# rndstream -c #10#words.cfg -rRRRRRRRRRR gen file #10#words_rnd_output -p 80; #+1# #EVSF_listen#
-# sim.pl -m=3 -file-r=#10#words.txt -file-r=#10#words_rnd_output -v=1
+# #14#rndstream -c #10#words.cfg -rRRRRRRRRRR gen file #10#words_rnd_output -p 80; #+1# #EVSF_listen#
+# #14#sim.pl -m=3 -file-r=#10#words.txt -file-r=#10#words_rnd_output -v=1
 
 # sleep 2; #+1#; sleep 2; #+6#; sleep 1; #+1#;
-# echo who; rndstream -c #10#who -rRRRRRRRRRR #EVSF_who#
-# echo what; rndstream -c #10#what -rRRRRRRRRRR #EVSF_what#
-# echo where; rndstream -c #10#where -rRRRRRRRRRR #EVSF_where#
-# echo when; rndstream -c #10#when -rRRRRRRRRRR #EVSF_when#
-# echo why; rndstream -c #10#why -rRRRRRRRRRR #EVSF_why#
-# echo how; rndstream -c #10#how -rRRRRRRRRRR #EVSF_how#
-# echo sensor status; rndstream -c #10#smsg -rRRRRRRRRRR #EVSF_status#
+# echo who; #14#rndstream -c #10#who -rRRRRRRRRRR #EVSF_who#
+# echo what; #14#rndstream -c #10#what -rRRRRRRRRRR #EVSF_what#
+# echo where; #14#rndstream -c #10#where -rRRRRRRRRRR #EVSF_where#
+# echo when; #14#rndstream -c #10#when -rRRRRRRRRRR #EVSF_when#
+# echo why; #14#rndstream -c #10#why -rRRRRRRRRRR #EVSF_why#
+# echo how; #14#rndstream -c #10#how -rRRRRRRRRRR #EVSF_how#
+# echo sensor status; #14#rndstream -c #12#smsg -w 1 -p 1 -rRRRRRRRRRR -S 'normal,non-normal,safe,very safe,turbulence,emergency,physically stable,digitally stable,stable,t-stable'; #EVSF_status#
 # echo image; rndstream -c #10#image -rRRRRRRRRRR #EVSF_sketch#
+# #14#rndstream -c #12#greet -rRRRRRRRRRR -w 1 -p 1 -S 'hello,welcome,greet,no response,come'; #EVSF_greet#
+# #14#rndstream -c #12#time -rRRR -w 1 -p 1 -S 'noon,afternoon,evening,night,midnight,morning'; #EVSF_time#
+# #14#rndstream -c #12#flight -rRRRRRRRRRR -w 1 -p 1 -S 'hover,park,atmospheric flight,planetary orbit,solar orbit,deep space parked,deep space flight'; #EVSF_flight#
 
-# #+1# # continuous status
-# while [ 1 ]; do #-4#; sleep #+5#; done
-# 30
+# #14#rndstream -c #12#scan -w 50 -l 16 -p 1 -O '#+1#' -rRRRRR #EVSF_scan# # scan: generate an image of the area around the ship
+# H   0   o    *    C    c    .                                
 
-# if [ ! -d forrest ]; then mkdir forrest; fi; echo You are above a forrest.; #EVSP_cdp_forrest# #EVSF_start#
+# if [ ! -d #15#home/forrest ]; then #+1# #EVSF_start# # start the game
+# mkdir -p #15#home/forrest; fi; #+1#
+# echo You are above a forrest.; #EVSP_cdp_explore/home/forrest#
 
 # if [ ! -f log ]; then ln -s #12#log.txt log; fi #EVSF_link_log#
-# #+1# #EVSF_scan#
-# #+1# #EVSF_look# # look, scan: generate an image of the ground called map
-# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -fmhA --color
-# 100
-# 33
+# #+1# #EVSF_look# # look: generate an image of the ground called map
+# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -hA --color
+# 50
+# 16
 # ^^.^^.^^nnoorrTTP77,,,,,/\\|-,,,,,,,,                                                                                                                                                                                                                                                                                                                                 
 # echo 100x100 foot area >> map; #EVSC_gen_map_p3# >> map #EVSF_gen_map_p2#
 # echo legend: TP7 - trees, ^., - foliage, -\| - trails, nor - rocks #EVSF_gen_map_p3#
-# #+1# #EVSF_search# # search: find landmarks in the area
-# #EVSC_var_d10# n=$d10; #+1#
-# while (( $n > 0 )); do echo searching...; sleep 1; n=$(($n - 1)); #+1#; done
-# if (( `#EVSC_raw_d20#` == 1 )); then echo Building >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 2 )); then echo Scroll >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 3 )); then echo Ghost >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 4 )); then echo Vehicle >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 5 )); then echo Cave >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 6 )); then echo Lake >> map; echo Found something\!; fi; #+1#
-# if (( `#EVSC_raw_d20#` == 7 )); then echo Temple >> map; echo Found something\!; fi
+# #EVSC_var_d10# nr=$d10; case $nr in #+1#; #EVSF_landmark# # landmark: find landmarks in the area
+# 1) echo Building >> map; echo Found something\!; ;; #+1#
+# 2) echo Scroll >> map; echo Found something\!; ;; #+1#
+# 3) echo Ghost >> map; echo Found something\!; ;; #+1#
+# 4) echo Vehicle >> map; echo Found something\!; ;; #+1#
+# 5) echo Cave >> map; echo Found something\!; ;; #+1#
+# 6) echo Lake >> map; echo Found something\!; ;; #+1#
+# 7) echo Temple >> map; echo Found something\!; ;; esac
 
 # #+1# #EVSF_person# # generate an npc
-# name=`#14#rndstream -c #12#name -w 5 -rR -p 1 -o az`; echo; echo generating person $name; #+1#
+# name=`#14#rndstream -c #12#name -w 5 -l 1 -rR -p 1 -o az`; echo; echo generating personality $name...; #+1#
 # echo Person Emulation $name: >> $name; sleep 1; #+1#
 # #EVSC_var_d20# echo strength $d20 >> $name; sleep 1; #+1#
 # #EVSC_var_d20# echo luck $d20 >> $name; sleep 1; #+1#
@@ -77,10 +70,28 @@
 # #EVSC_var_d10# echo beauty $d10 >> $name; #+1#
 # echo Skills: >> $name; #+1#
 # #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#+2#' >> $name; #+1#
-# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -dnS '#+1#' >> $name;
+# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -R -S '#+1#' >> $name;
 # acrobatics,animal handling,arcana,athletics,deception,history,insight,intimiddation,investigation,medicine,nature,perception,performance,persuasion,honesty,sleight of hand,stealth,survival,explosives,implotions,potions,advice,soothsaying,arguing,levetation
 
-# #14#rndstream -c #12#skills -v 0 -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#-2#' #EVSF_train#
+# #14#rndstream -c #12#skills -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#-2#' #EVSF_train#
+
+# #+1# #EVSF_search# # search the area
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_item#; fi; echo searching...; sleep 1; #+1#
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_weapon#; fi; echo searching...; sleep 1; #+1#
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_creature#; fi; echo searching...; sleep 1; #+1#
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_vehicle#; fi;
+
+# #+1# #EVSF_weapon# # weapon
+# #14#rndstream -c #12#weapon -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'sword,axe,dagger,gun,katana,scorpion,bat,pipe,screwdriver,large hammer,mace,spear,rod,staff,bow,crossbow,quiver,boots,grieves,gloves,helmet,armor,grenade,rpg,assault rifle,p1911,magnum,condome,elephant gun,blunderbus,ray gun,throwing stars,shuriken,large chain,kunai,rocks,boulder,machette,chainsaw,rail gun,lazer,LOIC,air strike,chicken leg,fangs,bear arms,pool stick'
+
+# #+1# #EVSF_item# # item
+# #14#rndstream -c #12#item -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'revival stone,crate,pot,pan,kettle,plate,fork,spoon,cup,napkin,towel,bouncy ball,night stand,tv,radio,phone,minifridge,beer,soda,liquor,cheeseburger,spaghetti,chicken and dumplings,jalepeneo,onion,carrot,pepper,wooden boards,lemon,lime,banana,salt,bottled water,potted plant,xbox,playstation,nintendo,fry,hulk fists,iron man suit,lighter,cloth,light bulb,led,circuite,pool ball,water balloon,snowball,nerf gun,rubber band,ring,bracelette,scruncy,hat,potato,tomato,avaco,pear,peach,false breasts,dildo,underwear,strap-on,miniskirt,wife beater,shoes,socks,pants,shirt,sweatshirt,coat,diamond,gold piece,silver piece,copper piece,tapestry,glock,clock,hockey puck,marshmellow stick,guitar,guitar pick,guitar strings,sheets of music,ammunition,backpack,frontpack,raptor pack'
+
+# #+1# #EVSF_creature# # creature
+# #14#rndstream -c #12#creature -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'bear,python,swallow,fish,hawk,worms,ants,bee,deer,rabbit,squerrel,chipmunk,beaver,catfish,otter,land whale,lemon,bean,old man,bearded thing,shadow,gigaafricanamerican,bat,glow worms,chicadas,finch,ghost,covid-19,gnats,flies,dung beatle,consumer,anaconda,viper,black widow,tarantula,giant spider,egg,giant egg,fire dragon,water dragon,rock dragon,veggie dragon,giant dragon,giant feral woman,firelette,masculinity,light dragon,dark dragon,wind dragon,metal dragon,sun dragon,space dragon,giant space dragon,digital dragon,eternal dragon,time dragon,gecko,komodo dragon,insurance agent,cat,dog,moth,crickets,grasshopper,june bugs,pterodactyl,eagle,falcon,sparrow,seal,walrus,baluga,bacteria,scorpion,wolf,wolf spider,giant wolf,walking stick,praying mantis,corn snake,raptor,t-rex,garden snake,copperhead,land pirannah,kangaroo,walabee,koala,grizzly bear,polar bear,whisp,spriggan,whisp mother,npc,foreign ai'
+
+# #+1# #EVSF_vehicle# # vehicle
+# #14#rndstream -c #12#vehicle -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'pontiac grand prix,yukon,suburban,trail blazer,hummer,utility truck,longbed truck,crane,excavator,tow truck,semi truck,rv,boat,motorcycle,scooter,bycicle,roller blades,skateboard,ice skates,roller skates,skiis,water skiis,heeles,snowmobile,sled,snowboard,plane,jet,helicopter,flying saucer,parachute,wingsuit,jetpack,oil tanker,cruise ship,x-wing,t-wing,star ship,tesla ship,warthog,4-wheeler,dirtbike,3-wheeler,side-by-side,hoverboard,rocket,'
 
 # #+1# #EVSF_direction# # check if a direction is blocked
 # #+1# #EVSF_dir#
@@ -108,4 +119,4 @@
 # if [ ! -d west ]; then mkdir west; ln -s .. west/east; fi; echo moving west...; #EVSP_cdp_west#
 
 # \n                  <KOAIR_82811_DS_SHUTTLE_Terminal>\n
-cat #12#setting.txt; #EVSC_start# # initialize the game
+cat #14#setting.txt; #EVSC_start# # initialize the game

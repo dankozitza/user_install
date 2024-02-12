@@ -1,0 +1,21 @@
+{
+"recursion_str": [""],
+"output_vstr": ["pontiac grand prix", "yukon", "suburban", "trail blazer", "hummer", "utility truck", "longbed truck", "crane", "excavator", "tow truck", "semi truck", "rv", "boat", "motorcycle", "scooter", "bycicle", "roller blades", "skateboard", "ice skates", "roller skates", "skiis", "water skiis", "heeles", "snowmobile", "sled", "snowboard", "plane", "jet", "helicopter", "flying saucer", "parachute", "wingsuit", "jetpack", "oil tanker", "cruise ship", "x-wing", "t-wing", "star ship", "tesla ship", "warthog", "4-wheeler", "dirtbike", "3-wheeler", "side-by-side", "hoverboard", "rocket"],
+"output_str": ["pontiac grand prix,yukon,suburban,trail blazer,hummer,utility truck,longbed truck,crane,excavator,tow truck,semi truck,rv,boat,motorcycle,scooter,bycicle,roller blades,skateboard,ice skates,roller skates,skiis,water skiis,heeles,snowmobile,sled,snowboard,plane,jet,helicopter,flying saucer,parachute,wingsuit,jetpack,oil tanker,cruise ship,x-wing,t-wing,star ship,tesla ship,warthog,4-wheeler,dirtbike,3-wheeler,side-by-side,hoverboard,rocket"],
+"ignore": [0],
+"output": ["none"],
+"pn": ["rndstream"],
+"handle_ctrl_c": true,
+"verbose": [0],
+"delay": [0.500000],
+"recursion_vstr": [],
+"seed": [243950090],
+"output_list": ["none"],
+"lines": [1],
+"config": ["/home/userland/cmd/engineering/terminal/explore/vehicle"],
+"print": [1],
+"frames": [1],
+"delete_temporary_files": true,
+"instance": ["ajlrao"],
+"width": [1]
+}

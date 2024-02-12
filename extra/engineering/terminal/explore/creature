@@ -1,0 +1,21 @@
+{
+"recursion_str": [""],
+"output_vstr": ["bear", "python", "swallow", "fish", "hawk", "worms", "ants", "bee", "deer", "rabbit", "squerrel", "chipmunk", "beaver", "catfish", "otter", "land whale", "lemon", "bean", "old man", "bearded thing", "shadow", "gigaafricanamerican", "bat", "glow worms", "chicadas", "finch", "ghost", "covid-19", "gnats", "flies", "dung beatle", "consumer", "anaconda", "viper", "black widow", "tarantula", "giant spider", "egg", "giant egg", "fire dragon", "water dragon", "rock dragon", "veggie dragon", "giant dragon", "giant feral woman", "firelette", "masculinity", "light dragon", "dark dragon", "wind dragon", "metal dragon", "sun dragon", "space dragon", "giant space dragon", "digital dragon", "eternal dragon", "time dragon", "gecko", "komodo dragon", "insurance agent", "cat", "dog", "moth", "crickets", "grasshopper", "june bugs", "pterodactyl", "eagle", "falcon", "sparrow", "seal", "walrus", "baluga", "bacteria", "scorpion", "wolf", "wolf spider", "giant wolf", "walking stick", "praying mantis", "corn snake", "garden snake", "copperhead", "land pirannah", "kangaroo", "walabee", "koala", "grizzly bear", "polar bear", "whisp", "spriggan", "whisp mother", "npc", "foreign ai"],
+"output_str": ["bear,python,swallow,fish,hawk,worms,ants,bee,deer,rabbit,squerrel,chipmunk,beaver,catfish,otter,land whale,lemon,bean,old man,bearded thing,shadow,gigaafricanamerican,bat,glow worms,chicadas,finch,ghost,covid-19,gnats,flies,dung beatle,consumer,anaconda,viper,black widow,tarantula,giant spider,egg,giant egg,fire dragon,water dragon,rock dragon,veggie dragon,giant dragon,giant feral woman,firelette,masculinity,light dragon,dark dragon,wind dragon,metal dragon,sun dragon,space dragon,giant space dragon,digital dragon,eternal dragon,time dragon,gecko,komodo dragon,insurance agent,cat,dog,moth,crickets,grasshopper,june bugs,pterodactyl,eagle,falcon,sparrow,seal,walrus,baluga,bacteria,scorpion,wolf,wolf spider,giant wolf,walking stick,praying mantis,corn snake,garden snake,copperhead,land pirannah,kangaroo,walabee,koala,grizzly bear,polar bear,whisp,spriggan,whisp mother,npc,foreign ai"],
+"ignore": [0],
+"output": ["none"],
+"pn": ["rndstream"],
+"handle_ctrl_c": true,
+"verbose": [0],
+"delay": [0.500000],
+"recursion_vstr": [],
+"seed": [379308798],
+"output_list": ["none"],
+"lines": [1],
+"config": ["/home/userland/cmd/engineering/terminal/explore/creature"],
+"print": [1],
+"frames": [1],
+"delete_temporary_files": true,
+"instance": ["cuugmlwiq"],
+"width": [1]
+}

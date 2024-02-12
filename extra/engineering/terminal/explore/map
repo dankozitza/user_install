@@ -9,13 +9,13 @@
 "verbose": [0],
 "delay": [0.500000],
 "recursion_vstr": [],
-"seed": [1704816330],
+"seed": [1706055302],
 "output_list": ["^^.^^.^^nnoorrTTP77,,,,,/\\\\|-,,,,,,,,                                                                                                                                                                                                                                                                                                                                 "],
-"lines": [0],
-"config": ["/home/morphis/cmd/engineering/terminal/explore/map"],
+"lines": [1],
+"config": ["/home/userland/cmd/engineering/terminal/explore/map"],
 "print": [0],
 "frames": [0],
 "delete_temporary_files": true,
-"instance": ["NULL"],
+"instance": ["mzctxvstiu"],
 "width": [1]
 }
