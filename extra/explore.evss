@@ -38,11 +38,11 @@
 
 # if [ ! -d #15#home/forrest ]; then #+1# #EVSF_start# # start the game
 # mkdir -p #15#home/forrest; fi; #+1#
-# echo You are above a forrest.; #EVSP_cdp_explore/home/forrest#
+# echo You are above a forrest.; #EVSP_cdp_explore_home_forrest#
 
 # if [ ! -f log ]; then ln -s #12#log.txt log; fi #EVSF_link_log#
 # #+1# #EVSF_look# # look: generate an image of the ground called map
-# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -hA --color
+# if [ ! -f map ]; then #14#rndstream -c #12#map -w #+1# -l #+2# -p 1 -O '#+3#' -drRRRRR gen file map; #EVSC_gen_map_p2#; fi; #EVSC_link_log#; cat map; pwd; ls -t --color
 # 50
 # 16
 # ^^.^^.^^nnoorrTTP77,,,,,/\\|-,,,,,,,,                                                                                                                                                                                                                                                                                                                                 
@@ -76,16 +76,20 @@
 # #14#rndstream -c #12#skills -w 1 -l 1 -p 1 -rRRRRRRRRRR -S '#-2#' #EVSF_train#
 
 # #+1# #EVSF_search# # search the area
-# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_item#; fi; echo searching...; sleep 1; #+1#
-# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_weapon#; fi; echo searching...; sleep 1; #+1#
-# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_creature#; fi; echo searching...; sleep 1; #+1#
-# if [ `#EVSC_raw_d20#` -gt 15 ]; then #EVSC_vehicle#; fi;
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #+1#; fi; echo searching...; sleep 1; #+2#
+# echo `#EVSC_item#` >> map; echo found an item!
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #+1#; fi; echo searching...; sleep 1; #+2#
+# echo `#EVSC_weapon#` >> map; echo found a weapon!
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #+1#; fi; echo searching...; sleep 1; #+2#
+# echo `#EVSC_creature#` >> map; echo found a creature!
+# if [ `#EVSC_raw_d20#` -gt 15 ]; then #+1#; fi;
+# echo `#EVSC_vehicle#` >> map; echo found a vehicle!
 
 # #+1# #EVSF_weapon# # weapon
-# #14#rndstream -c #12#weapon -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'sword,axe,dagger,gun,katana,scorpion,bat,pipe,screwdriver,large hammer,mace,spear,rod,staff,bow,crossbow,quiver,boots,grieves,gloves,helmet,armor,grenade,rpg,assault rifle,p1911,magnum,condome,elephant gun,blunderbus,ray gun,throwing stars,shuriken,large chain,kunai,rocks,boulder,machette,chainsaw,rail gun,lazer,LOIC,air strike,chicken leg,fangs,bear arms,pool stick'
+# #14#rndstream -c #12#weapon -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'sword,axe,dagger,gun,katana,scorpion,bat,pipe,screwdriver,large hammer,mace,spear,rod,staff,bow,crossbow,quiver,boots,grieves,gloves,helmet,armor,grenade,rpg,assault rifle,p1911,magnum,condome,elephant gun,blunderbus,ray gun,throwing stars,shuriken,large chain,kunai,rocks,boulder,machette,chainsaw,rail gun,lazer,air strike,chicken leg,fangs,bear arms,pool stick'
 
 # #+1# #EVSF_item# # item
-# #14#rndstream -c #12#item -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'revival stone,crate,pot,pan,kettle,plate,fork,spoon,cup,napkin,towel,bouncy ball,night stand,tv,radio,phone,minifridge,beer,soda,liquor,cheeseburger,spaghetti,chicken and dumplings,jalepeneo,onion,carrot,pepper,wooden boards,lemon,lime,banana,salt,bottled water,potted plant,xbox,playstation,nintendo,fry,hulk fists,iron man suit,lighter,cloth,light bulb,led,circuite,pool ball,water balloon,snowball,nerf gun,rubber band,ring,bracelette,scruncy,hat,potato,tomato,avaco,pear,peach,false breasts,dildo,underwear,strap-on,miniskirt,wife beater,shoes,socks,pants,shirt,sweatshirt,coat,diamond,gold piece,silver piece,copper piece,tapestry,glock,clock,hockey puck,marshmellow stick,guitar,guitar pick,guitar strings,sheets of music,ammunition,backpack,frontpack,raptor pack'
+# #14#rndstream -c #12#item -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'revival stone,crate,pot,pan,kettle,plate,fork,spoon,cup,napkin,towel,bouncy ball,night stand,tv,radio,phone,minifridge,beer,soda,liquor,cheeseburger,spaghetti,chicken and dumplings,jalepeneo,onion,carrot,pepper,wooden boards,lemon,lime,banana,salt,bottled water,potted plant,xbox,playstation,nintendo,fry,hulk fists,iron man suit,lighter,cloth,light bulb,led,circuite,pool ball,water balloon,snowball,nerf gun,rubber band,ring,bracelette,scruncy,hat,potato,tomato,avaco,pear,peach,false breasts,underwear,miniskirt,shoes,socks,pants,shirt,sweatshirt,coat,diamond,gold piece,silver piece,copper piece,tapestry,glock,clock,hockey puck,marshmellow stick,guitar,guitar pick,guitar strings,sheets of music,ammunition,backpack,frontpack,raptor pack'
 
 # #+1# #EVSF_creature# # creature
 # #14#rndstream -c #12#creature -w 1 -l 1 -p 1 -rRRRRRRRRRR -S 'bear,python,swallow,fish,hawk,worms,ants,bee,deer,rabbit,squerrel,chipmunk,beaver,catfish,otter,land whale,lemon,bean,old man,bearded thing,shadow,gigaafricanamerican,bat,glow worms,chicadas,finch,ghost,covid-19,gnats,flies,dung beatle,consumer,anaconda,viper,black widow,tarantula,giant spider,egg,giant egg,fire dragon,water dragon,rock dragon,veggie dragon,giant dragon,giant feral woman,firelette,masculinity,light dragon,dark dragon,wind dragon,metal dragon,sun dragon,space dragon,giant space dragon,digital dragon,eternal dragon,time dragon,gecko,komodo dragon,insurance agent,cat,dog,moth,crickets,grasshopper,june bugs,pterodactyl,eagle,falcon,sparrow,seal,walrus,baluga,bacteria,scorpion,wolf,wolf spider,giant wolf,walking stick,praying mantis,corn snake,raptor,t-rex,garden snake,copperhead,land pirannah,kangaroo,walabee,koala,grizzly bear,polar bear,whisp,spriggan,whisp mother,npc,foreign ai'
@@ -119,4 +123,4 @@
 # if [ ! -d west ]; then mkdir west; ln -s .. west/east; fi; echo moving west...; #EVSP_cdp_west#
 
 # \n                  <KOAIR_82811_DS_SHUTTLE_Terminal>\n
-cat #14#setting.txt; #EVSC_start# # initialize the game
+cat #12#setting.txt; #EVSC_start# # initialize the game

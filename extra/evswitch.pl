@@ -628,14 +628,16 @@ sub evaluate {
       return 1;
    }
 
-   if ($cmd =~ /#EVSP_(\w+|_+|\/+)#/) {
-      if ($1 =~ /cd_(\w+|_+|\/+)/) { # internal cd symbol #_cmddef
+   if ($cmd =~ /#EVSP_(\w+)#/) {
+      if ($1 =~ /cd_(\w+)/) { # internal cd symbol #_cmddef
          $chdirl = $1;
+         $chdirl =~ s/_/\//g;
       }
-      if ($1 =~ /cdp_(\w+|_+|\/+)/) { # internal post system call cd symbol #_cmddef
+      if ($1 =~ /cdp_(\w+)/) { # internal post system call cd symbol #_cmddef
          $post_chdirl = $1;
+         $post_chdirl =~ s/_/\//g;
       }
-      $cmd =~ s/#EVSP_(\w+|_+|\/+)#//;
+      $cmd =~ s/#EVSP_\w+#//;
    }
 
    while ($cmd =~ /^(.+)( # \S.*)$/) {
@@ -651,14 +653,16 @@ sub evaluate {
       my $tci = "";
       my $fname = "";
 
-      if ($cmd =~ /#EVSP_(\w+|_+|\/+)#/) { # duplicate above
-         if ($1 =~ /cd_(\w+|_+|\/+)/) {
+      if ($cmd =~ /#EVSP_(\w+)#/) {
+         if ($1 =~ /cd_(\w+)/) { # internal cd symbol #_cmddef
             $chdirl = $1;
+            $chdirl =~ s/_/\//g;
          }
-         if ($1 =~ /cdp_(\w+|_+|\/+)/) {
+         if ($1 =~ /cdp_(\w+)/) { # internal post system call cd symbol #_cmddef
             $post_chdirl = $1;
+            $post_chdirl =~ s/_/\//g;
          }
-         $cmd =~ s/ ?#EVSP_(\w+|_+|\/+)#//;
+         $cmd =~ s/#EVSP_\w+#//;
       }
 
       if ($cmd =~ /#(\-?\+?\d+)#/) { $tci = $1; $symbol = "index"; }
